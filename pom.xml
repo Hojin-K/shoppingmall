@@ -159,6 +159,18 @@
          <version>1.18.22</version>
          <scope>provided</scope>
       </dependency>
+<!--json 데이터 파싱-->
+		<dependency>
+			<groupId>com.fasterxml.jackson.core</groupId>
+			<artifactId>jackson-databind</artifactId>
+			<version>2.13.1</version>
+		</dependency>
+		<!-- java8 date/time -->
+		<dependency>
+			<groupId>com.fasterxml.jackson.datatype</groupId>
+			<artifactId>jackson-datatype-jsr310</artifactId>
+			<version>2.13.1</version>
+		</dependency>
    
 	</dependencies>
     <build>
