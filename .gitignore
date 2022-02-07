@@ -16,7 +16,6 @@ local.properties
 .recommenders
 target/
 .idea/
-.settings/
 .classpath
 .project
 .springBeans
@@ -52,7 +51,6 @@ target/
 .texlipse
 
 # STS (Spring Tool Suite)
-.springBeans
 
 # Code Recommenders
 .recommenders/
@@ -84,12 +82,6 @@ target/
 .idea/**/usage.statistics.xml
 .idea/**/dictionaries
 .idea/**/shelf
-target/
-.idea/
-.settings/
-.classpath
-.project
-.springBeans
 
 # AWS User-specific
 .idea/**/aws.xml
