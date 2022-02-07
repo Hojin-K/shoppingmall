@@ -30,7 +30,11 @@
 	</classpathentry>
 	<classpathentry kind="con" path="org.eclipse.jdt.launching.JRE_CONTAINER/org.eclipse.jdt.internal.debug.ui.launcher.StandardVMType/JavaSE-1.8">
 		<attributes>
+<<<<<<< HEAD
 			<attribute name="maven.pomderived" value="true"/>
+=======
+			<attribute name="owner.project.facets" value="java"/>
+>>>>>>> 27769417f5664d93000b45679a1608c35eeb3f41
 		</attributes>
 	</classpathentry>
 	<classpathentry kind="output" path="target/classes"/>
