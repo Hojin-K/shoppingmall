@@ -12,10 +12,11 @@
 </head>
 <body>
 <button onclick="requestPay()">결제하기</button>
-<script type="text/javascript" src="https://code.jquery.com/jquery-1.12.4.min.js" ></script>
+<script type="text/javascript" src="https://code.jquery.com/jquery-1.12.4.min.js"></script>
 <script type="text/javascript" src="https://cdn.iamport.kr/js/iamport.payment-1.2.0.js"></script>
 <script>
     IMP.init("imp21641442");
+
     function requestPay() {
         // IMP.request_pay(param, callback) 결제창 호출
         IMP.request_pay({ // param
@@ -29,34 +30,36 @@
             buyer_tel: "010-4025-8753",
             buyer_addr: "한국 어딘가",
             buyer_postcode: "01181"
-        }, function (rsp) { let msg;
+        }, function (rsp) {
 // callback
-            if ( rsp.success ) {
-                $.ajax({
-                    url : "/pay/getPay_sendRequest",
-                    method : "POST",
-                    date : {
-                        imp_uid : rsp.imp_uid,
-                        merchant_uid: rsp.merchant_uid,
-                        paid_amount : rsp.paid_amount,
-                        apply_num : rsp.apply_num
+            let msg;
+            if (rsp.success) {
+                jQuery.ajax({
+                    url: "/pay/getPay_sendRequest",
+                    method: "POST",
+                    // header : {"Content-Type" : "application/json"},
+                    data: {
+                        "imp_uid": rsp.imp_uid,
+                        "merchant_uid": rsp.merchant_uid,
+                        "paid_amount": rsp.paid_amount,
+                        "apply_num": rsp.apply_num,
                     },
-                    status : {
-                        200 : function (data){
+                    statusCode: {
+                        200: function (data) {
                             msg = '결제가 완료되었습니다.';
-                            msg += '고유ID : ' + data.imp_uid +'<br>';
-                            msg += '상점 거래ID : ' + data.merchant_uid+'<br>';
-                            msg += '결제 금액 : ' + data.paid_amount+'<br>';
+                            msg += '고유ID : ' + data.imp_uid + '<br>';
+                            msg += '상점 거래ID : ' + data.merchant_uid + '<br>';
+                            msg += '결제 금액 : ' + data.paid_amount + '<br>';
                             msg += '카드 승인번호 : ' + data.apply_num;
                         }
                     },
-                    400 : function (){
+                    400: function () {
                         msg = '위조된 결제입니다.';
                     }
 
                 })
             } else {
-                msg = '결제에 실패하였습니다.'+'<br>';
+                msg = '결제에 실패하였습니다.' + '<br>';
                 msg += '에러내용 : ' + rsp.error_msg;
             }
             alert(msg);
