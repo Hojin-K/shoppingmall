@@ -119,10 +119,10 @@
 		  <!-- oracle driver -->
       <!-- https://mvnrepository.com/artifact/com.oracle.database.jdbc/ojdbc6 -->
       <dependency>
-         <groupId>com.oracle.database.jdbc</groupId>
-         <artifactId>ojdbc6</artifactId>
-         <version>11.2.0.4</version>
-      </dependency>     
+            <groupId>com.oracle.ojdbc</groupId>
+            <artifactId>ojdbc8</artifactId>
+            <version>19.3.0.0</version>
+        </dependency>     
       
 <!-- 스프링에서 JDBC 를 사용하기 위한 라이브러리 입니다. -->
       <dependency>
@@ -171,7 +171,12 @@
 			<artifactId>jackson-datatype-jsr310</artifactId>
 			<version>2.13.1</version>
 		</dependency>
-   
+
+	<dependency>
+		<groupId>org.mybatis</groupId>
+		<artifactId>mybatis-typehandlers-jsr310</artifactId>
+		<version>1.0.2</version>
+	</dependency>
 	</dependencies>
     <build>
         <plugins>
