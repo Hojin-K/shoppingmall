@@ -31,18 +31,15 @@
 		<beans:property name="password" value="123456" />
 	</beans:bean>
 
-
-
 	<beans:bean id="sqlSessionFactory" class="org.mybatis.spring.SqlSessionFactoryBean">
 		<beans:property name="dataSource" ref="dataSource"/>
 		<beans:property name="mapperLocations"
 						value="classpath:mapper/**/*.xml"/>
-
+		<beans:property name="configLocation" value="/WEB-INF/spring/mybatis-config.xml" />
 	</beans:bean>
 
 	<beans:bean id="sqlSession" class="org.mybatis.spring.SqlSessionTemplate">
 		<beans:constructor-arg index="0" ref="sqlSessionFactory"/>
 	</beans:bean>
-
 	
 </beans:beans>
