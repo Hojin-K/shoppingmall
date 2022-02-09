@@ -4,7 +4,7 @@ import lombok.Getter;
 import lombok.Setter;
 
 @Getter @Setter
-public class ImPortAttributes {
+public class IamPortAttributes {
 
     private String imp_uid;
 

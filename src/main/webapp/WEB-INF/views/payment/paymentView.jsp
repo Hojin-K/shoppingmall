@@ -47,9 +47,9 @@
                     statusCode: {
                         200: function (data) {
                             msg = '결제가 완료되었습니다.';
-                            msg += '고유ID : ' + data.imp_uid + '<br>';
-                            msg += '상점 거래ID : ' + data.merchant_uid + '<br>';
-                            msg += '결제 금액 : ' + data.paid_amount + '<br>';
+                            msg += '고유ID : ' + data.imp_uid;
+                            msg += '상점 거래ID : ' + data.merchant_uid;
+                            msg += '결제 금액 : ' + data.paid_amount;
                             msg += '카드 승인번호 : ' + data.apply_num;
                         }
                     },
@@ -59,7 +59,7 @@
 
                 })
             } else {
-                msg = '결제에 실패하였습니다.' + '<br>';
+                msg = '결제에 실패하였습니다. \n';
                 msg += '에러내용 : ' + rsp.error_msg;
             }
             alert(msg);

@@ -1,6 +1,8 @@
 package com.shop.myapp.service;
 
 import com.shop.myapp.dto.Member;
+import com.shop.myapp.repository.MemberRepository;
+import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
 import java.util.ArrayList;

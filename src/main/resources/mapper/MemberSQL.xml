@@ -5,9 +5,9 @@
 <mapper namespace="com.shop.myapp.repository.MemberRepository">
 
     <insert id="insertMember">
---         insert 실행
+
     </insert>
     <select id="findAll" resultType="com.shop.myapp.dto.Member">
---         select 실행
+select * from SHOP_MEMBER_TB
     </select>
 </mapper>
