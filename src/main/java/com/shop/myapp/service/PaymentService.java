@@ -59,7 +59,7 @@ public class PaymentService {
         return accessToken;
     }
 
-    public String getImpAttributes(String impUid,String accessToken) throws ParseException {
+    public String getImpAttributes(String impUid, String accessToken) throws ParseException {
         // access token 을 전달할 httpHeaders 생성
         HttpHeaders headers = new HttpHeaders();
         // httpEntity 에 담아 header 전달
@@ -74,7 +74,7 @@ public class PaymentService {
         JSONObject responseAttributes = parsingRestAttribute(response);
         // access token 을 받을때와 마찬가지로 json 파싱
         // 해당 고유 번호로 결제된 금액 조회
-        String amount =""+ responseAttributes.get("amount");
+        String amount = "" + responseAttributes.get("amount");
         log.info("amount : {}", amount);
         return amount;
     }
