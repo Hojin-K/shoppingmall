@@ -11,4 +11,7 @@
     <select id="findAll" resultType="com.shop.myapp.dto.Member">
 			SELECT * FROM SHOP_MEMBER_TB
     </select>
+    <select id="checkUserAvailable" resultType="com.shop.myapp.dto.Member">
+			SELECT * FROM SHOP_MEMBER_TB WHERE MEMBER_ID = #{memberId}
+    </select>
 </mapper>

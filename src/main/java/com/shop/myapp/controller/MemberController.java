@@ -1,14 +1,13 @@
 package com.shop.myapp.controller;
 
 import java.util.List;
-import java.util.Map;
 
-import org.springframework.http.ResponseEntity;
 import org.springframework.stereotype.Controller;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.ModelAttribute;
 import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestMapping;
+import org.springframework.web.bind.annotation.RequestMethod;
 import org.springframework.web.bind.annotation.ResponseBody;
 
 import com.shop.myapp.dto.Member;
@@ -28,12 +27,6 @@ public class MemberController {
         this.memberService = memberService;
     }
 
-  /*  @GetMapping("")
-    public ResponseEntity<Object> helloController(){
-        log.info("{}", this);
-        return ResponseEntity.ok(memberService.getMember());
-    }*/
-    
     @GetMapping("/join")
     public String joinForm() {
     	log.info("joinForm");
@@ -54,5 +47,20 @@ public class MemberController {
     @GetMapping("")
     public List<Member> findAll(){
     	return memberService.getMember();
+    }
+    
+    @GetMapping("/login")
+    public String loginForm() {
+    	log.info("loginForm");
+    	return "/member/login";
+    }
+    
+    @ResponseBody
+    @RequestMapping(value="/login", produces="application/json;charset=UTF-8", 
+    method=RequestMethod.POST)
+    public String login(@ModelAttribute Member member){
+    	log.info("login");
+    	
+    	return memberService.loginMember(member);
     }
 }
