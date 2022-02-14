@@ -1,0 +1,35 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper
+        PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
+        "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="com.shop.myapp.repository.ItemOptionRepository">
+    <insert id="insertItemOptions" parameterType="list">
+        <foreach collection="list" item="itemOption" separator=" " open="insert all" close="select * from dual">
+            into HR.SHOP_ITEM_OPTIONS_TB values (#{itemOption.optionCode},
+            #{itemOption.itemCode},
+            #{itemOption.optionName},
+            #{itemOption.optionPriceUd},
+            #{itemOption.optionStock})
+        </foreach>
+    </insert>
+    <update id="modifyItemOption">
+    <foreach collection="list" item="itemOption">
+        update HR.SHOP_ITEM_OPTIONS_TB
+        set OPTION_PRICEUD = #{itemOption.optionPriceUd},
+            OPTION_STOCK   = #{itemOption.optionStock}
+        where OPTION_CODE = #{itemOption.optionCode}
+    </foreach>
+    </update>
+    <delete id="deleteItemOption">
+<foreach collection="list" item="optionCode">
+        delete HR.SHOP_ITEM_OPTIONS_TB where OPTION_CODE= #{optionCode}
+</foreach>
+    </delete>
+
+    <select id="findByOptionCode" resultType="com.shop.myapp.dto.ItemOption">
+        select * from HR.SHOP_ITEM_OPTIONS_TB where OPTION_CODE = #{optionCode}
+    </select>
+    <select id="findByItemCode" resultType="com.shop.myapp.dto.ItemOption">
+        select * from HR.SHOP_ITEM_OPTIONS_TB where ITEM_CODE = #{itemCode}
+    </select>
+</mapper>
