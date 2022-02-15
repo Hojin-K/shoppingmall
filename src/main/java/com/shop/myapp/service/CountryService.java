@@ -39,11 +39,13 @@ public class CountryService {
             for (Object data: datas) {
                 String countryCode = (String) ((JSONObject) data).get("국가코드ISO_numeric");
                 if (countryCode != null && !countryCode.equals("")){
-                Country country = new Country();
-                country.setCountryName((String) ((JSONObject) data).get("국가명"));
-                    System.out.println(countryCode);
-                country.setCountryCode(countryCode);
-                countries.add(country);
+
+                    Country country = Country.builder()
+                            .countryName((String) ((JSONObject) data).get("국가명"))
+                            .countryCode(countryCode)
+                            .build();
+
+                    countries.add(country);
                 }
             }
         CountryRepository mapper = sqlSession.getMapper(CountryRepository.class);

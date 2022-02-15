@@ -1,5 +1,6 @@
 package com.shop.myapp.service;
 
+import com.shop.myapp.dto.Payment;
 import lombok.extern.slf4j.Slf4j;
 import org.json.simple.JSONObject;
 import org.json.simple.parser.JSONParser;
@@ -15,7 +16,7 @@ import org.springframework.web.client.RestTemplate;
 
 @Service
 @Slf4j
-public class PaymentService {
+public class IamPortService {
 
     public JSONObject parsingRestAttribute(ResponseEntity<String> restResponse) throws ParseException {
         JSONParser parser = new JSONParser();
@@ -59,7 +60,7 @@ public class PaymentService {
         return accessToken;
     }
 
-    public String getImpAttributes(String impUid, String accessToken) throws ParseException {
+    public Payment getImpAttributes(String impUid, String accessToken) throws ParseException {
         // access token 을 전달할 httpHeaders 생성
         HttpHeaders headers = new HttpHeaders();
         // httpEntity 에 담아 header 전달
@@ -74,8 +75,17 @@ public class PaymentService {
         JSONObject responseAttributes = parsingRestAttribute(response);
         // access token 을 받을때와 마찬가지로 json 파싱
         // 해당 고유 번호로 결제된 금액 조회
-        String amount = "" + responseAttributes.get("amount");
-        log.info("amount : {}", amount);
-        return amount;
+        Payment payment = Payment.builder()
+                .impUid((String) responseAttributes.get("imp_Uid"))
+                .amount((Long) responseAttributes.get("amount"))
+                .buyerName((String) responseAttributes.get("buyer_name"))
+                .buyerTel((String) responseAttributes.get("buyer_tel"))
+                .buyerPostCode((String) responseAttributes.get("buyer_postcode"))
+                .buyerAddr((String) responseAttributes.get("buyer_addr"))
+                .buyerEmail((String) responseAttributes.get("buyer_email"))
+                .name((String) responseAttributes.get("name"))
+                .status((String) responseAttributes.get("status"))
+                .build();
+        return payment;
     }
 }
