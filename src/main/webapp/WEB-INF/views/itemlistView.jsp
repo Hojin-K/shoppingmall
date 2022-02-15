@@ -55,8 +55,7 @@
 					<a href="itemviewlist?page=${searchVO.page+1 }" class="btn_next"></a>
 					<a href="itemviewlist?page=${searchVO.totPage }" class="btn_last"></a>
 				</c:if>
-				<!-- 페이지 넘버 붙이기 end에 따라 페이지 넘버가 지정된다.${searchVO.pageEnd }를 end에 넣으면 
-				실제 글 개수의 마지막 페이지가 자동으로 나온다.-->
+				
 			</c:if>
 		</div>
 		</form> 

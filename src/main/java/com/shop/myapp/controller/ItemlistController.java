@@ -87,7 +87,7 @@ public class ItemlistController {
 		if (itemname.equals("itemname")) {
 			model.addAttribute("item_name",dao.itemList(rowStart,rowEnd,searchKeyword,"1"));
 		} else if (itemname.equals("")) {
-			model.addAttribute("item_name",dao.itemList(rowStart,rowEnd,searchKeyword,"1"));
+			model.addAttribute("item_name",dao.itemList(rowStart,rowEnd,searchKeyword,"0"));
 		}
 	
 		model.addAttribute("totRowCnt",total); 
@@ -98,6 +98,8 @@ public class ItemlistController {
 		return "itemlistView";
 		
 	}
+	
+	
 	
 
 }
