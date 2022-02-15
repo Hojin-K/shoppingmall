@@ -2,6 +2,9 @@ package com.shop.myapp.controller;
 
 import java.util.List;
 
+import javax.servlet.http.HttpServletRequest;
+import javax.servlet.http.HttpSession;
+
 import org.springframework.stereotype.Controller;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.ModelAttribute;
@@ -22,6 +25,7 @@ import lombok.extern.slf4j.Slf4j;
 public class MemberController {
 
     private final MemberService memberService;
+  
 
     public MemberController(MemberService memberService) {
         this.memberService = memberService;
@@ -44,7 +48,7 @@ public class MemberController {
     }
     
     @ResponseBody
-    @GetMapping("")
+    @GetMapping("getMember")
     public List<Member> findAll(){
     	return memberService.getMember();
     }
@@ -55,12 +59,12 @@ public class MemberController {
     	return "/member/login";
     }
     
-    @ResponseBody
     @RequestMapping(value="/login", produces="application/json;charset=UTF-8", 
     method=RequestMethod.POST)
-    public String login(@ModelAttribute Member member){
+    public String login(@ModelAttribute Member member, HttpServletRequest request){
     	log.info("login");
-    	
-    	return memberService.loginMember(member);
+    	Member mem = memberService.loginMember(member);
+    	request.getSession().setAttribute("member",mem);
+    	return "보낼 주소";
     }
 }

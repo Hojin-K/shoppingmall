@@ -11,5 +11,5 @@ public interface MemberRepository {
     int insertMember(Member member);
     List<Member> findAll();
     Optional<Member> findById();
-    Member checkUserAvailable(Member member);
+    Optional<Member> checkUserAvailable(Member member);
 }

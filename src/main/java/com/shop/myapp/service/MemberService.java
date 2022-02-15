@@ -1,6 +1,7 @@
 package com.shop.myapp.service;
 
 import java.util.List;
+import java.util.Optional;
 
 import org.apache.ibatis.session.SqlSession;
 import org.mindrot.jbcrypt.BCrypt;
@@ -44,29 +45,19 @@ public class MemberService {
     	return result;
     }
     
-    public String loginMember(Member member) {
+    public Member loginMember(Member member) {
     	MemberRepository memberRepository
     	= sqlSession.getMapper(MemberRepository.class);
     	String userPwd = member.getMemberPwd();
-    	Member loginMember = memberRepository.checkUserAvailable(member);
-    	 
-    	String msg = "";
-    	
-    	if(loginMember.getMemberId() != null) {
+    	//로그인한 유저 id를 조회한다.
+    	Optional<Member> loginMemberOptional = memberRepository.checkUserAvailable(member);
+    	if(loginMemberOptional.isPresent()) {
+    		Member loginMember = loginMemberOptional.get();
     		if(BCrypt.checkpw(userPwd,  loginMember.getMemberPwd())){
-    			if(isManager(loginMember.getMemberLevel())) {
-    				msg = "관리자님 어서오세요.";
-    			}else {
-    				msg = loginMember.getMemberName()+"님 환영합니다.";
-    			}
-    		}else {
-    			msg = "비밀번호가 틀렸습니다. 다시 입력해주세요.";
+    			return loginMember;
     		}
-    	}else {
-    		msg = "등록된 ID가 없습니다. 다시 입력해주세요.";
     	}
-    	
-    	return msg;
+    	return null;
     }
     
     public boolean isManager(String memberLevel) {

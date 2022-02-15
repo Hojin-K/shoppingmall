@@ -42,4 +42,13 @@
 		<beans:constructor-arg index="0" ref="sqlSessionFactory"/>
 	</beans:bean>
 	
+	<beans:bean id="authInterceptor" class="com.shop.myapp.service.AuthInterceptorService"/>
+	 	<interceptors>
+			<interceptor>
+				<mapping path="/getMember"/>
+	                        <!-- <exclude-mapping path="/getMember"/> -->
+	                        
+	            <beans:ref bean="authInterceptor"/>
+			</interceptor>
+		</interceptors>
 </beans:beans>
