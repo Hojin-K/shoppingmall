@@ -17,9 +17,8 @@ public class MemberService {
 		this.sqlSession = sqlSession;
 	}
 
-	public List<Member> getMember(){
-    	MemberRepository memberRepository 
-    	= sqlSession.getMapper(MemberRepository.class);
+	public List<Member> getMembers(){
+    	MemberRepository memberRepository = sqlSession.getMapper(MemberRepository.class);
     	List<Member> members = memberRepository.findAll();
     	members.forEach(member -> System.out.print(member.getMemberName()));
     	for(Member member : members) {

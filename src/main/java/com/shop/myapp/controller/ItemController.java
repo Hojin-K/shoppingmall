@@ -9,7 +9,6 @@ import org.springframework.web.bind.annotation.*;
 import org.springframework.web.servlet.mvc.support.RedirectAttributes;
 
 import java.util.List;
-import java.util.Optional;
 
 @Controller
 @RequestMapping("/item")
@@ -46,7 +45,7 @@ public class ItemController {
     @PostMapping("/add")
     public String createItem(@ModelAttribute Item item, RedirectAttributes redirectAttributes){
         int itemResult = itemService.createItem(item);
-        if (result != 0){
+        if (itemResult != 0){
             redirectAttributes.addAttribute("itemCode",item.getItemCode());
             return "redirect:/item/{itemCode}";
         } else {

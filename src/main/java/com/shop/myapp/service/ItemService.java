@@ -2,17 +2,16 @@ package com.shop.myapp.service;
 
 import com.shop.myapp.dto.Item;
 import com.shop.myapp.dto.ItemOption;
+import com.shop.myapp.repository.ItemOptionRepository;
 import com.shop.myapp.repository.ItemRepository;
 import org.apache.ibatis.session.SqlSession;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
-import org.springframework.transaction.annotation.Transactional;
 
 import java.util.List;
 import java.util.Optional;
 
 @Service
-@Transactional
 public class ItemService {
     private final ItemRepository itemRepository;
     private final ItemOptionRepository itemOptionRepository;
@@ -35,8 +34,7 @@ public class ItemService {
     }
 
     public List<Item> getItems() {
-        List<Item> items = itemRepository.findAll();
-        return
+        return itemRepository.findAll();
     }
 
     public int createItem(Item item) {

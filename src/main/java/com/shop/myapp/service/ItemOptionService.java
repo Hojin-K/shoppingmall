@@ -1,7 +1,6 @@
 package com.shop.myapp.service;
 
 import com.shop.myapp.dto.ItemOption;
-import com.shop.myapp.repository.ItemOptionRepository;
 import org.apache.ibatis.session.SqlSession;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
@@ -10,10 +9,10 @@ import java.util.List;
 import java.util.Optional;
 
 @Service
-public class ItemOptionRepository {
+public class ItemOptionService {
     private final com.shop.myapp.repository.ItemOptionRepository itemOptionRepository;
 
-    public ItemOptionRepository(@Autowired SqlSession sqlSession) {
+    public ItemOptionService(@Autowired SqlSession sqlSession) {
         this.itemOptionRepository = sqlSession.getMapper(com.shop.myapp.repository.ItemOptionRepository.class);
     }
 

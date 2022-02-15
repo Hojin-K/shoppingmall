@@ -3,12 +3,7 @@ package com.shop.myapp.controller;
 import java.util.List;
 
 import org.springframework.stereotype.Controller;
-import org.springframework.web.bind.annotation.GetMapping;
-import org.springframework.web.bind.annotation.ModelAttribute;
-import org.springframework.web.bind.annotation.PostMapping;
-import org.springframework.web.bind.annotation.RequestMapping;
-import org.springframework.web.bind.annotation.RequestMethod;
-import org.springframework.web.bind.annotation.ResponseBody;
+import org.springframework.web.bind.annotation.*;
 
 import com.shop.myapp.dto.Member;
 import com.shop.myapp.service.MemberService;
@@ -46,7 +41,7 @@ public class MemberController {
     @ResponseBody
     @GetMapping("")
     public List<Member> findAll(){
-    	return memberService.getMember();
+    	return memberService.getMembers();
     }
     
     @GetMapping("/login")
