@@ -33,7 +33,7 @@ public class ItemService {
         // 상품의 옵션 조회
         List<ItemOption> options = itemOptionRepository.findByItemCode(itemCode);
         // 상품에 옵션 넣기
-        item.setOptions(options);
+        item.setItemOptions(options);
         return item;
     }
 
@@ -43,7 +43,7 @@ public class ItemService {
 
     public int createItem(Item item) {
         itemRepository.insertItem(item);
-       return itemOptionService.insertItemOptions(item.getOptions(),item.getItemCode());
+       return itemOptionService.insertItemOptions(item.getItemOptions(),item.getItemCode());
     }
 
     public int deleteItem(String itemCode) {
@@ -52,6 +52,6 @@ public class ItemService {
 
     public int updateItem(Item item) {
         itemRepository.updateItem(item);
-     return itemOptionService.modifyItemOption(item.getOptions());
+     return itemOptionService.modifyItemOption(item.getItemOptions());
     }
 }

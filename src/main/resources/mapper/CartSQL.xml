@@ -8,11 +8,6 @@
         <id property="cartId" column="cart_id"/>
         <id property="memberId" column="member_id"/>
         <id property="itemAmount" column="amount"/>
-        <association property="item" javaType="com.shop.myapp.dto.Item">
-            <result property="itemCode" column="item_code"/>
-            <result property="itemName" column="item_name"/>
-            <result property="itemPrice" column="item_cost"/>
-        </association>
         <association property="itemOption" javaType="com.shop.myapp.dto.ItemOption">
             <result property="optionCode" column="option_code"/>
             <result property="optionName" column="option_name"/>
@@ -24,11 +19,10 @@
         <selectKey resultType="java.lang.String" keyProperty="cartId" order="BEFORE">
             SELECT CODE_CARD_SQ.nextval FROM sys.DUAL
         </selectKey>
-        insert into SHOP_CART_TB(CART_ID,item_code,
+        insert into SHOP_CART_TB(CART_ID,
         member_id,
-        OPTION_CODE,AMOUNT
+        "item_OPTION_CODE",AMOUNT
         ) values (#{cartId},
-        #{itemCode},
         #{memberId},
         #{itemOptionCode},
         #{itemAmount})

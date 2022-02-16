@@ -5,7 +5,6 @@ import lombok.Setter;
 
 import java.util.List;
 
-
 @Getter
 @Setter
 public class Item {
@@ -16,11 +15,11 @@ public class Item {
     private int itemPrice;
     private String itemImage;
     private String itemInfo;
-    private List<ItemOption> options;
+    private List<ItemOption> itemOptions;
     private int itemStock;
 
     public void calculateItemStock() {
-        for (ItemOption itemOption : options) {
+        for (ItemOption itemOption : itemOptions) {
             itemStock += itemOption.getOptionStock();
         }
     }

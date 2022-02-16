@@ -44,7 +44,6 @@ public class ItemTest {
             item.setMemberId("test1");
             item.setItemInfo("test Item" + i);
             item.setItemImage("없음");
-            item.setOptions(itemOptions);
             int result = itemService.createItem(item);
             count += result;
         }
@@ -55,7 +54,7 @@ public class ItemTest {
     public void findByItem(){
         Item item = itemService.getItem("7");
         System.out.println("ItemName : "+item.getItemName());
-        for (ItemOption itemOption : item.getOptions()){
+        for (ItemOption itemOption : item.getItemOptions()){
             System.out.println("OptionCode : " +itemOption.getItemCode());
             System.out.println("OptionName : "+itemOption.getOptionName());
         }

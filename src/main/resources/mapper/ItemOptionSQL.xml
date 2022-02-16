@@ -3,10 +3,28 @@
         PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
         "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
 <mapper namespace="com.shop.myapp.repository.ItemOptionRepository">
+
+    <resultMap id="itemOption" type="com.shop.myapp.dto.ItemOption">
+        <id property="optionCode" column="option_code"/>
+        <id property="itemCode" column="item_code"/>
+        <id property="optionName" column="option_name"/>
+        <id property="optionStock" column="option_stock"/>
+        <id property="optionPriceUd" column="option_price_ud"/>
+        <association property="item" javaType="com.shop.myapp.dto.Item">
+            <result property="itemCode" column="item_code"/>
+            <result property="itemPrice" column="item_price"/>
+            <result property="itemName" column="item_name"/>
+            <result property="memberId" column="member_id"/>
+            <result property="countryCode" column="country_code"/>
+            <result property="itemImage" column="item_image"/>
+        </association>
+    </resultMap>
+
+
     <update id="insertItemOptions" parameterType="list">
         insert into HR.SHOP_ITEM_OPTIONS_TB(option_code, item_code, option_name, option_priceud, OPTION_STOCK)
-        SELECT CODE_ITEM_OPTIONS_SQ.nextval AS
-        fileSeq , O.* FROM (   <foreach collection="list" item="itemOption" separator="UNION ALL ">
+        SELECT CODE_ITEM_OPTIONS_SQ.nextval AS option_code ,
+               O.* FROM (   <foreach collection="list" item="itemOption" separator="UNION ALL ">
         select
         #{itemOption.itemCode} as item_code,
         #{itemOption.optionName} as option_name,
@@ -32,12 +50,14 @@
 
     <select id="findByOptionCode" resultType="com.shop.myapp.dto.ItemOption">
         select *
-        from SHOP_ITEM_OPTIONS_TB
-        where OPTION_CODE = #{optionCode}
+        from SHOP_ITEM_OPTIONS_TB O
+        where O.OPTION_CODE = #{optionCode}
     </select>
     <select id="findByItemCode" resultType="com.shop.myapp.dto.ItemOption">
         select *
-        from HR.SHOP_ITEM_OPTIONS_TB
-        where ITEM_CODE = #{itemCode}
+        from SHOP_ITEM_OPTIONS_TB O,
+             SHOP_ITEM_TB I
+        where O.OPTION_CODE = #{optionCode}
+          and O.ITEM_CODE = I.ITEM_CODE;
     </select>
 </mapper>

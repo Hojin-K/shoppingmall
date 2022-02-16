@@ -18,6 +18,7 @@ import java.util.List;
 @WebAppConfiguration
 @RunWith(SpringJUnit4ClassRunner.class)
 @ContextConfiguration(locations = {"file:src/main/webapp/WEB-INF/spring/appServlet/servlet-context.xml"})
+//@Transactional
 public class CartTest {
 
     @Autowired
@@ -26,7 +27,6 @@ public class CartTest {
     @Test
     public void insertCart(){
         Cart cart = new Cart();
-        cart.setItemCode("8");
         cart.setMemberId("test2");
         cart.setItemOptionCode("20");
         cart.setItemAmount(1);
@@ -36,11 +36,9 @@ public class CartTest {
     }
 
     @Test
-    @Transactional
     public void findCartDetailByMemberId(){
         List<CartDetail> cartDetails = cartService.findCartDetailByMemberId("test2");
         for (CartDetail cartDetail : cartDetails){
-            System.out.println(cartDetail.getItem().getItemName());
             System.out.println(cartDetail.getItemOption().getOptionName());
         }
     }
