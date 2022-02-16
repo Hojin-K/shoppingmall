@@ -24,7 +24,10 @@ public class ItemOptionService {
         return itemOptionRepository.findByOptionCode(optionCode);
     }
 
-    public int insertItemOptions(List<ItemOption> options){
+    public int insertItemOptions(List<ItemOption> options,String itemCode){
+        for (ItemOption itemOption : options){
+            itemOption.setItemCode(itemCode);
+        }
         return itemOptionRepository.insertItemOptions(options);
     }
 

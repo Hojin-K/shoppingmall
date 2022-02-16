@@ -7,18 +7,22 @@ import com.shop.myapp.repository.ItemRepository;
 import org.apache.ibatis.session.SqlSession;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
+import org.springframework.transaction.annotation.Transactional;
 
 import java.util.List;
 import java.util.Optional;
 
 @Service
+@Transactional
 public class ItemService {
     private final ItemRepository itemRepository;
     private final ItemOptionRepository itemOptionRepository;
+    private final ItemOptionService itemOptionService;
 
-    public ItemService(@Autowired SqlSession sqlSession) {
+    public ItemService(@Autowired SqlSession sqlSession, ItemOptionService itemOptionService) {
         this.itemRepository = sqlSession.getMapper(ItemRepository.class);
         this.itemOptionRepository = sqlSession.getMapper(ItemOptionRepository.class);
+        this.itemOptionService = itemOptionService;
     }
 
     public Item getItem(String itemCode) {
@@ -39,7 +43,7 @@ public class ItemService {
 
     public int createItem(Item item) {
         itemRepository.insertItem(item);
-        return itemOptionRepository.insertItemOptions(item.getOptions());
+       return itemOptionService.insertItemOptions(item.getOptions(),item.getItemCode());
     }
 
     public int deleteItem(String itemCode) {
@@ -48,6 +52,6 @@ public class ItemService {
 
     public int updateItem(Item item) {
         itemRepository.updateItem(item);
-        return itemOptionRepository.modifyItemOption(item.getOptions());
+     return itemOptionService.modifyItemOption(item.getOptions());
     }
 }

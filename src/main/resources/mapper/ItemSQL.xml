@@ -37,9 +37,11 @@
         where item.ITEM_CODE = item_option.ITEM_CODE
         group by item.ITEM_CODE, MEMBER_ID, COUNTRY_CODE, ITEM_NAME, ITEM_COST, ITEM_IMAGE, ITEM_INFO, ITEM_STOCK
     </select>
+
     <select id="findByItemCode" resultType="com.shop.myapp.dto.Item">
         select *
         from HR.SHOP_ITEM_TB
         where ITEM_CODE = #{itemCode}
     </select>
+
 </mapper>

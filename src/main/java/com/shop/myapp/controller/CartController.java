@@ -19,7 +19,6 @@ public class CartController {
         HttpSession session = request.getSession();
         Member member = (Member) session.getAttribute("member");
         cartItem.setMemberId(member.getMemberId());
-
-
+        return "";
     }
 }
