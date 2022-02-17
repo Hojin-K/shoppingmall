@@ -26,13 +26,26 @@ public class MemberTest {
             member.setMemberId("test"+i);
             member.setMemberPwd("test"+i);
             member.setMemberName("test"+i);
-            member.setMemberLevel("1");
-            member.setMemberAdress("test"+i);
+            member.setMemberAddress("test"+i);
             member.setMemberTel("010-1111-1111");
             member.setMemberBirth(LocalDate.now());
             int result = memberService.insertMember(member);
             count += result;
         }
         assertEquals(count,5);
+    }
+    
+    @Test
+    public void updateMeber() {
+    	 Member member = new Member();
+         member.setMemberId("test");
+         member.setMemberPwd("test");
+         member.setMemberName("test");
+         member.setMemberAddress("test");
+         member.setMemberTel("010-1111-1111");
+         member.setMemberBirth(LocalDate.now());
+         int result = memberService.updateMember(member);
+         
+         assertEquals(result, 1);
     }
 }

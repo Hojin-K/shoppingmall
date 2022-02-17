@@ -43,5 +43,16 @@
     <beans:bean id="transactionManager" class="org.springframework.jdbc.datasource.DataSourceTransactionManager">
         <beans:property name="dataSource" ref="dataSource" />
     </beans:bean>
+    
+      <!-- 인터셉터 객체 생성 -->
+    <beans:bean id="authInterceptor" class="com.shop.myapp.interceptor.AuthInterceptorService">
+    </beans:bean>
+    <!-- Interceptor 설정 -->
+    <interceptors>
+        <interceptor>
+            <mapping path="/**"/>
+            <beans:ref bean="authInterceptor"/>
+        </interceptor>
+    </interceptors>
 
 </beans:beans>
