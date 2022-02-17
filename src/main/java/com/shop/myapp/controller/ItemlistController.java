@@ -8,14 +8,13 @@ import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.RequestMapping;
 
-import com.shop.myapp.dao.IDao;
 import com.shop.myapp.vopage.SearchVO;
 
 /*private String item_image;
 private String item_name;
 private String item_cost;
 private int item_code;*/
-
+/*
 @Controller
 public class ItemlistController {
 	
@@ -73,13 +72,13 @@ public class ItemlistController {
 		
 		searchVO.pageCalculate(total);
 		
-		/*System.out.println("Totrow : "+total); // 글의 총 갯수
+		System.out.println("Totrow : "+total); // 글의 총 갯수
 		System.out.println("clickPage : "+strPage);
 		System.out.println("pageStart : "+searchVO.getPageStart());
 		System.out.println("pageEnd : "+searchVO.getPageEnd());
 		System.out.println("pageTot : "+searchVO.getTotPage());
 		System.out.println("rowStart : "+searchVO.getRowStart());
-		System.out.println("rowEnd : "+searchVO.getRowEnd());*/
+		System.out.println("rowEnd : "+searchVO.getRowEnd());
 		
 		int rowStart=searchVO.getRowStart();
 		int rowEnd=searchVO.getRowEnd();
@@ -103,3 +102,4 @@ public class ItemlistController {
 	
 
 }
+*/

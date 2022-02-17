@@ -1,0 +1,56 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper
+        PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
+        "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="com.shop.myapp.repository.QnaRepository">
+	
+	<resultMap id="item" type="com.shop.myapp.dto.Qna">
+		<id property="boardid" column="board_id"/>
+		<id property="itemcode" column="item_code"/>
+		<id property="memberid" column="member_id"/>
+		<id property="boardtitle" column="board_title"/>
+		<id property="boardcontent" column="board_content"/>
+		<id property="recommendid" column="recommend_id"/>
+	</resultMap>
+	
+	 <insert id="insertQna">
+	 	INSERT INTO SHOP_QNABOARD_TB
+	 	VALUES (#{board_id},
+	 			#{item_code},
+	 			#{member_id},
+	 			#{board_title},
+	 			#{board_content},
+	 			#{recommend_id})	
+	</insert>
+	<delete id="deleteqnaById">
+        DELETE SHOP_QNABOARD_TB
+        WHERE BOARD_ID = #{BOARDID}
+    </delete>
+    
+    <!-- 페이징 처리 -->    
+    <select id="paging" resultType="com.shop.myapp.dto.Qna">
+		SELECT BOARD_ID,ITEM_CODE,MEMBER_ID,BOARD_TITLE,BOARD_CONTENT,RECOMMEND_ID
+		FROM
+		(SELECT BOARD_ID,ITEM_CODE,MEMBER_ID,BOARD_TITLE,BOARD_CONTENT,RECOMMEND_ID,
+		ROW_NUMBER() OVER(ORDER BY BOARD_ID DESC,BSTEP MEMBER_ID) B_SEQ FROM SHOP_QNABOARD_TB)
+		WHERE B_SEQ BETWEEN #{param1} AND #{param2}
+	</select>	
+	
+	<select id="selectBoardTotCount" resultType="Integer">
+		SELECT COUNT(*) FROM REPLYBOARD
+	</select>	
+	
+	
+	
+</mapper>
+
+
+
+<!-- CREATE TABLE "SHOP_QNABOARD_TB"
+(
+    "BOARD_ID"      NUMBER,
+    "ITEM_CODE"     NUMBER,
+    "MEMBER_ID"     VARCHAR2(20),
+    "BOARD_TITLE"   VARCHAR2(50)  NOT NULL,
+    "BOARD_CONTENT" VARCHAR2(500) NOT NULL,
+    "RECOMMEND_ID"  NUMBER        NULL -->

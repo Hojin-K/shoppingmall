@@ -10,7 +10,7 @@ import org.springframework.web.bind.annotation.RequestMethod;
 import org.springframework.web.bind.annotation.RestController;
 import org.springframework.web.servlet.ModelAndView;
 
-@RestController
+/*@RestController
 @RequestMapping("/qna")
 //이게 더 낫다!
 public class QnaController2 {
@@ -80,9 +80,56 @@ public class QnaController2 {
 	        return "redirect:/qna";
 	    }
 
+		//paging
+		String strPage=request.getParameter("page");
+		System.out.println("strPage1 : "+strPage);
+		if(strPage==null)
+			strPage="1";
+		System.out.println("strPage2 : "+strPage);
+				
+		//totalpage 계산
+		int page=Integer.parseInt(strPage);
+		searchVO.setPage(page);
+		
+		IDao dao=sqlSession.getMapper(IDao.class);
+		
+		int total=0;
+		if (itemname.equals("itemname")) {
+			total=dao.selectBoardTotCount1(searchKeyword);
+		}else if(itemname.equals("")) {
+			total=dao.selectBoardTotCount0(searchKeyword);
+		}
+		
+		searchVO.pageCalculate(total);
+		
+		System.out.println("Totrow : "+total); // 글의 총 갯수
+		System.out.println("clickPage : "+strPage);
+		System.out.println("pageStart : "+searchVO.getPageStart());
+		System.out.println("pageEnd : "+searchVO.getPageEnd());
+		System.out.println("pageTot : "+searchVO.getTotPage());
+		System.out.println("rowStart : "+searchVO.getRowStart());
+		System.out.println("rowEnd : "+searchVO.getRowEnd());
+		
+		int rowStart=searchVO.getRowStart();
+		int rowEnd=searchVO.getRowEnd();
+
+		if (itemname.equals("itemname")) {
+			model.addAttribute("item_name",dao.itemList(rowStart,rowEnd,searchKeyword,"1"));
+		} else if (itemname.equals("")) {
+			model.addAttribute("item_name",dao.itemList(rowStart,rowEnd,searchKeyword,"0"));
+		}
+	
+		model.addAttribute("totRowCnt",total); 
+		model.addAttribute("searchVO",searchVO);
+	
+		
+		
+		return "qnalistView";
+		
 
 
 
 	
 
 }
+*/

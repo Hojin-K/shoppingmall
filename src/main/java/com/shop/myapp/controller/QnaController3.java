@@ -17,20 +17,20 @@ import org.springframework.web.bind.annotation.RestController;
 import com.shop.myapp.dto.Qna;
 import com.shop.myapp.service.QnaService;
 
-@RestController
+/*@RestController
 @RequestMapping("/qna")
 public class QnaController3 {
 	
 	@Autowired
 	private QnaService qnaService;
 	
-	 /** 게시글 목록 조회 */
+	 *//** 게시글 목록 조회 *//*
     @GetMapping
     public List<Qna> getQnaList() throws Exception {
         return qnaService.getQnaList();
     }
     
-    /** 게시글 등록  */
+    *//** 게시글 등록  *//*
     @ResponseStatus(value = HttpStatus.CREATED)
     @PostMapping
     public Qna insertBoard(@RequestBody Qna qna) throws Exception {
@@ -42,7 +42,7 @@ public class QnaController3 {
         return boardDetail;
     }
     
-    /** 게시글 수정 */
+    *//** 게시글 수정 *//*
     @ResponseStatus(value = HttpStatus.OK)
     @PutMapping("/{board_id}")
     public Qna updateBoard(@PathVariable("board_id") int board_id, @RequestBody Qna qna) throws Exception {
@@ -53,7 +53,7 @@ public class QnaController3 {
         return boardDetail;
     }
     
-    /** 게시글 삭제  */
+    *//** 게시글 삭제  *//*
     @ResponseStatus(value = HttpStatus.OK)
     @DeleteMapping("/{board_id}")
     public Qna deleteBoard(@PathVariable("board_id") int board_id) throws Exception {
@@ -68,3 +68,4 @@ public class QnaController3 {
     
 
 }
+*/

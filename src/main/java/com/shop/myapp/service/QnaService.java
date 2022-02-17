@@ -9,7 +9,6 @@ import org.springframework.transaction.annotation.Transactional;
 
 import com.shop.myapp.dto.Qna;
 import com.shop.myapp.repository.QnaRepository;
-import com.shop.myapp.vopage.QnaVO;
 
 
 @Service

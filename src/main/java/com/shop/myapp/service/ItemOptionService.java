@@ -1,12 +1,8 @@
 package com.shop.myapp.service;
 
-<<<<<<< HEAD:src/main/java/com/shop/myapp/service/ItemOptionRepository.java
 import java.util.List;
 import java.util.Optional;
 
-=======
-import com.shop.myapp.dto.ItemOption;
->>>>>>> 5d9f3017b5e3e2e88859e30c7395c2edb6ff4124:src/main/java/com/shop/myapp/service/ItemOptionService.java
 import org.apache.ibatis.session.SqlSession;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
