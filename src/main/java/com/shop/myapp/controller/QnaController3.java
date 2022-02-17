@@ -19,7 +19,7 @@ import com.shop.myapp.service.QnaService;
 
 @RestController
 @RequestMapping("/qna")
-public class QnaController {
+public class QnaController3 {
 	
 	@Autowired
 	private QnaService qnaService;
