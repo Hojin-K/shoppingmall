@@ -30,7 +30,7 @@
         member_id,
         country_code,
         item_name,
-        item_cost,
+        item_price,
         item_image,
         item_info)
         values (#{itemCode},

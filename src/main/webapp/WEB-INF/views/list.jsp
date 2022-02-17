@@ -22,22 +22,13 @@
 	
 	<c:forEach items="${list }" var="dto">
 		<tr>
-			<td>${dto.bid }</td>
-			<td>${dto.bname }</td>
+			<td>${dto.board_id }</td>
+			<td>${dto.item_code }</td>
 			<td>
-			<!-- 	들여쓰기가 되도록 -->
-			<c:set value="${dto.bindent }" var="endindent" />
-			<c:forEach begin="1" end="${dto.bindent }" var="cnt">
-				&nbsp;
-				<c:if test="${cnt eq  endindent}">
-				<img src="resources/img/reply.gif" alt="" />
-				[re]
-				</c:if>	
-			</c:forEach>
-				<a href="content_view?bid=${dto.bid }">${dto.btitle }</a> 
+				<a href="content_view?bid=${dto.board_id }">${dto.board_title }</a> 
 			</td>
-			<td>${dto.bdate }</td>
-			<td>${dto.bhit }</td>
+			<td>${dto.board_content }</td>
+			<td>${dto.recommend_id }</td>
 		</tr>
 	</c:forEach>
 	<tr>

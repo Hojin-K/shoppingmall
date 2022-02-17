@@ -1,9 +1,5 @@
 package com.shop.myapp.service;
 
-<<<<<<< HEAD
-import java.util.ArrayList;
-import java.util.List;
-=======
 import java.util.List;
 
 import org.apache.ibatis.session.SqlSession;
@@ -12,11 +8,6 @@ import org.springframework.stereotype.Service;
 
 import com.shop.myapp.dto.Member;
 import com.shop.myapp.repository.MemberRepository;
->>>>>>> bdacc78d5044f8cc8ffab06b6772ab75d3d63c26
-
-import org.springframework.stereotype.Service;
-
-import com.shop.myapp.dto.Member;
 
 @Service
 public class MemberService {

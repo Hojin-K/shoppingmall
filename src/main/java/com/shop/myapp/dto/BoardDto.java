@@ -2,48 +2,62 @@ package com.shop.myapp.dto;
 
 
 public class BoardDto {
-	private int BOARD_ID;
-	private int ITEM_CODE;
-	private String MEMBER_ID;
-	private String BOARD_TITLE;
-	private String BOARD_CONTENT;
-	private int RECOMMEND_ID;
-		
+	private int board_id;
+	private int item_code;
+	private String member_id;
+	private String board_title;
+	private String board_content;
+	private int recommend_id;
+	
 	public BoardDto() {
+		// TODO Auto-generated constructor stub
+	}
+	public BoardDto(int board_id, int item_code, String member_id, String board_title, String board_content,
+			int recommend_id) {
 		
+		this.board_id = board_id;
+		this.item_code = item_code;
+		this.member_id = member_id;
+		this.board_title = board_title;
+		this.board_content = board_content;
+		this.recommend_id = recommend_id;
 	}
 	
-	public BoardDto(int BOARD_ID, int ITEM_CODE, String MEMBER_ID, String BOARD_TITLE, String BOARD_CONTENT, int RECOMMEND_ID) {
-		this.BOARD_ID = BOARD_ID;
-		this.ITEM_CODE= ITEM_CODE;
-		this.MEMBER_ID = MEMBER_ID;
-		this.BOARD_TITLE = BOARD_TITLE;
-		this.BOARD_CONTENT = BOARD_CONTENT;
-		this.RECOMMEND_ID = RECOMMEND_ID;
+	public int getBoard_id() {
+		return board_id;
+	}
+	public int getItem_code() {
+		return item_code;
+	}
+	public String getMember_id() {
+		return member_id;
+	}
+	public String getBoard_title() {
+		return board_title;
+	}
+	public String getBoard_content() {
+		return board_content;
+	}
+	public int getRecommend_id() {
+		return recommend_id;
+	}
+	public void setBoard_id(int board_id) {
+		this.board_id = board_id;
+	}
+	public void setItem_code(int item_code) {
+		this.item_code = item_code;
+	}
+	public void setMember_id(String member_id) {
+		this.member_id = member_id;
+	}
+	public void setBoard_title(String board_title) {
+		this.board_title = board_title;
+	}
+	public void setBoard_content(String board_content) {
+		this.board_content = board_content;
+	}
+	public void setRecommend_id(int recommend_id) {
+		this.recommend_id = recommend_id;
 	}
 
-	public void setBOARD_ID(int bOARD_ID) {
-		BOARD_ID = bOARD_ID;
-	}
-
-	public void setITEM_CODE(int iTEM_CODE) {
-		ITEM_CODE = iTEM_CODE;
-	}
-
-	public void setMEMBER_ID(String mEMBER_ID) {
-		MEMBER_ID = mEMBER_ID;
-	}
-
-	public void setBOARD_TITLE(String bOARD_TITLE) {
-		BOARD_TITLE = bOARD_TITLE;
-	}
-
-	public void setBOARD_CONTENT(String bOARD_CONTENT) {
-		BOARD_CONTENT = bOARD_CONTENT;
-	}
-
-	public void setRidRECOMMEND_ID(int RECOMMEND_ID) {
-		this.RECOMMEND_ID = RECOMMEND_ID;
-	}
-	
 }

@@ -77,19 +77,21 @@ public class BoardDao {
 		try {
 			con=dataSource.getConnection();
 			String sql="insert into SHOP_QNABOARD_TB " + 
-					"values(SHOP_QNABOARD_TB_seq.nextval,100,'blue',?,?,100)";
+					"values(SHOP_QNABOARD_TB_seq.nextval,30,'test2',?,?,100)";
 			pstmt=con.prepareStatement(sql);
 			pstmt.setString(1, BOARD_TITLE);
 			pstmt.setString(2, BOARD_CONTENT);
 			int rn=pstmt.executeUpdate();
 			
 		} catch (Exception e) {
+			e.printStackTrace();
 			// TODO: handle exception
 		} finally {
 			try {
 				if(pstmt!=null) pstmt.close();
 				if(con!=null) con.close();	
 			} catch (Exception e2) {
+				e2.printStackTrace();
 				// TODO: handle exception
 			}
 		}

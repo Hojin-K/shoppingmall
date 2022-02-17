@@ -9,7 +9,7 @@
         <id property="itemCode" column="item_code"/>
         <id property="optionName" column="option_name"/>
         <id property="optionStock" column="option_stock"/>
-        <id property="optionPriceUd" column="option_price_ud"/>
+        <id property="optionPriceUd" column="option_price_ud" ></id>
         <association property="item" javaType="com.shop.myapp.dto.Item">
             <result property="itemCode" column="item_code"/>
             <result property="itemPrice" column="item_price"/>
@@ -22,7 +22,7 @@
 
 
     <update id="insertItemOptions" parameterType="list">
-        insert into HR.SHOP_ITEM_OPTIONS_TB(option_code, item_code, option_name, option_priceud, OPTION_STOCK)
+        insert into HR.SHOP_ITEM_OPTIONS_TB(option_code, item_code, option_name, option_price_ud, OPTION_STOCK)
         SELECT CODE_ITEM_OPTIONS_SQ.nextval AS option_code ,
                O.* FROM (   <foreach collection="list" item="itemOption" separator="UNION ALL ">
         select
@@ -53,12 +53,12 @@
         from SHOP_ITEM_OPTIONS_TB O
         where O.OPTION_CODE = #{optionCode}
     </select>
-    <select id="findOneByItemCode" resultType="com.shop.myapp.dto.ItemOption">
+    <select id="findOneByItemCode" resultMap="itemOption">
         select *
         from SHOP_ITEM_OPTIONS_TB O,
              SHOP_ITEM_TB I
         where O.OPTION_CODE = #{optionCode}
-          and O.ITEM_CODE = I.ITEM_CODE;
+          and O.ITEM_CODE = I.ITEM_CODE
     </select>
 
 </mapper>
