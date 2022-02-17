@@ -15,7 +15,7 @@ public class Member {
 	private String memberPwd; 
 	private LinkedList<String> memberLevel;
 	private String memberName;
-	private String memberAdress;
+	private String memberAddress;
 	private String memberTel;
 	@DateTimeFormat(pattern = "yyyy-MM-dd")
 	private LocalDate memberBirth;

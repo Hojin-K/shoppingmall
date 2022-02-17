@@ -5,9 +5,14 @@
 <mapper namespace="com.shop.myapp.repository.MemberRepository">
 
     <insert id="insertMember">
-       		INSERT INTO SHOP_MEMBER_TB VALUES(#{memberId}, #{memberPwd}, #{memberLevel},
-       		#{memberName}, #{memberAdress}, #{memberTel}, #{memberBirth})
+       		INSERT INTO SHOP_MEMBER_TB VALUES(#{memberId}, #{memberPwd}, 'default',
+       		#{memberName}, #{memberAddress}, #{memberTel}, #{memberBirth})
     </insert>
+    <update id="updateMember">
+    		UPDATE SHOP_MEMBER_TB SET MEMBER_PWD = #{memberPwd}, MEMBER_NAME=#{memberName},
+    		MEMBER_ADDRESS=#{memberAddress},MEMBER_TEL=#{memberTel},MEMBER_BIRTH=#{memberBirth} 
+    		WHERE MEMBER_ID = #{memberId}
+    </update>
     <select id="findAll" resultType="com.shop.myapp.dto.Member">
 			SELECT * FROM SHOP_MEMBER_TB
     </select>

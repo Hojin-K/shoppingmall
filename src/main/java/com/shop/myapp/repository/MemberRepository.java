@@ -9,6 +9,7 @@ import java.util.Optional;
 @Mapper
 public interface MemberRepository {
     int insertMember(Member member);
+    int updateMember(Member member);
     List<Member> findAll();
     Optional<Member> findById();
     Optional<Member> checkUserAvailable(Member member);

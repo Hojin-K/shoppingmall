@@ -63,4 +63,19 @@ public class MemberService {
     public boolean isManager(String memberLevel) {
     	return Integer.parseInt(memberLevel) == 5;
     }
+
+	public int updateMember(Member member) {
+		MemberRepository memberRepository 
+    	= sqlSession.getMapper(MemberRepository.class);
+		try {
+			System.out.println("암호화 전 -->"+member.getMemberPwd());
+			member.setMemberPwd(BCrypt.hashpw(member.getMemberPwd(), BCrypt.gensalt()));			
+		}catch(Exception e) {
+			e.printStackTrace();
+		}
+		System.out.println("암호화 후 -->"+member.getMemberPwd());
+		
+    	int result = memberRepository.updateMember(member);
+		return result;
+	}
 }
