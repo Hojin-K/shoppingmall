@@ -9,6 +9,8 @@ import org.springframework.stereotype.Controller;
 import org.springframework.web.bind.annotation.*;
 
 import com.shop.myapp.dto.Member;
+import com.shop.myapp.interceptor.Auth;
+import com.shop.myapp.interceptor.Auth.Role;
 import com.shop.myapp.service.MemberService;
 
 import lombok.extern.slf4j.Slf4j;
@@ -42,13 +44,13 @@ public class MemberController {
     	return "redirect:/members";
     }
     
-    @GetMapping("/update/normal")
+    @GetMapping("/normalUpdate")
     public String normalUpdateForm() {
     	log.info("normalUpdateForm");
-    	return "/member/update/normal";
+    	return "/member/normalUpdate";
     }
     
-    @PostMapping("/update/normal")
+    @PostMapping("/normalUpdate")
     public String normalUpdate(@ModelAttribute Member member) {
     	// 에러가 있는지 검사
     	log.info("normalUpdate");
@@ -76,6 +78,6 @@ public class MemberController {
     	log.info("login");
     	Member mem = memberService.loginMember(member);
     	request.getSession().setAttribute("member",mem);
-    	return "보낼 주소";
+    	return "redirect:/members";
     }
 }
