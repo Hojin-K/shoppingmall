@@ -34,6 +34,7 @@
 		(SELECT BOARD_ID,ITEM_CODE,MEMBER_ID,BOARD_TITLE,BOARD_CONTENT,RECOMMEND_ID,
 		ROW_NUMBER() OVER(ORDER BY BOARD_ID DESC,BSTEP MEMBER_ID) B_SEQ FROM SHOP_QNABOARD_TB)
 		WHERE B_SEQ BETWEEN #{param1} AND #{param2}
+		<!-- B_SEQ 부분 체크 해볼것 -->
 	</select>	
 	
 	<select id="selectBoardTotCount" resultType="Integer">
