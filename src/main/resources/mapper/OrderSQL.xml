@@ -1,0 +1,27 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper
+        PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
+        "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="com.shop.myapp.repository.OrderRepository">
+
+    <insert id="insertOrder">
+        insert into SHOP_ORDER_TB
+        values (#{orderCode},
+                #{memberId},
+                #{totalPay},
+                #{buyerName},
+                #{buyerEmail},
+                #{buyerAddr},
+                #{buyerPostCode},
+                #{status})
+    </insert>
+    <update id="paidOrder">
+        update SHOP_ORDER_TB
+        set IS_PAID = 'Paid'
+        where ORDER_CODE = #{orderCode}
+    </update>
+    <delete id="deleteOrder">
+        delete SHOP_ORDER_TB
+        where ORDER_CODE = #{orderCode}
+    </delete>
+</mapper>

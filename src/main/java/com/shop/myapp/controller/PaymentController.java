@@ -1,28 +1,22 @@
 package com.shop.myapp.controller;
 
-import com.shop.myapp.service.PaymentService;
+import com.shop.myapp.dto.Payment;
+import com.shop.myapp.service.IamPortService;
 import lombok.extern.slf4j.Slf4j;
-import org.json.simple.JSONObject;
 import org.json.simple.parser.ParseException;
-import org.springframework.http.HttpEntity;
-import org.springframework.http.HttpHeaders;
-import org.springframework.http.HttpMethod;
 import org.springframework.http.ResponseEntity;
 import org.springframework.stereotype.Controller;
-import org.springframework.util.LinkedMultiValueMap;
-import org.springframework.util.MultiValueMap;
 import org.springframework.web.bind.annotation.*;
-import org.springframework.web.client.RestTemplate;
 
 @Controller
 @RequestMapping("/pay")
 @Slf4j
 public class PaymentController {
 
-    private final PaymentService paymentService;
+    private final IamPortService iamPortService;
 
-    public PaymentController(PaymentService paymentService) {
-        this.paymentService = paymentService;
+    public PaymentController(IamPortService iamPortService) {
+        this.iamPortService = iamPortService;
     }
 
     @GetMapping
@@ -35,11 +29,11 @@ public class PaymentController {
     @ResponseBody
     public ResponseEntity<Object> getPayRequest(@RequestParam("imp_uid") String impUid) throws ParseException {
 
-        String accessToken = paymentService.getAccessToken(impUid);
+        String accessToken = iamPortService.getAccessToken(impUid);
 
-        String amount = paymentService.getImpAttributes(impUid, accessToken);
+        Payment payment = iamPortService.getImpAttributes(impUid, accessToken);
         // db에 저장된 결제 금액과 비교
-        if (amount.equals("{db에 저장된 결제 금액}")) {
+        if ((""+payment.getAmount()).equals("{db에 저장된 결제 금액}")) {
             // true 일 경우, status 200으로 response
             log.info("paid done.");
             return ResponseEntity.ok().build();
