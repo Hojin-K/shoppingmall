@@ -3,14 +3,18 @@ package com.shop.myapp.controller;
 import java.util.List;
 
 import javax.servlet.http.HttpServletRequest;
-import javax.servlet.http.HttpSession;
 
 import org.springframework.stereotype.Controller;
-import org.springframework.web.bind.annotation.*;
+import org.springframework.web.bind.annotation.GetMapping;
+import org.springframework.web.bind.annotation.ModelAttribute;
+import org.springframework.web.bind.annotation.PostMapping;
+import org.springframework.web.bind.annotation.RequestMapping;
+import org.springframework.web.bind.annotation.RequestMethod;
+import org.springframework.web.bind.annotation.ResponseBody;
 
 import com.shop.myapp.dto.Member;
-import com.shop.myapp.interceptor.Auth;
-import com.shop.myapp.interceptor.Auth.Role;
+import com.shop.myapp.service.AuthService;
+import com.shop.myapp.service.AuthServiceImpl;
 import com.shop.myapp.service.MemberService;
 
 import lombok.extern.slf4j.Slf4j;
@@ -22,15 +26,18 @@ import lombok.extern.slf4j.Slf4j;
 public class MemberController {
 
     private final MemberService memberService;
-  
+    private final AuthService authService;
 
-    public MemberController(MemberService memberService) {
+    public MemberController(MemberService memberService, AuthServiceImpl authService) {
         this.memberService = memberService;
+        this.authService = authService;
     }
 
     @GetMapping("/join")
     public String joinForm() {
+    	authService.checkMemberId("");
     	log.info("joinForm");
+    	
     	return "/member/join";
     }
    

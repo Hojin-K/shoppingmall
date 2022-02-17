@@ -1,7 +1,11 @@
 package com.shop.myapp.controller;
 
 import com.shop.myapp.dto.Item;
+import com.shop.myapp.service.AuthService;
+import com.shop.myapp.service.AuthServiceImpl;
 import com.shop.myapp.service.ItemService;
+import com.shop.myapp.service.MemberService;
+
 import org.springframework.http.ResponseEntity;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
@@ -9,14 +13,17 @@ import org.springframework.web.bind.annotation.*;
 import org.springframework.web.servlet.mvc.support.RedirectAttributes;
 
 import java.util.List;
+import java.util.Optional;
 
 @Controller
 @RequestMapping("/item")
 public class ItemController {
     private final ItemService itemService;
+    private final AuthService authService;
 
-    public ItemController(ItemService itemService) {
+    public ItemController(ItemService itemService, AuthServiceImpl authService) {
         this.itemService = itemService;
+        this.authService = authService;
     }
 
     @GetMapping()
@@ -62,10 +69,14 @@ public class ItemController {
 
     @PostMapping("/{itemCode}/update")
     public String updateItem(@PathVariable String itemCode, Item item, RedirectAttributes redirectAttributes){
-
-        itemService.updateItem(item);
-        redirectAttributes.addAttribute("itemCode",itemCode);
-        return "redirect:/item/{itemCode}";
+    	Item itemInfo = itemService.getItem(itemCode);
+    	boolean result = authService.checkMemberId(itemInfo.getMemberId());
+    	if(!result) {
+    		throw new IllegalStateException("아이디 오류");
+    	}
+    	  itemService.updateItem(item);
+          redirectAttributes.addAttribute("itemCode",itemCode);
+          return "redirect:/item/{itemCode}";
     }
 
     @PostMapping("/{itemCode}/delete")
