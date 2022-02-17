@@ -4,9 +4,12 @@ import com.shop.myapp.dto.Member;
 import org.apache.ibatis.annotations.Mapper;
 
 import java.util.List;
+import java.util.Optional;
 
 @Mapper
 public interface MemberRepository {
     int insertMember(Member member);
     List<Member> findAll();
+    Optional<Member> findById();
+    Member checkUserAvailable(Member member);
 }
