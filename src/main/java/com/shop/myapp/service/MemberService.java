@@ -1,10 +1,11 @@
 package com.shop.myapp.service;
 
-import com.shop.myapp.dto.Member;
-import org.springframework.stereotype.Service;
-
 import java.util.ArrayList;
 import java.util.List;
+
+import org.springframework.stereotype.Service;
+
+import com.shop.myapp.dto.Member;
 
 @Service
 public class MemberService {
