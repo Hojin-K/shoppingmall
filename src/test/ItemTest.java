@@ -23,23 +23,23 @@ public class ItemTest {
     private ItemService itemService;
 
     @Test
-    public void insertItems(){
+    public void insertItems() {
         int count = 0;
-        for (int i=0; i<8; i++){
+        for (int i = 0; i < 8; i++) {
             Item item = new Item();
 
             List<ItemOption> itemOptions = new ArrayList<>();
-            for (int j=0; j<5; j++){
+            for (int j = 0; j < 5; j++) {
 
                 ItemOption itemOption = new ItemOption();
-                itemOption.setOptionName(Integer.toString(200+5*j));
-                itemOption.setOptionStock((int)(Math.random()*10)+1 );
+                itemOption.setOptionName(Integer.toString(200 + 5 * j));
+                itemOption.setOptionStock((int) (Math.random() * 10) + 1);
                 itemOption.setOptionPriceUd(0);
                 itemOptions.add(itemOption);
             }
 
-            item.setItemName("testItem"+i);
-            item.setItemPrice((int)(Math.random()*10000) +1000);
+            item.setItemName("testItem" + i);
+            item.setItemPrice((int) (Math.random() * 10000) + 1000);
             item.setCountryCode("410");
             item.setMemberId("test1");
             item.setItemInfo("test Item" + i);
@@ -48,16 +48,23 @@ public class ItemTest {
             int result = itemService.createItem(item);
             count += result;
         }
-        assertEquals(count,8);
+        assertEquals(count, 8);
     }
 
     @Test
-    public void findByItem(){
+    public void findByItem() {
         Item item = itemService.getItem("7");
-        System.out.println("ItemName : "+item.getItemName());
-        for (ItemOption itemOption : item.getItemOptions()){
-            System.out.println("OptionCode : " +itemOption.getItemCode());
-            System.out.println("OptionName : "+itemOption.getOptionName());
+        item.calculateItemStock();
+        System.out.println("ItemName : " + item.getItemName());
+        System.out.println(item.getItemPrice());
+        int stock = 0;
+        for (ItemOption itemOption : item.getItemOptions()) {
+            System.out.println("OptionCode : " + itemOption.getItemCode());
+            System.out.println("OptionName : " + itemOption.getOptionName());
+            System.out.println("itemOption.getOptionStock() = " + itemOption.getOptionStock());
+            stock += itemOption.getOptionStock();
         }
+        System.out.println("itemStock : " + item.getItemStock());
+        assertEquals(stock, item.getItemStock());
     }
 }
