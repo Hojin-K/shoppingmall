@@ -4,9 +4,12 @@ import lombok.Builder;
 import lombok.Getter;
 import lombok.Setter;
 
-@Getter @Setter
+
+@Getter
+@Setter
 public class Payment {
-    private String impUid;
+    private String paymentCode;
+    private String impUid; // null
     private String name;
     private long amount;
     private String buyerName;
@@ -15,6 +18,11 @@ public class Payment {
     private String buyerAddr;
     private String buyerPostCode;
     private String status;
+    /*
+        개인통관고유번호
+        13자리 + 맨 앞 'p'
+     */
+    private String buyerPCC;
 
     @Builder
     public Payment(String impUid, String name, long amount, String buyerName, String buyerEmail, String buyerTel, String buyerAddr, String buyerPostCode, String status) {
@@ -26,6 +34,5 @@ public class Payment {
         this.buyerTel = buyerTel;
         this.buyerAddr = buyerAddr;
         this.buyerPostCode = buyerPostCode;
-        this.status = status;
     }
 }

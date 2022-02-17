@@ -3,6 +3,25 @@
         PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
         "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
 <mapper namespace="com.shop.myapp.repository.ItemRepository">
+
+    <resultMap id="item" type="com.shop.myapp.dto.Item">
+        <id property="itemCode" column="item_code"/>
+        <id property="itemPrice" column="item_price"/>
+        <id property="itemName" column="item_name"/>
+        <id property="memberId" column="member_id"/>
+        <id property="countryCode" column="country_code"/>
+        <id property="itemImage" column="item_image"/>
+        <id property="itemInfo" column="item_info"/>
+        <collection property="itemOptions"  ofType="com.shop.myapp.dto.ItemOption" javaType="java.util.List">
+            <result property="optionCode" column="option_code"/>
+            <result property="itemCode" column="item_code"/>
+            <result property="optionName" column="option_name"/>
+            <result property="optionStock" column="option_stock"/>
+            <result property="optionPriceUd" column="option_price_ud"/>
+        </collection>
+    </resultMap>
+
+
     <insert id="insertItem" parameterType="com.shop.myapp.dto.Item">
         <selectKey resultType="java.lang.String" keyProperty="itemCode" order="BEFORE">
             SELECT CODE_ITEM_SQ.nextval FROM DUAL
@@ -37,9 +56,11 @@
         where item.ITEM_CODE = item_option.ITEM_CODE
         group by item.ITEM_CODE, MEMBER_ID, COUNTRY_CODE, ITEM_NAME, ITEM_COST, ITEM_IMAGE, ITEM_INFO, ITEM_STOCK
     </select>
-    <select id="findByItemCode" resultType="com.shop.myapp.dto.Item">
+
+    <select id="findByItemCode" resultMap="item">
         select *
-        from HR.SHOP_ITEM_TB
-        where ITEM_CODE = #{itemCode}
+        from HR.SHOP_ITEM_TB I,HR.SHOP_ITEM_OPTIONS_TB O
+        where I.ITEM_CODE = #{itemCode} and O.ITEM_CODE = #{itemCode}
     </select>
+
 </mapper>

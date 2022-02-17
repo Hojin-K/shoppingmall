@@ -15,11 +15,11 @@ public class Item {
     private int itemPrice;
     private String itemImage;
     private String itemInfo;
-    private List<ItemOption> options;
     private int itemStock;
+    private List<ItemOption> itemOptions;
 
     public void calculateItemStock() {
-        for (ItemOption itemOption : options) {
+        for (ItemOption itemOption : itemOptions) {
             itemStock += itemOption.getOptionStock();
         }
     }

@@ -12,5 +12,5 @@ public class ItemOption {
     private String optionName;
     private int optionPriceUd;
     private int optionStock;
-
+    private Item item;
 }
