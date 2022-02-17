@@ -53,12 +53,12 @@
         from SHOP_ITEM_OPTIONS_TB O
         where O.OPTION_CODE = #{optionCode}
     </select>
-    <select id="findOneByItemCode" resultType="com.shop.myapp.dto.ItemOption">
+    <select id="findOneByItemCode" resultMap="itemOption">
         select *
         from SHOP_ITEM_OPTIONS_TB O,
              SHOP_ITEM_TB I
         where O.OPTION_CODE = #{optionCode}
-          and O.ITEM_CODE = I.ITEM_CODE;
+          and O.ITEM_CODE = I.ITEM_CODE
     </select>
 
 </mapper>

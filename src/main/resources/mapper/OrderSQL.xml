@@ -4,6 +4,22 @@
         "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
 <mapper namespace="com.shop.myapp.repository.OrderRepository">
 
+    <resultMap id="order" type="com.shop.myapp.dto.Order">
+        <id property="orderCode" column="order_code"/>
+        <id property="totalPay" column="total_pay"/>
+        <id property="memberId" column="member_id"/>
+        <id property="buyerName" column="buyer_name"/>
+        <id property="buyerEmail" column="buyer_email"/>
+        <id property="buyerAddr" column="buyer_addr"/>
+        <id property="buyerPostCode" column="buyer_post_code"/>
+        <collection property="orderDetails" ofType="com.shop.myapp.dto.OrderDetail" javaType="java.util.List">
+            <result property="orderDetailCode" column="order_detail_code"/>
+            <result property="orderCode" column="order_code"/>
+            <result property="optionCode" column="option_code"/>
+            <result property="amount" column="amount"/>
+            <result property="postedStatus" column="posted_status"/>
+        </collection>
+    </resultMap>
     <insert id="insertOrder">
         insert into SHOP_ORDER_TB
         values (#{orderCode},
@@ -12,8 +28,7 @@
                 #{buyerName},
                 #{buyerEmail},
                 #{buyerAddr},
-                #{buyerPostCode},
-                #{status})
+                #{buyerPostCode},#{isPaid})
     </insert>
     <update id="paidOrder">
         update SHOP_ORDER_TB
@@ -24,4 +39,10 @@
         delete SHOP_ORDER_TB
         where ORDER_CODE = #{orderCode}
     </delete>
+    <select id="findOrderByMemberId" resultMap="order">
+        select *
+        from HR.SHOP_ORDER_TB O,
+             HR.SHOP_ORDER_DETAIL_TB D
+        where O.ORDER_CODE = #{orderCode}
+    </select>
 </mapper>

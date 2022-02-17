@@ -15,6 +15,8 @@ public interface OrderRepository {
 
     int deleteOrder(@Param("orderCode") String orderCode);
 
+    Order findOrderByMemberId();
+
 
 
 
