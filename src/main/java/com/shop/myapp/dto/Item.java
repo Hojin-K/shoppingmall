@@ -15,8 +15,8 @@ public class Item {
     private int itemPrice;
     private String itemImage;
     private String itemInfo;
-    private List<ItemOption> itemOptions;
     private int itemStock;
+    private List<ItemOption> itemOptions;
 
     public void calculateItemStock() {
         for (ItemOption itemOption : itemOptions) {

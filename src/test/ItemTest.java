@@ -44,6 +44,7 @@ public class ItemTest {
             item.setMemberId("test1");
             item.setItemInfo("test Item" + i);
             item.setItemImage("없음");
+            item.setItemOptions(itemOptions);
             int result = itemService.createItem(item);
             count += result;
         }

@@ -21,7 +21,7 @@
         </selectKey>
         insert into SHOP_CART_TB(CART_ID,
         member_id,
-        "item_OPTION_CODE",AMOUNT
+        OPTION_CODE,AMOUNT
         ) values (#{cartId},
         #{memberId},
         #{itemOptionCode},
@@ -36,19 +36,21 @@
         where MEMBER_ID = #{memberId}
     </delete>
     <select id="findByMemberId" resultMap="cartDetail">
-        select cart.*,
-               item.ITEM_NAME as item_name,
-               item.ITEM_COST as item_cost,
-               item.ITEM_CODE as item_code,
-               options.OPTION_NAME as option_name,
-               options.OPTION_PRICEUD as option_priceud,
-               options.OPTION_CODE as option_code
+        select cart.CART_ID            as cart_id,
+               cart.MEMBER_ID          as member_id,
+               cart.AMOUNT             as amount,
+               item.ITEM_NAME          as item_name,
+               item.ITEM_COST          as item_cost,
+               item.ITEM_CODE          as item_code,
+               options.OPTION_NAME     as option_name,
+               options.OPTION_PRICEUD  as option_priceud,
+               options.OPTION_CODE     as option_code
         from HR.SHOP_CART_TB cart,
              HR.SHOP_ITEM_TB item,
              HR.SHOP_ITEM_OPTIONS_TB options
         where cart.MEMBER_ID = #{memberId}
-          and cart.item_code = item.item_code
           and cart.option_code = options.option_code
+        and options.item_code = item.item_code
     </select>
 
 

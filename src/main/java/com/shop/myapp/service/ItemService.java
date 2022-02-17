@@ -31,9 +31,7 @@ public class ItemService {
         // 상품 null 체크
         Item item = itemOptional.orElseThrow(() -> new IllegalStateException("Not Found Item"));
         // 상품의 옵션 조회
-        List<ItemOption> options = itemOptionRepository.findByItemCode(itemCode);
         // 상품에 옵션 넣기
-        item.setItemOptions(options);
         return item;
     }
 

@@ -10,10 +10,10 @@ import java.time.format.DateTimeFormatter;
 public class OrderDetail {
 
     private String orderCode;
-    private Item item;
     private ItemOption itemOption;
     private int amount;
     private String postedStatus;
+    private Order order;
 
 
 }

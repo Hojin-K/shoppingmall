@@ -10,7 +10,7 @@ import java.util.Optional;
 @Mapper
 public interface ItemOptionRepository {
     Optional<ItemOption> findByOptionCode(String optionCode);
-    List<ItemOption> findByItemCode(String itemCode);
+    Optional<ItemOption> findOneByItemCode(String itemCode);
     int insertItemOptions(List<ItemOption> itemOptions);
     int deleteItemOption(List<String> itemCode);
     int modifyItemOption(List<ItemOption> itemOptions);

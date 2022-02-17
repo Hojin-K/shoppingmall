@@ -18,7 +18,7 @@ import java.util.List;
 @WebAppConfiguration
 @RunWith(SpringJUnit4ClassRunner.class)
 @ContextConfiguration(locations = {"file:src/main/webapp/WEB-INF/spring/appServlet/servlet-context.xml"})
-//@Transactional
+@Transactional
 public class CartTest {
 
     @Autowired

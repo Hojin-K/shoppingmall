@@ -12,7 +12,8 @@
                 #{buyerName},
                 #{buyerEmail},
                 #{buyerAddr},
-                #{buyerPostCode}, #{status})
+                #{buyerPostCode},
+                #{status})
     </insert>
     <update id="paidOrder">
         update SHOP_ORDER_TB

@@ -16,8 +16,8 @@ public class ItemOptionService {
         this.itemOptionRepository = sqlSession.getMapper(com.shop.myapp.repository.ItemOptionRepository.class);
     }
 
-    public List<ItemOption> findByItemCode(String itemCode){
-        return itemOptionRepository.findByItemCode(itemCode);
+    public Optional<ItemOption> findByItemCode(String itemCode){
+        return itemOptionRepository.findOneByItemCode(itemCode);
     }
 
     public Optional<ItemOption> findByOptionCode(String optionCode){
