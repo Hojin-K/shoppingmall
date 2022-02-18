@@ -201,6 +201,13 @@
 		    <artifactId>jbcrypt</artifactId>
 		    <version>0.4</version>
 		</dependency>
+
+        <!-- File Upload -->
+        <dependency> <!-- 파일 업로드를 위한 dependency -->
+            <groupId>commons-fileupload</groupId>
+            <artifactId>commons-fileupload</artifactId>
+            <version>1.4</version>
+        </dependency>
         
     </dependencies>
     <build>

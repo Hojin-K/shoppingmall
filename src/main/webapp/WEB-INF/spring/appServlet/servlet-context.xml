@@ -32,7 +32,7 @@
 
     <beans:bean id="sqlSessionFactory" class="org.mybatis.spring.SqlSessionFactoryBean">
         <beans:property name="dataSource" ref="dataSource"/>
-        <beans:property name="mapperLocations" value="classpath:mapper/**/*.xml"/>
+        <beans:property name="mapperLocations" value="classpath:countryRepository/**/*.xml"/>
         <beans:property name="configLocation" value="/WEB-INF/spring/mybatis-config.xml"/>
     </beans:bean>
 
@@ -43,7 +43,12 @@
     <beans:bean id="transactionManager" class="org.springframework.jdbc.datasource.DataSourceTransactionManager">
         <beans:property name="dataSource" ref="dataSource" />
     </beans:bean>
-    
+<!--    multipartFile 설정-->
+    <beans:bean id="multipartResolver" class="org.springframework.web.multipart.commons.CommonsMultipartResolver">
+        <beans:property name="maxUploadSize" value="2000000000" />
+        <beans:property name="defaultEncoding" value="UTF-8" />
+    </beans:bean>
+
       <!-- 인터셉터 객체 생성 -->
     <beans:bean id="authInterceptor" class="com.shop.myapp.interceptor.AuthInterceptorService">
     </beans:bean>
