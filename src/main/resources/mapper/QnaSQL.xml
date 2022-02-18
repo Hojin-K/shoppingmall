@@ -3,55 +3,65 @@
         PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
         "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
 <mapper namespace="com.shop.myapp.repository.QnaRepository">
-	
-	<resultMap id="item" type="com.shop.myapp.dto.Qna">
-		<id property="boardid" column="board_id"/>
-		<id property="itemcode" column="item_code"/>
-		<id property="memberid" column="member_id"/>
-		<id property="boardtitle" column="board_title"/>
-		<id property="boardcontent" column="board_content"/>
-		<id property="recommendid" column="recommend_id"/>
-	</resultMap>
-	
-	 <insert id="insertQna">
-	 	INSERT INTO SHOP_QNABOARD_TB
-	 	VALUES (#{board_id},
-	 			#{item_code},
-	 			#{member_id},
-	 			#{board_title},
-	 			#{board_content},
-	 			#{recommend_id})	
+
+	<!-- 페이징 처리 -->
+	<select id="listpaging" resultType="com.shop.myapp.dto.Qna">
+		SELECT BOARD_ID, ITEM_CODE,
+		MEMBER_ID, BOARD_TITLE, BOARD_CONTENT,
+		RECOMMEND_ID
+		FROM(SELECT ROWNUM
+		AS BOARD_ID, ITEM_CODE, MEMBER_ID, BOARD_TITLE, BOARD_CONTENT,
+		RECOMMEND_ID
+		FROM SHOP_QNABOARD_TB)
+		WHERE BOARD_ID BETWEEN #{BOARD_ID}
+		AND #{ITEM_CODE};
+	</select>
+	<select id="selectQnaTotCount" resultType="Integer">
+		SELECT COUNT(*) FROM
+		SHOP_QNABOARD_TB
+	</select>
+
+	<select id="qnaView" resultType="com.shop.myapp.dto.Qna">
+		select BOARD_ID, ITEM_CODE,
+		MEMBER_ID, BOARD_TITLE, BOARD_CONTENT, RECOMMEND_ID
+		from SHOP_QNABOARD_TB1 where BOARD_ID=#{BOARD_ID}
+	</select>
+
+	<insert id="insertQna">
+		INSERT INTO SHOP_QNABOARD_TB
+		VALUES (#{board_id},
+		#{item_code},
+		#{member_id},
+		#{board_title},
+		#{board_content},
+		#{recommend_id})
 	</insert>
+
+	<update id="qnaModify">
+		UPDATE SHOP_QNABOARD_TB SET
+		BOARD_TITLE=#{BOARD_TITLE},BOARD_CONTENT=#{BOARD_CONTENT}
+		WHERE
+		BOARD_ID=#{BOARD_ID}
+	</update>
+
 	<delete id="deleteqnaById">
-        DELETE SHOP_QNABOARD_TB
-        WHERE BOARD_ID = #{BOARDID}
-    </delete>
-    
-    <!-- 페이징 처리 -->    
-    <select id="paging" resultType="com.shop.myapp.dto.Qna">
-		SELECT BOARD_ID,ITEM_CODE,MEMBER_ID,BOARD_TITLE,BOARD_CONTENT,RECOMMEND_ID
-		FROM
-		(SELECT BOARD_ID,ITEM_CODE,MEMBER_ID,BOARD_TITLE,BOARD_CONTENT,RECOMMEND_ID,
-		ROW_NUMBER() OVER(ORDER BY BOARD_ID DESC,BSTEP MEMBER_ID) B_SEQ FROM SHOP_QNABOARD_TB)
-		WHERE B_SEQ BETWEEN #{param1} AND #{param2}
-		<!-- B_SEQ 부분 체크 해볼것 -->
-	</select>	
+		DELETE SHOP_QNABOARD_TB
+		WHERE BOARD_ID = #{BOARDID}
+	</delete>
 	
-	<select id="selectBoardTotCount" resultType="Integer">
-		SELECT COUNT(*) FROM REPLYBOARD
-	</select>	
-	
-	
-	
+	<insert id="write">
+		INSERT INTO SHOP_QNABOARD_TB
+		VALUES(REPLYBOARD_SEQ.NEXTVAL,#{param1},#{param2},#{param3},
+		SYSDATE,0,REPLYBOARD_SEQ.CURRVAL,0,0)
+	</insert>
+
+
+
+
 </mapper>
 
 
 
-<!-- CREATE TABLE "SHOP_QNABOARD_TB"
-(
-    "BOARD_ID"      NUMBER,
-    "ITEM_CODE"     NUMBER,
-    "MEMBER_ID"     VARCHAR2(20),
-    "BOARD_TITLE"   VARCHAR2(50)  NOT NULL,
-    "BOARD_CONTENT" VARCHAR2(500) NOT NULL,
-    "RECOMMEND_ID"  NUMBER        NULL -->
+<!-- CREATE TABLE "SHOP_QNABOARD_TB" ( "BOARD_ID" NUMBER, "ITEM_CODE" NUMBER, 
+	"MEMBER_ID" VARCHAR2(20), "BOARD_TITLE" VARCHAR2(50) NOT NULL, "BOARD_CONTENT" 
+	VARCHAR2(500) NOT NULL, "RECOMMEND_ID" NUMBER NULL -->
