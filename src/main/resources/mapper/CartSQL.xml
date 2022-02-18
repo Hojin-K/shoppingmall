@@ -4,14 +4,23 @@
         "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
 <mapper namespace="com.shop.myapp.repository.CartRepository">
 
-    <resultMap id="cartDetail" type="com.shop.myapp.dto.CartDetail">
+    <resultMap id="cart" type="com.shop.myapp.dto.Cart">
         <id property="cartId" column="cart_id"/>
         <id property="memberId" column="member_id"/>
-        <id property="itemAmount" column="amount"/>
-        <association property="itemOption" javaType="com.shop.myapp.dto.ItemOption">
-            <result property="optionCode" column="option_code"/>
-            <result property="optionName" column="option_name"/>
-            <result property="optionPriceUd" column="option_price_ud"/>
+        <id property="amount" column="amount"/>
+        <association property="itemOption" column="option_code" resultMap="itemOption"/>
+    </resultMap>
+
+    <resultMap id="itemOption" type="com.shop.myapp.dto.ItemOption">
+        <result property="optionCode" column="option_code"/>
+        <result property="optionName" column="option_name"/>
+        <result property="itemCode" column="item_code"/>
+        <result property="optionPriceUd" column="option_price_ud"/>
+        <association property="item" javaType="com.shop.myapp.dto.Item">
+            <result property="itemCode" column="item_code"/>
+            <result property="itemImage" column="ITEM_IMAGE"/>
+            <result property="itemName" column="item_name"/>
+            <result property="itemPrice" column="item_cost"/>
         </association>
     </resultMap>
 
@@ -24,8 +33,8 @@
         OPTION_CODE,AMOUNT
         ) values (#{cartId},
         #{memberId},
-        #{itemOptionCode},
-        #{itemAmount})
+        #{optionCode},
+        #{amount})
     </insert>
     <delete id="deleteCartByCartId">
         delete HR.SHOP_CART_TB
@@ -35,22 +44,53 @@
         delete HR.SHOP_CART_TB
         where MEMBER_ID = #{memberId}
     </delete>
-    <select id="findByMemberId" resultMap="cartDetail">
-        select cart.CART_ID            as cart_id,
-               cart.MEMBER_ID          as member_id,
-               cart.AMOUNT             as amount,
-               item.ITEM_NAME          as item_name,
-               item.ITEM_COST          as item_cost,
-               item.ITEM_CODE          as item_code,
-               options.OPTION_NAME     as option_name,
-               options.OPTION_PRICEUD  as option_priceud,
-               options.OPTION_CODE     as option_code
+    <select id="findByMemberId" resultMap="cart">
+        select cart.CART_ID           as cart_id,
+               cart.MEMBER_ID         as member_id,
+               cart.AMOUNT            as amount,
+               item.ITEM_NAME         as item_name,
+               item.ITEM_COST         as item_cost,
+               item.ITEM_CODE         as item_code,
+               item.ITEM_IMAGE        as item_image,
+               options.OPTION_NAME    as option_name,
+               options.OPTION_PRICEUD as option_priceud,
+               options.OPTION_CODE    as option_code
         from HR.SHOP_CART_TB cart,
              HR.SHOP_ITEM_TB item,
              HR.SHOP_ITEM_OPTIONS_TB options
         where cart.MEMBER_ID = #{memberId}
           and cart.option_code = options.option_code
+          and options.item_code = item.item_code
+    </select>
+    <select id="findAll" resultType="com.shop.myapp.dto.Cart">
+        select *
+        from HR.SHOP_CART_TB;
+    </select>
+    <select id="findByCartId" resultType="com.shop.myapp.dto.Cart">
+        select *
+        from HR.SHOP_CART_TB
+        where CART_ID = #{cartId}
+    </select>
+    <select id="findSelectCartByCartCodes" resultMap="cart">
+        select cart.CART_ID           as cart_id,
+        cart.MEMBER_ID         as member_id,
+        cart.AMOUNT            as amount,
+        item.ITEM_NAME         as item_name,
+        item.ITEM_COST         as item_cost,
+        item.ITEM_CODE         as item_code,
+        item.ITEM_IMAGE        as item_image,
+        options.OPTION_NAME    as option_name,
+        options.OPTION_PRICEUD as option_priceud,
+        options.OPTION_CODE    as option_code
+        from HR.SHOP_CART_TB cart,
+        HR.SHOP_ITEM_TB item,
+        HR.SHOP_ITEM_OPTIONS_TB options
+        where (<foreach collection="list" item="cartCode" open="(" close=")" separator="or">
+        cart_id =#{cartCode}
+    </foreach>)
+        and cart.option_code = options.option_code
         and options.item_code = item.item_code
+
     </select>
 
 

@@ -18,6 +18,14 @@ public class MemberService {
 		this.sqlSession = sqlSession;
 	}
 
+	public Member getMember(String memberId){
+		MemberRepository memberRepository = sqlSession.getMapper(MemberRepository.class);
+		return memberRepository.
+				findById(memberId).
+				orElseThrow(()->new IllegalStateException(memberId +" 라는 id의 member 없음"));
+
+	}
+
 	public List<Member> getMembers(){
     	MemberRepository memberRepository = sqlSession.getMapper(MemberRepository.class);
     	List<Member> members = memberRepository.findAll();
@@ -49,7 +57,7 @@ public class MemberService {
     	= sqlSession.getMapper(MemberRepository.class);
     	String userPwd = member.getMemberPwd();
     	//로그인한 유저 id를 조회한다.
-    	Optional<Member> loginMemberOptional = memberRepository.checkUserAvailable(member);
+    	Optional<Member> loginMemberOptional = memberRepository.findById(member.getMemberId());
     	if(loginMemberOptional.isPresent()) {
     		Member loginMember = loginMemberOptional.get();
     		if(BCrypt.checkpw(userPwd,  loginMember.getMemberPwd())){

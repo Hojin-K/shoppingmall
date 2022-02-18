@@ -1,5 +1,6 @@
 package com.shop.myapp.dto;
 
+import lombok.Builder;
 import lombok.Getter;
 import lombok.Setter;
 import java.time.LocalDateTime;
@@ -23,14 +24,29 @@ public class Order {
 
     private String buyerPostCode;
 
-    private String status;
+    private String isPaid;
 
     private List<OrderDetail> orderDetails;
 
-    public void setOrderCode(){
+    public void setOrderCodeByDate(){
         LocalDateTime now = LocalDateTime.now();
         DateTimeFormatter formatter = DateTimeFormatter.ofPattern("yyyyMMddHHmmss");
         this.orderCode = now.format(formatter);
 
+    }
+    @Builder
+    public Order(String orderCode, String memberId, long totalPay, String buyerName, String buyerEmail, String buyerAddr, String buyerPostCode, String isPaid, List<OrderDetail> orderDetails) {
+        this.orderCode = orderCode;
+        this.memberId = memberId;
+        this.totalPay = totalPay;
+        this.buyerName = buyerName;
+        this.buyerEmail = buyerEmail;
+        this.buyerAddr = buyerAddr;
+        this.buyerPostCode = buyerPostCode;
+        this.isPaid = isPaid;
+        this.orderDetails = orderDetails;
+    }
+
+    public Order() {
     }
 }

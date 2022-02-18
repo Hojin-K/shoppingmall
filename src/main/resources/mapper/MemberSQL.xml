@@ -10,13 +10,13 @@
     </insert>
     <update id="updateMember">
     		UPDATE SHOP_MEMBER_TB SET MEMBER_PWD = #{memberPwd}, MEMBER_NAME=#{memberName},
-    		MEMBER_ADDRESS=#{memberAddress},MEMBER_TEL=#{memberTel},MEMBER_BIRTH=#{memberBirth} 
+    		MEMBER_ADRESS=#{memberAddress},MEMBER_TEL=#{memberTel},MEMBER_BIRTH=#{memberBirth}
     		WHERE MEMBER_ID = #{memberId}
     </update>
     <select id="findAll" resultType="com.shop.myapp.dto.Member">
 			SELECT * FROM SHOP_MEMBER_TB
     </select>
-    <select id="checkUserAvailable" resultType="com.shop.myapp.dto.Member">
-			SELECT * FROM SHOP_MEMBER_TB WHERE MEMBER_ID = #{memberId}
+    <select id="findById" resultType="com.shop.myapp.dto.Member">
+        SELECT * FROM SHOP_MEMBER_TB WHERE MEMBER_ID = #{memberId}
     </select>
 </mapper>

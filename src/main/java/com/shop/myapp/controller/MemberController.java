@@ -74,10 +74,10 @@ public class MemberController {
     
     @RequestMapping(value="/login", produces="application/json;charset=UTF-8", 
     method=RequestMethod.POST)
-    public String login(@ModelAttribute Member member, HttpServletRequest request){
+    public String login(@ModelAttribute Member memberInfo, HttpServletRequest request){
     	log.info("login");
-    	Member mem = memberService.loginMember(member);
-    	request.getSession().setAttribute("member",mem);
+    	Member member = memberService.loginMember(memberInfo);
+    	request.getSession().setAttribute("member",member);
     	return "redirect:/members";
     }
 }
