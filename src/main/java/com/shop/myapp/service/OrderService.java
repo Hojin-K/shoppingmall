@@ -16,7 +16,7 @@ import java.util.List;
 @Transactional
 public class OrderService {
 
-    private OrderRepository orderRepository;
+    private final OrderRepository orderRepository;
     private final OrderDetailService orderDetailService;
     private final CartService cartService;
 
@@ -42,6 +42,10 @@ public class OrderService {
         order.setTotalPay(total);
         int result = orderRepository.insertOrder(order);
         return orderDetailService.insertOrderDetails(orderDetails);
+    }
+
+    public List<Cart> getSelectCartByCartIds(List<String> cartIds){
+        return cartService.findSelectCartByCartIds(cartIds);
     }
 
 }

@@ -36,6 +36,14 @@
         #{optionCode},
         #{amount})
     </insert>
+    <update id="amountSetByCartId">
+        update HR.SHOP_CART_TB set HR.SHOP_CART_TB.AMOUNT = HR.SHOP_CART_TB.AMOUNT
+    <choose>
+        <when test='mathSign == "+"'>+</when>
+        <when test='mathSign == "-"'>-</when>
+    </choose>
+    1 where CART_ID = #{cartId}
+    </update>
     <delete id="deleteCartByCartId">
         delete HR.SHOP_CART_TB
         where CART_ID = #{cartId}
@@ -76,7 +84,7 @@
         cart.MEMBER_ID         as member_id,
         cart.AMOUNT            as amount,
         item.ITEM_NAME         as item_name,
-        item.ITEM_COST         as item_cost,
+        item.ITEM_PRICE         as item_price,
         item.ITEM_CODE         as item_code,
         item.ITEM_IMAGE        as item_image,
         options.OPTION_NAME    as option_name,

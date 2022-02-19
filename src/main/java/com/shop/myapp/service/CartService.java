@@ -40,10 +40,17 @@ public class CartService {
     public List<Cart> findSelectCartByCartIds(List<String> cartCods){
         return cartRepository.findSelectCartByCartCodes(cartCods);
     }
-    public Cart findByCartId(String cartId){
-        Optional<Cart> cartOptional = cartRepository.findByCartId(cartId);
-        return cartOptional.orElseThrow(()->new IllegalStateException("cart 없음"));
+    public Optional<Cart> findByCartId(String cartId){
+        return cartRepository.findByCartId(cartId);
 
+    }
+    public int amountSetByCartId(String cartId,String mathSign){
+        try{
+        return cartRepository.amountSetByCartId(cartId,mathSign);
+        } catch (Exception e){
+            e.printStackTrace();
+        }
+        return 0;
     }
 
 }
