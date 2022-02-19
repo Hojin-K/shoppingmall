@@ -8,6 +8,7 @@ import org.mindrot.jbcrypt.BCrypt;
 import org.springframework.stereotype.Service;
 
 import com.shop.myapp.dto.Member;
+import com.shop.myapp.dto.Seller;
 import com.shop.myapp.repository.MemberRepository;
 
 @Service
@@ -40,6 +41,23 @@ public class MemberService {
 		}
 		System.out.println("암호화 후 -->"+member.getMemberPwd());
     	int result = memberRepository.insertMember(member);
+    	
+    	return result;
+    }
+    
+public int insertSeller(Seller seller) {
+    	
+    	MemberRepository memberRepository 
+    	= sqlSession.getMapper(MemberRepository.class);
+		try {
+			System.out.println("암호화 전 -->"+seller.getMemberPwd());
+			seller.setMemberPwd(BCrypt.hashpw(seller.getMemberPwd(), BCrypt.gensalt()));			
+		}catch(Exception e) {
+			e.printStackTrace();
+		}
+		System.out.println("암호화 후 -->"+seller.getMemberPwd());
+    	memberRepository.insertMember(seller);
+		int result = memberRepository.insertSellerInfo(seller);
     	
     	return result;
     }
