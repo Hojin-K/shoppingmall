@@ -20,7 +20,7 @@
             <result property="itemCode" column="item_code"/>
             <result property="itemImage" column="ITEM_IMAGE"/>
             <result property="itemName" column="item_name"/>
-            <result property="itemPrice" column="item_cost"/>
+            <result property="itemPrice" column="item_price"/>
         </association>
     </resultMap>
 
@@ -49,7 +49,7 @@
                cart.MEMBER_ID         as member_id,
                cart.AMOUNT            as amount,
                item.ITEM_NAME         as item_name,
-               item.ITEM_COST         as item_cost,
+               item.ITEM_PRICE         as item_price,
                item.ITEM_CODE         as item_code,
                item.ITEM_IMAGE        as item_image,
                options.OPTION_NAME    as option_name,

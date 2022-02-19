@@ -22,7 +22,7 @@
             <c:forEach items="${items}" var="item">
                 <div class="card" style="width: 10rem;" >
                     <a class="card-link" href="/item/${item.itemCode}">
-                    <img class="card-img-top"  style="width: 100%; height: auto;" src="/resources${item.itemImage}" alt=""/>
+                    <img class="card-img-top"  style="width: 100%; height: auto;" src="${item.itemImage}" alt=""/>
                     <div class="card-body">
                         <p class="card-text"><c:out value="${item.memberId}"/></p>
                         <h5 class="card-title"><c:out value="${item.itemName}"/></h5>

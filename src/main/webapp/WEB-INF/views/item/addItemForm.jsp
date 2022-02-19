@@ -1,12 +1,5 @@
-<%--
-  Created by IntelliJ IDEA.
-  User: gimtaeyeon
-  Date: 2022/02/18
-  Time: 3:23 오후
-  To change this template use File | Settings | File Templates.
---%>
-<%@ page contentType="text/html;charset=UTF-8" language="java" %>
-<%@ taglib uri="http://java.sun.com/jsp/jstl/core" prefix="c" %>
+<%@ page contentType="text/html;charset=UTF-8" language="java"%>
+<%@ taglib uri="http://java.sun.com/jsp/jstl/core" prefix="c"%>
 <html>
 <head>
     <script src="http://code.jquery.com/jquery-latest.min.js"></script>
@@ -47,9 +40,9 @@
             function getOptionForm() {
                 let result = "<div style='display: inline-block' name='option" + optionSetting + "' id='option" + optionSetting + "'>"
                 result += '<p>옵션</p>';
-                result += "사이즈<input type='number' name='itemOptions[" + optionSetting + "].optionName'/> <br>"
-                result += "보유 수량<input type='number' name='itemOptions[" + optionSetting + "].optionStock'/> <br>"
-                result += "변동액<input type='number' name='itemOptions[" + optionSetting + "].optionPriceUd'/> <br>"
+                result += "사이즈<input type='number' name='itemOptions[" + optionSetting + "].optionName'/> "
+                result += "보유 수량<input type='number' name='itemOptions[" + optionSetting + "].optionStock'/> "
+                result += "변동액<input type='number' name='itemOptions[" + optionSetting + "].optionPriceUd'/> "
                 result += "<button type='button' name='deleteOption'>삭제</button>"
                 result += "</div>"
                 $("#options").append(result);

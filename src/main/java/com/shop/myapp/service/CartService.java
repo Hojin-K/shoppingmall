@@ -8,6 +8,7 @@ import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 
 import java.util.List;
+import java.util.Optional;
 
 @Service
 @Transactional
@@ -38,6 +39,11 @@ public class CartService {
 
     public List<Cart> findSelectCartByCartIds(List<String> cartCods){
         return cartRepository.findSelectCartByCartCodes(cartCods);
+    }
+    public Cart findByCartId(String cartId){
+        Optional<Cart> cartOptional = cartRepository.findByCartId(cartId);
+        return cartOptional.orElseThrow(()->new IllegalStateException("cart 없음"));
+
     }
 
 }
