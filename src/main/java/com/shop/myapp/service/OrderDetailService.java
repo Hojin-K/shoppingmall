@@ -21,4 +21,12 @@ public class OrderDetailService {
         return orderDetailRepository.insertOrderDetails(orderDetails);
 
     }
+
+    public int deleteOrderDetail(String orderCode){
+        return orderDetailRepository.deleteOrderDetail(orderCode);
+    }
+
+    public int updatePostedStatusByOrderCode(String orderCode){
+        return orderDetailRepository.updatePostedStatusByOrderCode(orderCode);
+    }
 }

@@ -11,13 +11,9 @@ import java.util.List;
 public interface OrderRepository {
     int insertOrder(Order order);
 
-    int paidOrder(@Param("orderCode") String orderCode);
+    int deleteOrderByOrderCode(@Param("orderCode") String orderCode);
 
-    int deleteOrder(@Param("orderCode") String orderCode);
-
-    Order findOrderByMemberId();
-
-
-
-
+    List<Order> findOrderByMemberId(String memberId);
+    Order findByOrderCode(String orderCode);
+    int updateIsPaidIntByOrderCode(String orderCode);
 }

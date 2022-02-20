@@ -1,4 +1,5 @@
 import com.shop.myapp.dto.Order;
+import com.shop.myapp.dto.OrderDetail;
 import com.shop.myapp.service.OrderService;
 import org.junit.Test;
 import org.junit.runner.RunWith;
@@ -47,7 +48,13 @@ public class OrderTest {
                 .isPaid("NotPaid")
                 .build();
         List<String> cartIds = Arrays.asList("45","46");
-        int result = orderService.insertOrder(order, cartIds);
-        assertEquals(result,2);
+        Order order1 = orderService.insertOrder(order, cartIds);
+    }
+
+    @Test
+    public void findByOrderCode(){
+        Order byOrderCode = orderService.findByOrderCode("20220220220206");
+        System.out.println(byOrderCode.getOrderCode());
+        System.out.println(byOrderCode.getTotalPay());
     }
 }
