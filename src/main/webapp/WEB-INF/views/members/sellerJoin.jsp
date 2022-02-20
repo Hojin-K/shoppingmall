@@ -21,7 +21,7 @@
 </head>
 <body>
 <h2>회원가입</h2>
-<form name="frm" onsubmit="setMemberAddress()" method="POST" action="/members/join" >
+<form name="frm" onsubmit="setMemberAddress()" method="POST" action="/members/sellerJoin" >
      id : <input type="text" name="memberId" /> <br />
          이름 : <input type="text" name="memberName" /> <br />
          이메일 : <input type="text" name="memberEmail" /> <br />
@@ -32,6 +32,8 @@
      <input type="hidden" name="memberAddress"/>
          전화번호 : <input type="text" name="memberTel" /> <br />
          생년월일 : <input type="date" name="memberBirth" /> <br />
+         사업자명 : <input type="text" name="businessName" /> <br />
+         사업자번호 : <input type="text" name="businessRegistrationNo" /> <br />
          <input type="submit" value="가입하기">
 </form>
 <script>
