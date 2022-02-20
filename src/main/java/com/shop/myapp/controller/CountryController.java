@@ -1,14 +1,20 @@
 package com.shop.myapp.controller;
 
+import com.shop.myapp.dto.Country;
 import com.shop.myapp.service.CountryService;
 import lombok.extern.slf4j.Slf4j;
 import org.json.simple.parser.ParseException;
+import org.springframework.http.ResponseEntity;
 import org.springframework.stereotype.Controller;
+import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.RequestMapping;
+import org.springframework.web.bind.annotation.ResponseBody;
 
 import java.net.URISyntaxException;
+import java.util.List;
 
 @Controller
+@RequestMapping("/country")
 @Slf4j
 public class CountryController {
     private final CountryService countryService;
@@ -17,10 +23,16 @@ public class CountryController {
         this.countryService = countryService;
     }
 
-    @RequestMapping("/country")
     public String get() throws ParseException, URISyntaxException {
         int result = countryService.getCountryFromAPI();
         log.info("들어간 값(234) : {}",result);
         return "";
+    }
+
+    @ResponseBody
+    @GetMapping("")
+    public ResponseEntity<Object> getCountries(){
+        List<Country> countries = countryService.getCountries();
+        return ResponseEntity.ok(countries);
     }
 }

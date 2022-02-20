@@ -8,6 +8,7 @@ import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 
 import java.util.List;
+import java.util.Optional;
 
 @Service
 @Transactional
@@ -38,6 +39,18 @@ public class CartService {
 
     public List<Cart> findSelectCartByCartIds(List<String> cartCods){
         return cartRepository.findSelectCartByCartCodes(cartCods);
+    }
+    public Optional<Cart> findByCartId(String cartId){
+        return cartRepository.findByCartId(cartId);
+
+    }
+    public int amountSetByCartId(String cartId,String mathSign){
+        try{
+        return cartRepository.amountSetByCartId(cartId,mathSign);
+        } catch (Exception e){
+            e.printStackTrace();
+        }
+        return 0;
     }
 
 }
