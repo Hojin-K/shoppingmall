@@ -1,0 +1,37 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper
+        PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
+        "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="com.shop.myapp.repository.OrderDetailRepository">
+
+
+    <update id="insertOrderDetails" parameterType="list">
+        insert into HR.SHOP_ORDER_DETAIL_TB(HR.SHOP_ORDER_DETAIL_TB.order_detail_code,
+        HR.SHOP_ORDER_DETAIL_TB.order_code, HR.SHOP_ORDER_DETAIL_TB.option_code, HR.SHOP_ORDER_DETAIL_TB.AMOUNT)
+        SELECT CODE_ORDER_DETAIL_SQ.nextval AS order_detail_code ,
+        O.* FROM (   <foreach collection="list" item="orderDetail" separator="UNION ALL ">
+        select
+        #{orderDetail.orderCode} as order_code,
+        #{orderDetail.itemOption.optionCode} as option_code,
+        #{orderDetail.amount} as amount
+        from sys.dual
+    </foreach> ) O
+    </update>
+    <update id="updatePostedStatusByOrderCode">
+        update HR.SHOP_ORDER_DETAIL_TB
+        set HR.SHOP_ORDER_DETAIL_TB.POSTED_STATUS = 'paid'
+        where HR.SHOP_ORDER_DETAIL_TB.ORDER_CODE = #{orderCode}
+    </update>
+    <delete id="deleteOrderDetail">
+        delete HR.SHOP_ORDER_DETAIL_TB
+        where HR.SHOP_ORDER_DETAIL_TB.ORDER_CODE = #{orderCode}
+    </delete>
+    <select id="findOrderDetailByOrderId" resultType="com.shop.myapp.dto.OrderDetail">
+        select *
+        from HR.SHOP_ORDER_DETAIL_TB D,
+             HR.SHOP_ORDER_TB O
+        where D.ORDER_DETAIL_CODE = #{order_detail_code}
+          and O.ORDER_CODE = D.ORDER_CODE
+    </select>
+
+</mapper>

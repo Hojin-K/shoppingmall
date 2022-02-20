@@ -29,7 +29,7 @@ public class PaymentController {
     @ResponseBody
     public ResponseEntity<Object> getPayRequest(@RequestParam("imp_uid") String impUid) throws ParseException {
 
-        String accessToken = iamPortService.getAccessToken(impUid);
+        String accessToken = iamPortService.getAccessToken();
 
         Payment payment = iamPortService.getImpAttributes(impUid, accessToken);
         // db에 저장된 결제 금액과 비교
