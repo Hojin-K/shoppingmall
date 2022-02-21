@@ -27,12 +27,7 @@ public class ItemController {
         this.fileService = fileService;
     }
 
-    @GetMapping()
-    public String getItemsForm(){
-        return "";
-    }
-
-    @GetMapping("/getItem")
+    @GetMapping("")
     public String getItems(/* {페이징 처리},{검색 필터}*/Model model){
         List<Item> items = itemService.getItems();
         model.addAttribute("items",items);
