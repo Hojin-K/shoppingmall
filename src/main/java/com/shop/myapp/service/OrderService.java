@@ -3,8 +3,10 @@ package com.shop.myapp.service;
 import com.shop.myapp.dto.Cart;
 import com.shop.myapp.dto.Order;
 import com.shop.myapp.dto.OrderDetail;
+import com.shop.myapp.dto.Payment;
 import com.shop.myapp.repository.OrderRepository;
 import org.apache.ibatis.session.SqlSession;
+import org.json.simple.parser.ParseException;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
@@ -19,15 +21,17 @@ public class OrderService {
     private final OrderRepository orderRepository;
     private final OrderDetailService orderDetailService;
     private final CartService cartService;
+    private final IamPortService iamPortService;
 
 
-    public OrderService(@Autowired SqlSession sqlSession, OrderDetailService orderDetailService, CartService cartService) {
+    public OrderService(@Autowired SqlSession sqlSession, OrderDetailService orderDetailService, CartService cartService, IamPortService iamPortService) {
         this.orderRepository = sqlSession.getMapper(OrderRepository.class);
         this.orderDetailService = orderDetailService;
         this.cartService = cartService;
+        this.iamPortService = iamPortService;
     }
 
-    public int insertOrder(Order order, List<String> cartIds) {
+    public Order insertOrder(Order order, List<String> cartIds) {
         order.setOrderCodeByDate();
         List<Cart> carts = cartService.findSelectCartByCartIds(cartIds);
         List<OrderDetail> orderDetails = new ArrayList<>();
@@ -40,12 +44,48 @@ public class OrderService {
             total += amount * itemPrice;
         }
         order.setTotalPay(total);
+        order.setOrderDetails(orderDetails);
         int result = orderRepository.insertOrder(order);
-        return orderDetailService.insertOrderDetails(orderDetails);
+        orderDetailService.insertOrderDetails(orderDetails);
+        return order;
     }
 
     public List<Cart> getSelectCartByCartIds(List<String> cartIds){
         return cartService.findSelectCartByCartIds(cartIds);
     }
 
+    public Payment validateTotalPay(String impUid, String orderCode) throws ParseException {
+        try{
+        Order order = orderRepository.findByOrderCode(orderCode);
+        System.out.println(order.toString());
+        String accessToken = iamPortService.getAccessToken();
+
+        Payment payment = iamPortService.getImpAttributes(impUid, accessToken);
+        System.out.println(payment.toString());
+        if (order.getTotalPay() == payment.getAmount()){
+            int i = orderRepository.updateIsPaidIntByOrderCode(orderCode);
+            System.out.println(i);
+            i=orderDetailService.updatePostedStatusByOrderCode(orderCode);
+            System.out.println(i);
+            return payment;
+        }
+        }catch (Exception e){
+         e.printStackTrace();
+        }
+        return null;
+    }
+
+    public int cancelOrder(String orderCode) {
+        orderDetailService.deleteOrderDetail(orderCode);
+        return orderRepository.deleteOrderByOrderCode(orderCode);
+
+    }
+
+    public List<Order> myOrder(String memberId){
+        return orderRepository.findOrderByMemberId(memberId);
+    }
+
+    public Order findByOrderCode(String orderCode){
+        return orderRepository.findByOrderCode(orderCode);
+    }
 }

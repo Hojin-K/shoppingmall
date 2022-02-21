@@ -9,4 +9,6 @@ import java.util.List;
 public interface OrderDetailRepository {
     int insertOrderDetails(List<OrderDetail> orderDetails);
     OrderDetail findOrderDetailByOrderId();
+    int deleteOrderDetail(String orderCode);
+    int updatePostedStatusByOrderCode(String orderCode);
 }

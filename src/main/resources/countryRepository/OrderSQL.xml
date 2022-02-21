@@ -21,21 +21,24 @@
         </collection>
     </resultMap>
     <insert id="insertOrder">
-        insert into SHOP_ORDER_TB
+        insert into SHOP_ORDER_TB (order_code, member_id, total_pay,
+                                   buyer_name, buyer_tel,
+                                   buyer_email, buyer_addr, buyer_post_code)
         values (#{orderCode},
                 #{memberId},
                 #{totalPay},
                 #{buyerName},
+                #{buyerTel},
                 #{buyerEmail},
                 #{buyerAddr},
-                #{buyerPostCode},#{isPaid})
+                #{buyerPostCode})
     </insert>
-    <update id="paidOrder">
+    <update id="updateIsPaidIntByOrderCode">
         update SHOP_ORDER_TB
         set IS_PAID = 'Paid'
         where ORDER_CODE = #{orderCode}
     </update>
-    <delete id="deleteOrder">
+    <delete id="deleteOrderByOrderCode">
         delete SHOP_ORDER_TB
         where ORDER_CODE = #{orderCode}
     </delete>
@@ -43,6 +46,14 @@
         select *
         from HR.SHOP_ORDER_TB O,
              HR.SHOP_ORDER_DETAIL_TB D
+        where O.MEMBER_ID = #{memberId}
+          and O.order_code = D.order_code
+    </select>
+    <select id="findByOrderCode" resultMap="order">
+        select *
+        from HR.SHOP_ORDER_TB O,
+             HR.SHOP_ORDER_DETAIL_TB D
         where O.ORDER_CODE = #{orderCode}
+          and D.order_code = O.order_code
     </select>
 </mapper>

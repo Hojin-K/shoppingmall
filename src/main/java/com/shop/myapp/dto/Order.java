@@ -18,6 +18,8 @@ public class Order {
 
     private String buyerName;
 
+    private String buyerTel;
+
     private String buyerEmail;
 
     private String buyerAddr;
