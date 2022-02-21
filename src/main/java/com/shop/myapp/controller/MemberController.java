@@ -4,13 +4,9 @@ import java.util.List;
 
 import javax.servlet.http.HttpServletRequest;
 
+import org.springframework.http.ResponseEntity;
 import org.springframework.stereotype.Controller;
-import org.springframework.web.bind.annotation.GetMapping;
-import org.springframework.web.bind.annotation.ModelAttribute;
-import org.springframework.web.bind.annotation.PostMapping;
-import org.springframework.web.bind.annotation.RequestMapping;
-import org.springframework.web.bind.annotation.RequestMethod;
-import org.springframework.web.bind.annotation.ResponseBody;
+import org.springframework.web.bind.annotation.*;
 
 import com.shop.myapp.dto.Member;
 import com.shop.myapp.service.AuthService;
@@ -68,7 +64,7 @@ public class MemberController {
     }
     
     @ResponseBody
-    @GetMapping("getMember")
+    @GetMapping("")
     public List<Member> findAll(){
     	return memberService.getMembers();
     }
@@ -86,5 +82,12 @@ public class MemberController {
     	Member mem = memberService.loginMember(member);
     	request.getSession().setAttribute("member",mem);
     	return "redirect:/members";
+    }
+
+    @GetMapping("/{memberId}")
+    @ResponseBody
+    public ResponseEntity<Object> getMemberInfo(@PathVariable String memberId){
+        Member member = memberService.getMember(memberId);
+        return ResponseEntity.ok(member);
     }
 }
