@@ -22,11 +22,17 @@ public class Member {
 	private String businessRegistrationNo;
 	private String businessName;
 	
-	private String detailAddress;
-	private String address;
+	/*public void setMemberBirth(String memberBirth) {
+		DateTimeFormatter format = DateTimeFormatter.ofPattern("yyyy-MM-dd");
+		System.out.println(memberBirth);
+		this.memberBirth = LocalDate.parse(memberBirth, format);
+		System.out.println(this.memberBirth);
+	}*/
 	
-	public void setDetailAddress(String detailAddress) {
-		this.detailAddress = detailAddress;
-		this.memberAddress = this.address +" "+this.detailAddress;
-	}
+	/*public String getMemberBirth() {
+		
+		String birth = this.memberBirth.toString();
+		log.info("birth : {}", birth);
+		return birth;
+	}*/
 }
