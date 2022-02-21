@@ -26,7 +26,7 @@ public class ReviewTest {
 		int count = 0;
 		for (int i=0; i<5; i++) {
 			Review review = new Review();
-			review.setReviewContent("asdfdf");
+			review.setReviewContent("asdfdf1");
 			review.setMemberId("test1");
 			review.setItemCode(11);
 			int result = reviewService.updateReview(review);
