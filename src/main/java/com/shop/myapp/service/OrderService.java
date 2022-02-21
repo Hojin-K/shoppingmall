@@ -45,32 +45,33 @@ public class OrderService {
         }
         order.setTotalPay(total);
         order.setOrderDetails(orderDetails);
-        int result = orderRepository.insertOrder(order);
+        orderRepository.insertOrder(order);
+        cartService.deleteByMemberId(order.getMemberId());
         orderDetailService.insertOrderDetails(orderDetails);
         return order;
     }
 
-    public List<Cart> getSelectCartByCartIds(List<String> cartIds){
+    public List<Cart> getSelectCartByCartIds(List<String> cartIds) {
         return cartService.findSelectCartByCartIds(cartIds);
     }
 
     public Payment validateTotalPay(String impUid, String orderCode) throws ParseException {
-        try{
-        Order order = orderRepository.findByOrderCode(orderCode);
-        System.out.println(order.toString());
-        String accessToken = iamPortService.getAccessToken();
+        try {
+            Order order = orderRepository.findByOrderCode(orderCode);
+            System.out.println(order.toString());
+            String accessToken = iamPortService.getAccessToken();
 
-        Payment payment = iamPortService.getImpAttributes(impUid, accessToken);
-        System.out.println(payment.toString());
-        if (order.getTotalPay() == payment.getAmount()){
-            int i = orderRepository.updateIsPaidIntByOrderCode(orderCode);
-            System.out.println(i);
-            i=orderDetailService.updatePostedStatusByOrderCode(orderCode);
-            System.out.println(i);
-            return payment;
-        }
-        }catch (Exception e){
-         e.printStackTrace();
+            Payment payment = iamPortService.getImpAttributes(impUid, accessToken);
+            System.out.println(payment.toString());
+            if (order.getTotalPay() == payment.getAmount()) {
+                int i = orderRepository.updateIsPaidIntByOrderCode(orderCode);
+                System.out.println(i);
+                i = orderDetailService.updatePostedStatusByOrderCode(orderCode);
+                System.out.println(i);
+                return payment;
+            }
+        } catch (Exception e) {
+            e.printStackTrace();
         }
         return null;
     }
@@ -81,11 +82,11 @@ public class OrderService {
 
     }
 
-    public List<Order> myOrder(String memberId){
+    public List<Order> myOrder(String memberId) {
         return orderRepository.findOrderByMemberId(memberId);
     }
 
-    public Order findByOrderCode(String orderCode){
+    public Order findByOrderCode(String orderCode) {
         return orderRepository.findByOrderCode(orderCode);
     }
 }
