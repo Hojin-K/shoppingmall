@@ -9,9 +9,12 @@
         <id property="itemPrice" column="item_price"/>
         <id property="itemName" column="item_name"/>
         <id property="memberId" column="member_id"/>
-        <id property="countryCode" column="country_code"/>
         <id property="itemImage" column="item_image"/>
         <id property="itemInfo" column="item_info"/>
+        <association property="country" javaType="com.shop.myapp.dto.Country">
+            <result property="countryCode" column="country_code"/>
+            <result property="countryName" column="country_name"/>
+        </association>
         <collection property="itemOptions" ofType="com.shop.myapp.dto.ItemOption" javaType="java.util.List">
             <result property="optionCode" column="option_code"/>
             <result property="itemCode" column="item_code"/>
@@ -49,27 +52,38 @@
         where HR.SHOP_ITEM_TB.ITEM_CODE = #{itemCode}
     </delete>
 
-    <select id="findAll" resultType="com.shop.myapp.dto.Item">
-        select item.ITEM_CODE,
-               MEMBER_ID,
-               COUNTRY_CODE,
-               ITEM_NAME,
-               ITEM_PRICE,
-               ITEM_IMAGE,
-               ITEM_INFO,
-               sum(item_option.OPTION_STOCK) as item_stock
-        from HR.SHOP_ITEM_TB item,
-             HR.SHOP_ITEM_OPTIONS_TB item_option
-        where item.ITEM_CODE = item_option.ITEM_CODE
-        group by item.ITEM_CODE, MEMBER_ID, COUNTRY_CODE, ITEM_NAME, ITEM_PRICE, ITEM_IMAGE, ITEM_INFO, ITEM_STOCK
-    </select>
+    <select id="findAll" resultMap="item"><![CDATA[
+        SELECT *
+        FROM (
+                 SELECT ROW_NUMBER() over (order by item.item_code desc ) AS num,
+                        item.ITEM_CODE,
+                        MEMBER_ID,
+                        item.COUNTRY_CODE as country_code,
+                        ITEM_NAME,
+                        ITEM_PRICE,
+                        ITEM_IMAGE,
+                        ITEM_INFO,
+                        COUNTRY_NAME,
+                        sum(item_option.OPTION_STOCK)                     as item_stock
+                 from HR.SHOP_ITEM_TB item,
+                      HR.SHOP_ITEM_OPTIONS_TB item_option,HR.SHOP_COUNTRY_TB country
+                 WHERE rownum <= #{endList}
+                   and item.ITEM_CODE = item_option.ITEM_CODE and item.country_code = country.country_code
+                 group by item.ITEM_CODE, MEMBER_ID, item.COUNTRY_CODE, ITEM_NAME, ITEM_PRICE, ITEM_IMAGE, ITEM_INFO,
+                          ITEM_STOCK,country_name)
+        WHERE #{startList} < num
+    ]]></select>
 
     <select id="findByItemCode" resultMap="item">
         select *
         from HR.SHOP_ITEM_TB I,
-             HR.SHOP_ITEM_OPTIONS_TB O
+             HR.SHOP_ITEM_OPTIONS_TB O,HR.SHOP_COUNTRY_TB C
         where I.ITEM_CODE = #{itemCode}
-          and O.ITEM_CODE = #{itemCode}
+          and O.ITEM_CODE = #{itemCode} and C.country_code = I.country_code
+    </select>
+    <select id="getItemListCnt" resultType="java.lang.Integer">
+        select count(*) as listCnt
+        from HR.SHOP_ITEM_TB
     </select>
 
 </mapper>

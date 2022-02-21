@@ -28,7 +28,6 @@ public class MemberTest {
             member.setMemberId("test"+i);
             member.setMemberPwd("test"+i);
             member.setMemberName("test"+i);
-            member.setMemberLevel(new LinkedList<>());
             member.setMemberAddress("test"+i);
             member.setMemberTel("010-1111-1111");
             member.setMemberBirth(LocalDate.now());

@@ -37,7 +37,8 @@ public class MemberService {
     }
 
     public int insertMember(Member member) {
-
+        System.out.println(member.getMemberBirth().toString());
+        System.out.println(member.getMemberAddress());
         MemberRepository memberRepository
                 = sqlSession.getMapper(MemberRepository.class);
         try {
@@ -61,6 +62,7 @@ public class MemberService {
         if (loginMemberOptional.isPresent()) {
             Member loginMember = loginMemberOptional.get();
             if (BCrypt.checkpw(userPwd, loginMember.getMemberPwd())) {
+                System.out.println("true");
                 return loginMember;
             }
         }

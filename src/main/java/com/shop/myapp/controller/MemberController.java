@@ -39,6 +39,7 @@ public class MemberController {
    
     @PostMapping("/join")
     public String join(@ModelAttribute Member member) {
+        System.out.println("member.getMemberPwd() = " + member.getMemberPwd());
     	// 에러가 있는지 검사
     	log.info("join");
     	System.out.println(member.getMemberAddress());
@@ -78,9 +79,15 @@ public class MemberController {
     @RequestMapping(value="/login", produces="application/json;charset=UTF-8", 
     method=RequestMethod.POST)
     public String login(@ModelAttribute Member member, HttpServletRequest request){
+        System.out.println("PWD : "+member.getMemberPwd());
     	log.info("login");
+        try{
     	Member mem = memberService.loginMember(member);
     	request.getSession().setAttribute("member",mem);
+        }catch (Exception e){
+            e.printStackTrace();
+        }
+
     	return "redirect:/members";
     }
 
