@@ -8,6 +8,8 @@ import org.springframework.test.context.junit4.SpringJUnit4ClassRunner;
 import org.springframework.test.context.web.WebAppConfiguration;
 
 import java.time.LocalDate;
+import java.util.ArrayList;
+import java.util.LinkedList;
 
 import static org.junit.Assert.assertEquals;
 
@@ -26,13 +28,27 @@ public class MemberTest {
             member.setMemberId("test"+i);
             member.setMemberPwd("test"+i);
             member.setMemberName("test"+i);
-            member.setMemberLevel("1");
-            member.setMemberAdress("test"+i);
+            member.setMemberLevel(new LinkedList<>());
+            member.setMemberAddress("test"+i);
             member.setMemberTel("010-1111-1111");
             member.setMemberBirth(LocalDate.now());
             int result = memberService.insertMember(member);
             count += result;
         }
         assertEquals(count,5);
+    }
+    
+    @Test
+    public void updateMeber() {
+    	 Member member = new Member();
+         member.setMemberId("test");
+         member.setMemberPwd("test");
+         member.setMemberName("test");
+         member.setMemberAddress("test");
+         member.setMemberTel("010-1111-1111");
+         member.setMemberBirth(LocalDate.now());
+         int result = memberService.updateMember(member);
+         
+         assertEquals(result, 1);
     }
 }

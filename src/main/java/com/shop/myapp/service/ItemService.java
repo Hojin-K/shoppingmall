@@ -16,23 +16,20 @@ import java.util.Optional;
 @Transactional
 public class ItemService {
     private final ItemRepository itemRepository;
-    private final ItemOptionRepository itemOptionRepository;
     private final ItemOptionService itemOptionService;
 
     public ItemService(@Autowired SqlSession sqlSession, ItemOptionService itemOptionService) {
         this.itemRepository = sqlSession.getMapper(ItemRepository.class);
-        this.itemOptionRepository = sqlSession.getMapper(ItemOptionRepository.class);
         this.itemOptionService = itemOptionService;
     }
 
     public Item getItem(String itemCode) {
         // itemCode 로 상품 조회
-        Optional<Item> itemOptional = itemRepository.findByItemCode(itemCode);
+        Optional<Item> item = itemRepository.findByItemCode(itemCode);
         // 상품 null 체크
-        Item item = itemOptional.orElseThrow(() -> new IllegalStateException("Not Found Item"));
         // 상품의 옵션 조회
         // 상품에 옵션 넣기
-        return item;
+        return item.orElseThrow(() -> new IllegalStateException("Not Found Item"));
     }
 
     public List<Item> getItems() {

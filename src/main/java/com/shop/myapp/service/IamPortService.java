@@ -26,11 +26,10 @@ public class IamPortService {
         return (JSONObject) responseBody.get("response");
     }
 
-    public String getAccessToken(String impUid) throws ParseException {
+    public String getAccessToken() throws ParseException {
 
         // map에 저장된 결제 정보를 꺼내 db에 저장되어있는 주문(order)과 비교하여
         // 민약 값이 맞으면 status 200 으로 보내고 값이 틀리면 status 400으로 보냄.
-        log.info("고유 ID : {}", impUid);
 
         // Spring에서 외부 api로 http 요청을 보내기 위해 RestTemplate 사용
         RestTemplate template = new RestTemplate();
@@ -43,9 +42,9 @@ public class IamPortService {
         MultiValueMap<String, String> map = new LinkedMultiValueMap<>();
 
         // import key
-        map.add("imp_key", "키 번호");
+        map.add("imp_key","8245163167318128");
         // import secret key
-        map.add("imp_secret", "시크릿 번호");
+        map.add("imp_secret", "41123179b382fed758afa59a01b11043b4f72a3d6ce176d91234dd508082e34968a885c53cb1ef89");
         // RestTemplate 를 사용하여 url 에 request 요청 -> 이후 response 를 ResponseEntity 에 저장
 
         ResponseEntity<String> response = template.postForEntity(url, map, String.class);
@@ -75,7 +74,7 @@ public class IamPortService {
         JSONObject responseAttributes = parsingRestAttribute(response);
         // access token 을 받을때와 마찬가지로 json 파싱
         // 해당 고유 번호로 결제된 금액 조회
-        Payment payment = Payment.builder()
+        return Payment.builder()
                 .impUid((String) responseAttributes.get("imp_Uid"))
                 .amount((Long) responseAttributes.get("amount"))
                 .buyerName((String) responseAttributes.get("buyer_name"))
@@ -86,6 +85,5 @@ public class IamPortService {
                 .name((String) responseAttributes.get("name"))
                 .status((String) responseAttributes.get("status"))
                 .build();
-        return payment;
     }
 }

@@ -48,7 +48,7 @@ public class ItemTest {
             int result = itemService.createItem(item);
             count += result;
         }
-        assertEquals(count, 8);
+        assertEquals(count, 8*5);
     }
 
     @Test

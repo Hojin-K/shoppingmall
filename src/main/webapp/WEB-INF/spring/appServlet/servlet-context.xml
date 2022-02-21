@@ -10,7 +10,7 @@
     <!-- DispatcherServlet Context: defines this servlet's request-processing infrastructure -->
 
     <!-- Enables the Spring MVC @Controller programming model -->
-    <annotation-driven/>
+    <!-- <annotation-driven/> -->
 
     <!-- Handles HTTP GET requests for /resources/** by efficiently serving up static resources in the ${webappRoot}/resources directory -->
     <resources mapping="/resources/**" location="/resources/"/>
@@ -32,7 +32,7 @@
 
     <beans:bean id="sqlSessionFactory" class="org.mybatis.spring.SqlSessionFactoryBean">
         <beans:property name="dataSource" ref="dataSource"/>
-        <beans:property name="mapperLocations" value="classpath:mapper/**/*.xml"/>
+        <beans:property name="mapperLocations" value="classpath:countryRepository/**/*.xml"/>
         <beans:property name="configLocation" value="/WEB-INF/spring/mybatis-config.xml"/>
     </beans:bean>
 
@@ -43,5 +43,28 @@
     <beans:bean id="transactionManager" class="org.springframework.jdbc.datasource.DataSourceTransactionManager">
         <beans:property name="dataSource" ref="dataSource" />
     </beans:bean>
+<!--    multipartFile 설정-->
+    <beans:bean id="multipartResolver" class="org.springframework.web.multipart.commons.CommonsMultipartResolver">
+        <beans:property name="maxUploadSize" value="2000000000" />
+        <beans:property name="defaultEncoding" value="UTF-8" />
+    </beans:bean>
+
+      <!-- 인터셉터 객체 생성 -->
+    <beans:bean id="authInterceptor" class="com.shop.myapp.interceptor.AuthInterceptorService">
+    </beans:bean>
+    <!-- Interceptor 설정 -->
+    <interceptors>
+        <interceptor>
+            <mapping path="/**"/>
+            <beans:ref bean="authInterceptor"/>
+        </interceptor>
+    </interceptors>
+    
+    <annotation-driven>
+         <!-- argument resolver -->
+         <argument-resolvers>
+                  <beans:bean class="com.shop.myapp.interceptor.AuthUserHandlerMethodArgumentResolver" />
+         </argument-resolvers>
+	</annotation-driven>
 
 </beans:beans>

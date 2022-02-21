@@ -2,6 +2,7 @@ package com.shop.myapp.dto;
 
 
 import java.time.LocalDate;
+import java.util.LinkedList;
 
 import org.springframework.format.annotation.DateTimeFormat;
 
@@ -12,9 +13,9 @@ import lombok.Setter;
 public class Member {
 	private String memberId;
 	private String memberPwd; 
-	private String memberLevel;
+	private LinkedList<String> memberLevel;
 	private String memberName;
-	private String memberAdress;
+	private String memberAddress;
 	private String memberTel;
 	@DateTimeFormat(pattern = "yyyy-MM-dd")
 	private LocalDate memberBirth;
