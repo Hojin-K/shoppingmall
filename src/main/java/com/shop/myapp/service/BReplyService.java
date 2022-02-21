@@ -17,18 +17,17 @@ public class BReplyService implements BServiceInf{
 		Map<String, Object> map=model.asMap();
 //		map->request
 		HttpServletRequest request=(HttpServletRequest) map.get("request");
-		String bid=request.getParameter("bid");
-		String bName=request.getParameter("bName");
-		String bTitle=request.getParameter("bTitle");
-		String bContent=request.getParameter("bContent");
-		String bgroup=request.getParameter("bgroup");
-		String bstep=request.getParameter("bstep");
-		String bindent=request.getParameter("bindent");
+		String BOARD_ID=request.getParameter("BOARD_ID");
+		String ITEM_CODE=request.getParameter("ITEM_CODE");
+		String MEMBER_ID=request.getParameter("MEMBER_ID");
+		String BOARD_TITLE=request.getParameter("BOARD_TITLE");
+		String BOARD_CONTENT=request.getParameter("BOARD_CONTENT");
+		String RECOMMEND_ID=request.getParameter("RECOMMEND_ID");
 		
 	
 		BoardDao dao=new BoardDao();
-		dao.reply(bid,bName,bTitle,
-				bContent,bgroup,bstep,bindent);
+		dao.reply(BOARD_ID,ITEM_CODE,MEMBER_ID,
+				BOARD_TITLE,BOARD_CONTENT,RECOMMEND_ID);
 		
 	}
 }

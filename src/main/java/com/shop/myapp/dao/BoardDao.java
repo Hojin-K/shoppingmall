@@ -221,7 +221,7 @@ public class BoardDao {
 			}
 		}
 	}
-	public BoardDto replyView(String sbid) {
+	public BoardDto replyView(String BOARD_ID) {
 		
 		BoardDto dto=null;
 		Connection con=null;
@@ -230,20 +230,18 @@ public class BoardDao {
 		
 		try {
 			con=dataSource.getConnection();
-			String sql="select bid,bname,btitle,bcontent,bdate,bhit,bgroup,bstep,bindent "
+			String sql="select BOARD_ID,ITEM_CODE,MEMBER_ID,BOARD_TITLE,bdate,bhit,bgroup,bstep,bindent "
 					+ "from replyboard where bid=?"; 
 			pstmt=con.prepareStatement(sql);
-			pstmt.setInt(1, Integer.parseInt(sbid));
+			pstmt.setInt(1, Integer.parseInt(sBOARD_ID));
 			rs=pstmt.executeQuery();
 			
 			rs.next();
-			int bid=rs.getInt("bid");
-			String bname=rs.getString("bname");
-			String btitle=rs.getString("btitle");
-			String bcontent=rs.getString("bcontent");
-			
-			Timestamp bdate=rs.getTimestamp("bdate");
-			
+			int BOARD_ID=rs.getInt("BOARD_ID");
+			String ITEM_CODE=rs.getString("ITEM_CODE");
+			String MEMBER_ID=rs.getString("MEMBER_ID");
+			String BOARD_TITLE=rs.getString("BOARD_TITLE");
+								
 			int bhit=rs.getInt("bhit");
 			int bgroup=rs.getInt("bgroup");
 			int bstep=rs.getInt("bstep");
@@ -290,12 +288,12 @@ public class BoardDao {
 			}
 		}	
 	}
-	public void reply(String bid, String bName,
-			String bTitle, String bContent,
-			String bgroup, String bstep,
+	public void reply(String BOARD_ID, String ITEM_CODE,
+			String MEMBER_ID, String BOARD_TITLE,
+			String BOARD_CONTENT, String bgroup,
 			String bindent) {
 		
-		replyShape(bgroup,bstep);
+		replyShape(bgroup);
 				
 		Connection con=null;
 		PreparedStatement pstmt=null;	
@@ -304,14 +302,13 @@ public class BoardDao {
 			String sql="insert into replyboard(bid,bname,btitle,bcontent,bgroup,bstep,bindent) " + 
 					"values(replyboard_seq.nextval,?,?,?,?,?,?)";
 			pstmt=con.prepareStatement(sql);
-			pstmt.setString(1,bName);
-			pstmt.setString(2,bTitle);
-			pstmt.setString(3,bContent);
+			pstmt.setString(1,ITEM_CODE);
+			pstmt.setString(2,MEMBER_ID);
+			pstmt.setString(3,BOARD_TITLE);
+			pstmt.setString(4,BOARD_CONTENT);
 			pstmt.setInt(4,Integer.parseInt(bgroup));
-			pstmt.setInt(5,Integer.parseInt(bstep)+1);
-			pstmt.setInt(6,Integer.parseInt(bindent)+1);
-			
-			
+			pstmt.setString(4,RECOMMEND_ID);
+						
 			pstmt.executeUpdate();
 			
 		} catch (Exception e) {

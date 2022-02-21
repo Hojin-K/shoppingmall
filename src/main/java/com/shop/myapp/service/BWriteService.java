@@ -19,7 +19,6 @@ public class BWriteService implements BServiceInf{
 		HttpServletRequest request=(HttpServletRequest) map.get("request");
 		String BOARD_TITLE=request.getParameter("BOARD_TITLE");
 		String BOARD_CONTENT=request.getParameter("BOARD_CONTENT");
-		System.out.println("김형철"+BOARD_TITLE);
 		BoardDao dao=new BoardDao();
 		dao.write(BOARD_TITLE,BOARD_CONTENT);
 	}

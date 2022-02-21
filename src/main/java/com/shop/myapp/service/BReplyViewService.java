@@ -18,12 +18,12 @@ public class BReplyViewService implements BServiceInf{
 		Map<String, Object> map=model.asMap();
 //		map->request
 		HttpServletRequest request=(HttpServletRequest) map.get("request");
-		String bid=request.getParameter("bid");
+		String bid=request.getParameter("BOARD_ID");
 		
 		
 		
 		BoardDao dao=new BoardDao();
-		BoardDto dto=dao.replyView(bid);
+		BoardDto dto=dao.replyView(BOARD_ID);
 		
 		
 		model.addAttribute("reply_view",dto);
