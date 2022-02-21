@@ -19,9 +19,11 @@ import java.util.List;
 @Service
 public class CountryService {
     private final SqlSession sqlSession;
+    private CountryRepository countryRepository;
 
     public CountryService(SqlSession sqlSession) {
         this.sqlSession = sqlSession;
+        this.countryRepository = sqlSession.getMapper(CountryRepository.class);
     }
 
     public int getCountryFromAPI() throws ParseException, URISyntaxException {
@@ -48,10 +50,17 @@ public class CountryService {
                     countries.add(country);
                 }
             }
-        CountryRepository mapper = sqlSession.getMapper(CountryRepository.class);
 
-        return mapper.insertCountries(countries);
+        return countryRepository.insertCountries(countries);
 
+    }
+
+    public Country getCountry(String countryCode){
+        return countryRepository.findByCountryCode(countryCode);
+    }
+
+    public List<Country> getCountries(){
+        return countryRepository.findAll();
     }
 
 }
