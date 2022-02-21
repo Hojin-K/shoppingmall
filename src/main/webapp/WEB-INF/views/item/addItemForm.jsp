@@ -41,9 +41,9 @@
                 let result = "<div style='display: inline-block' name='option" + optionSetting + "' id='option" + optionSetting + "'>"
                 result += '<p>옵션</p>';
                 result += "사이즈<input type='number' name='itemOptions[" + optionSetting + "].optionName'/> "
-                result += "보유 수량<input type='number' name='itemOptions[" + optionSetting + "].optionStock'/> "
-                result += "변동액<input type='number' name='itemOptions[" + optionSetting + "].optionPriceUd'/> "
-                result += "<button type='button' name='deleteOption'>삭제</button>"
+                result += "&nbsp;보유 수량<input type='number' name='itemOptions[" + optionSetting + "].optionStock'/> "
+                result += "&nbsp;변동액<input type='number' name='itemOptions[" + optionSetting + "].optionPriceUd'/> "
+                result += "<button class='btn btn-danger btn-sm' type='button' name='deleteOption'>삭제</button>"
                 result += "</div>"
                 $("#options").append(result);
                 optionSetting += 1;
@@ -57,26 +57,28 @@
                 let optionDiv = $(this).closest("div");
                 optionDiv.remove();
             });
+
         });
     </script>
 </head>
 <body class="pt-5">
 <div class="container">
-
+    <div class="text-center">
+    <h3>상품 등록하기</h3>
+    </div>
     <form action="/item/add" method="post" enctype="multipart/form-data" id="addForm">
         <div class="mb-3">
             <label for="itemName">이름</label>
             <input class="form-control" type="text" name="itemName" id="itemName" placeholder="상품 이름을 입력해주세요." required>
         </div>
         <div class="mb-3">
-            <button type="button" id="createOption">옵션 생성하기</button>
+            <button class="btn btn-secondary btn-sm" type="button" id="createOption">옵션 생성하기</button>
             <div class="mb-3" id="options">
-
             </div>
         </div>
         <div class="mb-3">
             <label for="countryCode">국가코드</label>
-            <select name="countryCode" id="countryCode" required>
+            <select class="form-control" name="countryCode" id="countryCode" required>
             </select>
         </div>
         <div class="mb-3">
@@ -92,7 +94,7 @@
             <label for="content">상세 보기</label>
             <textarea name="itemInfo" id="content" style="width:100%;" required></textarea>
         </div>
-        <input type="submit" value="생성하기">
+        <input class="btn btn-primary btn-sm" type="submit" value="생성하기">
     </form>
 </div>
 </body>

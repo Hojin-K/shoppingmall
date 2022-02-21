@@ -3,6 +3,8 @@ package com.shop.myapp.dto;
 import lombok.Builder;
 import lombok.Getter;
 import lombok.Setter;
+import org.springframework.format.annotation.DateTimeFormat;
+
 import java.time.LocalDateTime;
 import java.time.format.DateTimeFormatter;
 import java.util.List;
@@ -28,6 +30,9 @@ public class Order {
 
     private String isPaid;
 
+    @DateTimeFormat(pattern = "yyyy-MM-dd HH:mm:ss")
+    private LocalDateTime paidAt;
+
     private List<OrderDetail> orderDetails;
 
     public void setOrderCodeByDate(){
@@ -50,5 +55,11 @@ public class Order {
     }
 
     public Order() {
+    }
+
+    public String getPaidAtToString(){
+        LocalDateTime d = LocalDateTime.parse(this.paidAt.toString());
+        DateTimeFormatter formatter = DateTimeFormatter.ofPattern("yyyy-MM-dd HH:mm:ss");
+        return d.format(formatter);
     }
 }

@@ -37,7 +37,9 @@ public class OrderController {
         Member member = (Member) session.getAttribute("member");
         order.setMemberId(member.getMemberId());
         Order responseOrder = orderService.insertOrder(order, formList.getCartCodes());
-
+        for (OrderDetail orderDetail:responseOrder.getOrderDetails()){
+            orderDetail.setOrder(null);
+        }
         return ResponseEntity.ok(responseOrder);
     }
     @PostMapping("/{orderCode}/validate")
@@ -67,5 +69,17 @@ public class OrderController {
         model.addAttribute("orders",orders);
         return "/order/myOrder";
     };
+
+    @GetMapping("/{orderCode}")
+    public String findByOrderCode(@PathVariable String orderCode,Model model){
+        Member member = (Member) session.getAttribute("member");
+        String memberId = member.getMemberId();
+        Order order = orderService.findByOrderCode(orderCode);
+        if (order.getMemberId().equals(memberId)){
+            model.addAttribute("order",order);
+            return "/order/order";
+        }
+        throw new IllegalStateException("아이디 불일치(접근 권한 없음)");
+    }
 
 }

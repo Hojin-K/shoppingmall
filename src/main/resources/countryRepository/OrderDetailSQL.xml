@@ -3,7 +3,37 @@
         PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
         "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
 <mapper namespace="com.shop.myapp.repository.OrderDetailRepository">
+    <resultMap id="orderDetail" type="com.shop.myapp.dto.OrderDetail">
+        <id property="orderDetailCode" column="order_detail_code"/>
+        <id property="orderCode" column="order_code"/>
+        <id property="optionCode" column="option_code"/>
+        <id property="amount" column="amount"/>
+        <id property="postedStatus" column="posted_status"/>
+        <association property="itemOption" column="option_code" resultMap="itemOption"/>
+        <association property="order" javaType="com.shop.myapp.dto.Order">
+            <result property="orderCode" column="order_code"/>
+            <result property="totalPay" column="total_pay"/>
+            <result property="memberId" column="member_id"/>
+            <result property="buyerName" column="buyer_name"/>
+            <result property="buyerEmail" column="buyer_email"/>
+            <result property="buyerAddr" column="buyer_addr"/>
+            <result property="buyerPostCode" column="buyer_post_code"/>
+            <result property="isPaid" column="is_paid"/>
+        </association>
+    </resultMap>
 
+    <resultMap id="itemOption" type="com.shop.myapp.dto.ItemOption">
+        <result property="optionCode" column="option_code"/>
+        <result property="optionName" column="option_name"/>
+        <result property="itemCode" column="item_code"/>
+        <result property="optionPriceUd" column="option_price_ud"/>
+        <association property="item" javaType="com.shop.myapp.dto.Item">
+            <result property="itemCode" column="item_code"/>
+            <result property="itemImage" column="ITEM_IMAGE"/>
+            <result property="itemName" column="item_name"/>
+            <result property="itemPrice" column="item_price"/>
+        </association>
+    </resultMap>
 
     <update id="insertOrderDetails" parameterType="list">
         insert into HR.SHOP_ORDER_DETAIL_TB(HR.SHOP_ORDER_DETAIL_TB.order_detail_code,
@@ -26,12 +56,13 @@
         delete HR.SHOP_ORDER_DETAIL_TB
         where HR.SHOP_ORDER_DETAIL_TB.ORDER_CODE = #{orderCode}
     </delete>
-    <select id="findOrderDetailByOrderId" resultType="com.shop.myapp.dto.OrderDetail">
+    <select id="findOrderDetailByOrderId" resultMap="orderDetail">
         select *
         from HR.SHOP_ORDER_DETAIL_TB D,
-             HR.SHOP_ORDER_TB O
+             HR.SHOP_ORDER_TB O, HR.SHOP_ITEM_OPTIONS_TB IO,HR.SHOP_ITEM_TB I
         where D.ORDER_DETAIL_CODE = #{order_detail_code}
           and O.ORDER_CODE = D.ORDER_CODE
+and IO.option_code = D.option_code and I.item_code = IO.item_code
     </select>
 
 </mapper>

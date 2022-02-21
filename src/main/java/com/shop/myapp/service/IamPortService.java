@@ -83,7 +83,7 @@ public class IamPortService {
                 .buyerAddr((String) responseAttributes.get("buyer_addr"))
                 .buyerEmail((String) responseAttributes.get("buyer_email"))
                 .name((String) responseAttributes.get("name"))
-                .status((String) responseAttributes.get("status"))
+                .paidAt((long) responseAttributes.get("paid_at"))
                 .build();
     }
 }
