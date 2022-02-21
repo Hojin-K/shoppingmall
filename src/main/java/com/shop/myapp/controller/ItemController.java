@@ -24,13 +24,6 @@ public class ItemController {
     public ItemController(ItemService itemService, AuthServiceImpl authService) {
         this.itemService = itemService;
         this.authService = authService;
-
-    private final FileService fileService;
-
-    public ItemController(ItemService itemService, FileService fileService) {
-        this.itemService = itemService;
-        this.fileService = fileService;
-
     }
 
     @GetMapping()
