@@ -19,6 +19,8 @@ public class Member {
 	private String memberTel;
 	@DateTimeFormat(pattern = "yyyy-MM-dd")
 	private LocalDate memberBirth;
+	private String businessRegistrationNo;
+	private String businessName;
 	
 	/*public void setMemberBirth(String memberBirth) {
 		DateTimeFormatter format = DateTimeFormatter.ofPattern("yyyy-MM-dd");

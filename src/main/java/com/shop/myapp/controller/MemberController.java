@@ -13,7 +13,6 @@ import org.springframework.web.bind.annotation.RequestMethod;
 import org.springframework.web.bind.annotation.ResponseBody;
 
 import com.shop.myapp.dto.Member;
-import com.shop.myapp.dto.Seller;
 import com.shop.myapp.service.AuthService;
 import com.shop.myapp.service.AuthServiceImpl;
 import com.shop.myapp.service.MemberService;
@@ -48,24 +47,6 @@ public class MemberController {
     	log.info("join");
     	System.out.println(member.getMemberAddress());
     	int isSuccess = memberService.insertMember(member);
-    	System.out.println(isSuccess);
-    	return "redirect:/members";
-    }
-    
-    @GetMapping("/sellerJoin")
-    public String sellerJoinForm() {
-    	//authService.checkMemberId("");
-    	log.info("sellerJoinForm");
-    	
-    	return "/members/sellerJoin";
-    }
-    
-    @PostMapping("/sellerJoin")
-    public String sellerJoin(@ModelAttribute Seller seller) {
-    	// 에러가 있는지 검사
-    	log.info("sellerJoin");
-    	System.out.println(seller.getBusinessName());
-    	int isSuccess = memberService.insertSeller(seller);
     	System.out.println(isSuccess);
     	return "redirect:/members";
     }

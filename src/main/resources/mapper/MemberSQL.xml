@@ -6,10 +6,11 @@
 
     <insert id="insertMember">
        		INSERT INTO SHOP_MEMBER_TB VALUES(#{memberId}, #{memberPwd}, #{memberLevel},
-       		#{memberName}, #{memberAddress}, #{memberTel}, #{memberBirth})
-    </insert>
-    <insert id="insertSellerInfo">
-       		INSERT INTO SHOP_SELLER_TB VALUES(#{memberId}, #{businessRegistrationNo}, #{businessName})
+       		#{memberName}, #{memberAddress}, #{memberTel}, #{memberBirth}
+       		<if test="#{businessRegistrationNo} != null and #{businessRegistrationNo}.equals('')">
+       		 ,#{businessRegistrationNo}, #{businessName}
+       		</if>
+       		)
     </insert>
     <update id="updateMember">
     		UPDATE SHOP_MEMBER_TB SET MEMBER_PWD = #{memberPwd}, MEMBER_NAME=#{memberName},
