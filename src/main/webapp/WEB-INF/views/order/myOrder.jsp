@@ -19,35 +19,7 @@
         });
     </script>
 </head>
-<style>
-    p, h5 {
-        font-size: small
-    }
-
-    .itemLink {
-        color: #333333;
-    }
-
-    .itemLink:hover {
-        color: black;
-    }
-
-    .content {
-        display: table;
-    }
-
-    .content span {
-        display: table-cell;
-        vertical-align: middle;
-    }
-
-</style>
 <body>
-<div class="container">
-
-<div class="text-center">
-<h2>${sessionScope.member.memberId}'s Order</h2>
-</div>
 <table class="table text-center">
     <thead>
     <tr>
@@ -61,12 +33,11 @@
         <tbody>
 <tr>
     <td><a class="itemLink" href="/order/${order.orderCode}">${order.orderCode}</a></td>
-    <td>${order.getPaidAtToString()}</td>
+    <td>${order.paidAtToString()}</td>
     <td>${order.isPaid}</td>
 </tr>
 </tbody>
     </c:forEach>
 </table>
-</div>
 </body>
 </html>
