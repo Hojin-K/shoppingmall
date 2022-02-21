@@ -120,18 +120,20 @@
                     </td>
                     <td id="price_${cart.cartId}">${cart.itemOption.item.itemPrice}</td>
                     <td >
-                        <button type="button" id="minus_${cart.cartId}">-</button>
+                        <button class="btn btn-secondary btn-sm" type="button" id="minus_${cart.cartId}">-</button>
                            <span id="amount_${cart.cartId}">${cart.amount}</span>
-                        <button class="btn-default" type="button" id="plus_${cart.cartId}">+</button>
+                        <button class="btn btn-secondary btn-sm" type="button" id="plus_${cart.cartId}">+</button>
                     </td>
-                    <td><button class="btn-default" type="button" id="deleteCart_${cart.cartId}">삭제하기</button></td>
+                    <td><button class="btn btn-sm btn-secondary" type="button" id="deleteCart_${cart.cartId}">삭제하기</button></td>
                 </tr>
             <c:set var="i" value="${i+1}" scope="page"/>
         </c:forEach>
                 </tbody>
             </table>
+            <div>
                 <span>총 결제 금액 : </span><span id="total" style="font-size: xx-large">0</span>원
-            <input class="btn-default" type="submit" value="결제하기">
+            <input class="btn btn-secondary pull-right" type="submit" value="결제하기">
+            </div>
         </form>
     </div>
 </div>
