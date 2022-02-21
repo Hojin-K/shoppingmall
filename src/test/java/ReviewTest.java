@@ -1,4 +1,5 @@
 import static org.junit.Assert.assertEquals;
+import static org.junit.Assert.assertNull;
 
 import org.junit.Test;
 import org.junit.runner.RunWith;
@@ -23,16 +24,12 @@ public class ReviewTest {
 	
 	@Test
 	public void getReview() {
-		int count = 0;
-		for (int i=0; i<5; i++) {
-			Review review = new Review();
-			review.setReviewContent("asdfdf1");
-			review.setMemberId("test1");
-			review.setItemCode(11);
-			int result = reviewService.updateReview(review);
-			count += result;
-		}
-		assertEquals(count,5);
+		//int count = 0;
+		
+		Review review = reviewService.getReview("1");
+		
+		assertNull(review);
+		//assertEquals(count,5);
 	}
 	
 	
