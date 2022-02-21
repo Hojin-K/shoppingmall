@@ -65,8 +65,8 @@ public class MemberController {
     	// 에러가 있는지 검사
     	log.info("sellerJoin");
     	System.out.println(seller.getBusinessName());
-    	int isSuccess = memberService.insertSeller(seller);
-    	System.out.println(isSuccess);
+//    	int isSuccess = memberService.insertSeller(seller);
+//    	System.out.println(isSuccess);
     	return "redirect:/members";
     }
     

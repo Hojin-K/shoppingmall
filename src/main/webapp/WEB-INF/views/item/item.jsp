@@ -84,6 +84,9 @@
             <h2>상세보기</h2>
             ${item.itemInfo}
         </div>
+        <div id="qna">
+        
+        </div>
     </div>
     <a id="back-to-top" href="#" class="btn btn-secondary btn-sm back-to-top" role="button"
        title="Click to return on the top page" data-toggle="tooltip" data-placement="left">TOP<span
