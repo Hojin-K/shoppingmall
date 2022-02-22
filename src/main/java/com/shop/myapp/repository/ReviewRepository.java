@@ -13,5 +13,6 @@ public interface ReviewRepository {
 	int insertReview(Review review);
 	int deleteReview(String review);
 	int updateReview(Review review);
+	int getReviewListCnt();
 
 }

@@ -25,7 +25,6 @@ public class ReviewService {
 	}
 	
 	public Review getReview(String reviewCode) {
-		
 		Review review = reviewRepository.findByReviewCode(reviewCode);
 		return review;		
 	}
@@ -50,6 +49,8 @@ public class ReviewService {
 	     return reviewRepository.updateReview(review);
 	    }
 	
-	
+	    public int getReviewListCnt() {
+	    	return reviewRepository.getReviewListCnt();
+	    }
 
 }

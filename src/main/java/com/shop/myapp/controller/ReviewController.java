@@ -1,6 +1,8 @@
 package com.shop.myapp.controller;
 
+import java.util.HashMap;
 import java.util.List;
+import java.util.Map;
 
 import javax.servlet.http.HttpSession;
 
@@ -10,8 +12,10 @@ import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestMapping;
+import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.servlet.mvc.support.RedirectAttributes;
 
+import com.shop.myapp.dto.Pagination;
 import com.shop.myapp.dto.Review;
 import com.shop.myapp.service.ReviewService;
 
@@ -25,8 +29,11 @@ public class ReviewController {
 	}
 	
 	@GetMapping("")
-	public String getReviews(Model model) {
-		List<Review> reviews = reviewService.getReviews();
+	public String getReviews(@RequestParam(required = false, defaultValue = "1") int page, Model model) {
+		Pagination pagination = new Pagination();
+		int reviewListCnt = reviewService.getReviewListCnt();
+		List<Review> reviews = reviewService.getReviews(pagination);
+
 		model.addAttribute("revies",reviews);
 		return "review/reviews";
 	}
@@ -40,15 +47,15 @@ public class ReviewController {
 	
 	@GetMapping("/{reviewCode}/update")
 	public String updateReview(@PathVariable String reviewCode, Review review, Model model) {
-		Review review = reviewService.getReview(reviewCode);
-		model.addAttribute("review",review);
+		Review review1 = reviewService.getReview(review1);
+		model.addAttribute("review",review1);
 		return "";
 	}
 	@PostMapping("/{reviewCode}/update")
 	public String updateReview(@PathVariable String review, RedirectAttributes redirectAttributes) {
 		
 		reviewService.updateReview(review);
-		redirectAttributes.addAttribute("reviewCode",reviewCode);
+		redirectAttributes.addAttribute("reviewCode",review);
 		return "redirect:/review/{reviewCode}";
 	}
 	
@@ -58,6 +65,16 @@ public class ReviewController {
 		return "redirect:/review";
 	}
 	
+	/*// 평점 옵션
+	Map ratingOptions = new HashMap();
+	ratingOptions.put(0, "☆☆☆☆☆");
+	ratingOptions.put(1, "★☆☆☆☆");
+	ratingOptions.put(2, "★★☆☆☆");
+	ratingOptions.put(3, "★★★☆☆");
+	ratingOptions.put(4, "★★★★☆");
+	ratingOptions.put(5, "★★★★★");
+	model.addAttribute("ratingOptions", ratingOptions);
+	*/
 	
 
 }

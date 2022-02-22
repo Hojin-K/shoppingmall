@@ -1,16 +1,16 @@
 package com.shop.myapp.service;
 
-<<<<<<< HEAD
+
 import java.util.List;
 import java.util.Optional;
 
-=======
+
 import com.shop.myapp.dto.Item;
 import com.shop.myapp.dto.ItemOption;
 import com.shop.myapp.dto.Pagination;
 import com.shop.myapp.repository.ItemOptionRepository;
 import com.shop.myapp.repository.ItemRepository;
->>>>>>> 9dd63d4b92aeaccad227a4ef950b6ba0b92c8d39
+
 import org.apache.ibatis.session.SqlSession;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
@@ -40,14 +40,14 @@ public class ItemService {
         return item.orElseThrow(() -> new IllegalStateException("Not Found Item"));
     }
 
-<<<<<<< HEAD
+
     public List<Item> getItems() {
         List<Item> items = itemRepository.findAll();
         return items;
-=======
+
     public List<Item> getItems(Pagination pagination) {
         return itemRepository.findAll(pagination);
->>>>>>> 9dd63d4b92aeaccad227a4ef950b6ba0b92c8d39
+
     }
 
     public int createItem(Item item) {
