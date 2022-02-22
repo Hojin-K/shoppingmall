@@ -3,6 +3,7 @@ package com.shop.myapp.controller;
 import com.shop.myapp.dto.Item;
 import com.shop.myapp.dto.ItemOption;
 import com.shop.myapp.dto.Member;
+import com.shop.myapp.dto.Pagination;
 import com.shop.myapp.service.FileService;
 import com.shop.myapp.service.ItemService;
 import org.springframework.stereotype.Controller;
@@ -28,21 +29,26 @@ public class ItemController {
     }
 
     @GetMapping("")
-    public String getItems(/* {페이징 처리},{검색 필터}*/Model model){
-        List<Item> items = itemService.getItems();
-        model.addAttribute("items",items);
+    public String getItems(@RequestParam(required = false, defaultValue = "1") int page, Model model) {
+        Pagination pagination = new Pagination();
+        int itemListCnt = itemService.getItemListCnt();
+        pagination.pageInfo(page, itemListCnt);
+        List<Item> items = itemService.getItems(pagination);
+        model.addAttribute("items", items);
+        model.addAttribute("pagination", pagination);
         return "item/items";
 
     }
+
     @GetMapping("/{itemCode}")
-    public String getItemDetail(@PathVariable String itemCode, Model model){
+    public String getItemDetail(@PathVariable String itemCode, Model model) {
         Item item = itemService.getItem(itemCode);
-        model.addAttribute("item",item);
+        model.addAttribute("item", item);
         return "item/item";
     }
 
     @GetMapping("/add")
-    public String createItemForm(){
+    public String createItemForm() {
 
         return "/item/addItemForm";
     }
@@ -54,14 +60,14 @@ public class ItemController {
         item.setMemberId(member.getMemberId());
         Map<String, String> fileInfo = fileService.boardFileUpload(file, absolutePath);
         List<ItemOption> itemOptions = item.getItemOptions();
-        for (ItemOption itemOption : itemOptions){
+        for (ItemOption itemOption : itemOptions) {
             System.out.println(itemOption.getOptionName());
             System.out.println(itemOption.getOptionStock());
         }
         item.setItemImage(fileInfo.get("path"));
         int itemResult = itemService.createItem(item);
-        if (itemResult != 0){
-            redirectAttributes.addAttribute("itemCode",item.getItemCode());
+        if (itemResult != 0) {
+            redirectAttributes.addAttribute("itemCode", item.getItemCode());
             return "redirect:/item/{itemCode}";
         } else {
             throw new IllegalStateException("아이템 등록 실패");
@@ -69,22 +75,22 @@ public class ItemController {
     }
 
     @GetMapping("/{itemCode}/update")
-    public String updateItemForm(@PathVariable String itemCode,Model model){
+    public String updateItemForm(@PathVariable String itemCode, Model model) {
         Item item = itemService.getItem(itemCode);
-        model.addAttribute("item",item);
+        model.addAttribute("item", item);
         return "";
     }
 
     @PostMapping("/{itemCode}/update")
-    public String updateItem(@PathVariable String itemCode, Item item, RedirectAttributes redirectAttributes){
+    public String updateItem(@PathVariable String itemCode, Item item, RedirectAttributes redirectAttributes) {
 
         itemService.updateItem(item);
-        redirectAttributes.addAttribute("itemCode",itemCode);
+        redirectAttributes.addAttribute("itemCode", itemCode);
         return "redirect:/item/{itemCode}";
     }
 
     @PostMapping("/{itemCode}/delete")
-    public String deleteItem(@PathVariable String itemCode){
+    public String deleteItem(@PathVariable String itemCode) {
         itemService.deleteItem(itemCode);
         return "redirect:/item";
     }

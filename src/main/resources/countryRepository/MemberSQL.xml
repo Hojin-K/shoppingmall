@@ -5,6 +5,7 @@
 <mapper namespace="com.shop.myapp.repository.MemberRepository">
 
     <insert id="insertMember">
+<<<<<<< HEAD
        		INSERT INTO SHOP_MEMBER_TB(member_id,member_pwd,MEMBER_NAME,MEMBER_ADdRESS,MEMBER_TEL,MEMBER_BIRTH) 
        		VALUES(#{memberId}, #{memberPwd},
        		#{memberName}, #{memberAddress}, #{memberTel}, #{memberBirth})
@@ -16,11 +17,32 @@
     		UPDATE SHOP_MEMBER_TB SET MEMBER_PWD = #{memberPwd}, MEMBER_NAME=#{memberName},
     		MEMBER_ADDRESS=#{memberAddress},MEMBER_TEL=#{memberTel},MEMBER_BIRTH=#{memberBirth}
     		WHERE MEMBER_ID = #{memberId}
+=======
+        INSERT INTO SHOP_MEMBER_TB(member_id, member_pwd,
+                                   member_name, member_address,
+                                   member_tel, member_birth,
+                                   BUSINESS_REGISTRATION_NO, BUSINESS_NAME)
+        VALUES (#{memberId}, #{memberPwd},
+                #{memberName}, #{memberAddress}, #{memberTel}, #{memberBirth}
+                   , #{businessRegistrationNo,jdbcType=VARCHAR}, #{businessName,jdbcType=VARCHAR})
+    </insert>
+    <update id="updateMember">
+        UPDATE SHOP_MEMBER_TB
+        SET MEMBER_PWD   = #{memberPwd},
+            MEMBER_NAME=#{memberName},
+            MEMBER_ADRESS=#{memberAddress},
+            MEMBER_TEL=#{memberTel},
+            MEMBER_BIRTH=#{memberBirth}
+        WHERE MEMBER_ID = #{memberId}
+>>>>>>> 9dd63d4b92aeaccad227a4ef950b6ba0b92c8d39
     </update>
     <select id="findAll" resultType="com.shop.myapp.dto.Member">
-			SELECT * FROM SHOP_MEMBER_TB
+        SELECT *
+        FROM SHOP_MEMBER_TB
     </select>
     <select id="findById" resultType="com.shop.myapp.dto.Member">
-        SELECT * FROM SHOP_MEMBER_TB WHERE MEMBER_ID = #{memberId}
+        SELECT *
+        FROM SHOP_MEMBER_TB
+        WHERE MEMBER_ID = #{memberId}
     </select>
 </mapper>

@@ -62,28 +62,28 @@
                     let msg;
                     if (rsp.success) {
                         jQuery.ajax({
-                            url: "/order/"+order.orderCode+"/validate",
+                            url: "/order/" + order.orderCode + "/validate",
                             method: "POST",
                             // header : {"Content-Type" : "application/json"},
                             data: {
                                 "imp_uid": rsp.imp_uid,
-                                "orderCode" : order.orderCode
+                                "orderCode": order.orderCode
                             },
                             statusCode: {
                                 200: function (data) {
                                     location.href = "/order/myOrder";
+                                },
+                                402: function () {
+                                    msg = '위조된 결제입니다.';
                                 }
-                            },
-                            402: function () {
-                                msg = '위조된 결제입니다.';
                             }
 
                         })
                     } else {
                         $.ajax({
-                            url:"/order/"+order.orderCode+"/cancel",
-                            method:"POST",
-                            success:function (){
+                            url: "/order/" + order.orderCode + "/cancel",
+                            method: "POST",
+                            success: function () {
                                 msg += "다시 주문 해주세요. \n";
                             }
                         });
@@ -182,7 +182,7 @@
         ${pageScope.total}
     </span>원
     </form>
-    <button id="request_pay">결제하기</button>
+    <button class="btn btn-secondary btn-sm" id="request_pay">결제하기</button>
 </div>
 </body>
 </html>

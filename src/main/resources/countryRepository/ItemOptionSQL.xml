@@ -21,6 +21,7 @@
     </resultMap>
 
 
+
     <update id="insertItemOptions" parameterType="list">
         insert into HR.SHOP_ITEM_OPTIONS_TB(option_code, item_code, option_name, option_priceud, OPTION_STOCK)
         SELECT CODE_ITEM_OPTIONS_SQ.nextval AS option_code ,

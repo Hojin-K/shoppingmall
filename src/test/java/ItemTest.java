@@ -38,10 +38,10 @@ public class ItemTest {
                 itemOptions.add(itemOption);
             }
 
-            item.setItemName("testItem" + i);
+            item.setItemName("titem" + i);
             item.setItemPrice((int) (Math.random() * 10000) + 1000);
             item.setCountryCode("410");
-            item.setMemberId("test1");
+            item.setMemberId("tt1");
             item.setItemInfo("test Item" + i);
             item.setItemImage("없음");
             item.setItemOptions(itemOptions);

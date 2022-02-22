@@ -1,16 +1,16 @@
 package com.shop.myapp.controller;
 
 import com.shop.myapp.dto.Country;
+import com.shop.myapp.dto.Member;
 import com.shop.myapp.service.CountryService;
 import lombok.extern.slf4j.Slf4j;
 import org.json.simple.parser.ParseException;
 import org.springframework.http.ResponseEntity;
 import org.springframework.stereotype.Controller;
-import org.springframework.web.bind.annotation.GetMapping;
-import org.springframework.web.bind.annotation.RequestMapping;
-import org.springframework.web.bind.annotation.ResponseBody;
+import org.springframework.web.bind.annotation.*;
 
 import java.net.URISyntaxException;
+import java.util.ArrayList;
 import java.util.List;
 
 @Controller
@@ -36,4 +36,5 @@ public class CountryController {
         List<Country> countries = countryService.getCountries();
         return ResponseEntity.ok(countries);
     }
+
 }

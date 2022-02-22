@@ -19,18 +19,14 @@ public class Member {
 	private String memberTel;
 	@DateTimeFormat(pattern = "yyyy-MM-dd")
 	private LocalDate memberBirth;
+	private String businessRegistrationNo;
+	private String businessName;
 	
-	/*public void setMemberBirth(String memberBirth) {
-		DateTimeFormatter format = DateTimeFormatter.ofPattern("yyyy-MM-dd");
-		System.out.println(memberBirth);
-		this.memberBirth = LocalDate.parse(memberBirth, format);
-		System.out.println(this.memberBirth);
-	}*/
+	private String detailAddress;
+	private String address;
 	
-	/*public String getMemberBirth() {
-		
-		String birth = this.memberBirth.toString();
-		log.info("birth : {}", birth);
-		return birth;
-	}*/
+	public void setDetailAddress(String detailAddress) {
+		this.detailAddress = detailAddress;
+		this.memberAddress = this.address +" "+this.detailAddress;
+	}
 }

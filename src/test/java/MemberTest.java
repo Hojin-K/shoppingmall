@@ -24,7 +24,7 @@ public class MemberTest {
         int count = 0;
         for (int i=0; i<5; i++){
             Member member = new Member();
-            member.setMemberId("t"+i);
+            member.setMemberId("tt"+i);
             member.setMemberPwd("test"+i);
             member.setMemberName("test"+i);
             member.setMemberAddress("test"+i);
@@ -39,7 +39,7 @@ public class MemberTest {
     @Test
     public void updateMeber() {
     	 Member member = new Member();
-         member.setMemberId("test8");
+         member.setMemberId("t1");
          member.setMemberPwd("test8");
          member.setMemberName("test8");
          member.setMemberAddress("test8");
