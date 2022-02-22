@@ -9,7 +9,12 @@
 			<param name="ConversionPattern" value="%-5p: %c - %m%n" />
 		</layout>
 	</appender>
-	
+	<!-- Query Loggers --> 
+	<!-- <logger name="jdbc.sqlonly" additivity="false">
+		<level value="INFO" />
+		<appender-ref ref="console-infolog" />
+	</logger> -->
+
 	<!-- Application Loggers -->
 	<logger name="com.shop.myapp">
 		<level value="info" />

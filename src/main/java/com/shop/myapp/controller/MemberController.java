@@ -1,6 +1,7 @@
 package com.shop.myapp.controller;
 
 import java.util.List;
+import java.util.Map;
 
 import javax.servlet.http.HttpServletRequest;
 
@@ -8,6 +9,7 @@ import org.springframework.http.ResponseEntity;
 import org.springframework.stereotype.Controller;
 import org.springframework.web.bind.annotation.*;
 
+import com.shop.myapp.dto.Country;
 import com.shop.myapp.dto.Member;
 import com.shop.myapp.service.AuthService;
 import com.shop.myapp.service.AuthServiceImpl;
@@ -51,7 +53,7 @@ public class MemberController {
     @GetMapping("/normalUpdate")
     public String normalUpdateForm() {
     	log.info("normalUpdateForm");
-    	return "/member/normalUpdate";
+    	return "/members/normalUpdate";
     }
     
     @PostMapping("/normalUpdate")
@@ -64,10 +66,17 @@ public class MemberController {
     	return "redirect:/members";
     }
     
+    @GetMapping("/memberListView")
+    public String memberList() {
+    	return "/members/memberList";
+    }
+    
     @ResponseBody
-    @GetMapping("")
-    public List<Member> findAll(){
-    	return memberService.getMembers();
+    @GetMapping("/memberList")
+    public ResponseEntity<Object> getMemberList(@RequestParam Map<String, Object> param){
+    	log.info("memberList");
+        List<Member> members = memberService.getMembers(param);
+        return ResponseEntity.ok(members);
     }
     
     @GetMapping("/login")

@@ -23,6 +23,7 @@ public class CountryController {
         this.countryService = countryService;
     }
 
+    @GetMapping("getCountry")
     public String get() throws ParseException, URISyntaxException {
         int result = countryService.getCountryFromAPI();
         log.info("들어간 값(234) : {}",result);
