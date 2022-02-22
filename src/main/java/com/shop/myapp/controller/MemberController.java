@@ -82,7 +82,7 @@ public class MemberController {
     @GetMapping("/login")
     public String loginForm() {
     	log.info("loginForm");
-    	return "/members/login";
+    	return "/member/login";
     }
     
     @RequestMapping(value="/login", produces="application/json;charset=UTF-8", 
