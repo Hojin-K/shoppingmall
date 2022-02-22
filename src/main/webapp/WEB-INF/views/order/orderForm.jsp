@@ -24,10 +24,12 @@
                             let buyerName = data.memberName;
                             let buyerAddr = data.memberAddress;
                             let buyerTel = data.memberTel;
+                            let buyerEmail = data.memberEmail;
 
                             $("#buyerName").val(buyerName);
                             $("#buyerAddr").val(buyerAddr);
                             $("#buyerTel").val(buyerTel);
+                            $("#buyerEmail").val(buyerEmail);
                         },
                         error: function () {
                             alert("회원 정보를 가져오는데 실패하였습니다.")
@@ -129,7 +131,7 @@
         </div>
         <div class="mb-3">
             <label for="buyerTel">전화번호</label>
-            <input class="form-control" type="tel" name="buyerTel" id="buyerTel" required>
+            <input class="form-control" type="tel" name="buyerTel" id="buyerTel" placeholder="전화번호를 입력해주세요." required>
         </div>
         <div class="mb-3">
             <label for="buyerEmail">이메일</label>

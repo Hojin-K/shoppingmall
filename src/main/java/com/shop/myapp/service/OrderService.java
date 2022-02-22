@@ -54,16 +54,14 @@ public class OrderService {
         return cartService.findSelectCartByCartIds(cartIds);
     }
 
-    public Payment validateTotalPay(String impUid, String orderCode) throws ParseException {
+    public Payment validateTotalPay(String impUid, String orderCode) {
         try {
             Order order = orderRepository.findByOrderCode(orderCode);
-            System.out.println(order.toString());
             String accessToken = iamPortService.getAccessToken();
 
             Payment payment = iamPortService.getImpAttributes(impUid, accessToken);
-            System.out.println(payment.toString());
             if (order.getTotalPay() == payment.getAmount()) {
-                orderRepository.updateIsPaidIntByOrderCode(orderCode);
+                orderRepository.updateIsPaidIntByOrderCode(orderCode,payment);
                 orderDetailService.updatePostedStatusByOrderCode(orderCode);
                 cartService.deleteByMemberId(order.getMemberId());
                 return payment;

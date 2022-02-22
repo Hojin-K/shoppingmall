@@ -15,6 +15,7 @@ public class Member {
 	private String memberPwd; 
 	private String memberLevel;
 	private String memberName;
+	private String memberEmail;
 	private String memberAddress;
 	private String memberTel;
 	@DateTimeFormat(pattern = "yyyy-MM-dd")

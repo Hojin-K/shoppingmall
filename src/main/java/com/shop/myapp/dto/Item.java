@@ -16,6 +16,7 @@ public class Item {
     private String itemImage;
     private String itemInfo;
     private int itemStock;
+    private String itemBrand;
     private List<ItemOption> itemOptions;
     private Country country;
 

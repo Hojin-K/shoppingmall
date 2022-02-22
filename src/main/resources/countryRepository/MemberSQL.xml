@@ -17,7 +17,7 @@
         UPDATE SHOP_MEMBER_TB
         SET MEMBER_PWD   = #{memberPwd},
             MEMBER_NAME=#{memberName},
-            MEMBER_ADRESS=#{memberAddress},
+            MEMBER_ADDRESS=#{memberAddress},
             MEMBER_TEL=#{memberTel},
             MEMBER_BIRTH=#{memberBirth}
         WHERE MEMBER_ID = #{memberId}

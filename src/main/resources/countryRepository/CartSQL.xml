@@ -61,7 +61,7 @@
                item.ITEM_CODE         as item_code,
                item.ITEM_IMAGE        as item_image,
                options.OPTION_NAME    as option_name,
-               options.OPTION_PRICEUD as option_priceud,
+               options.OPTION_PRICE_UD as option_price_ud,
                options.OPTION_CODE    as option_code
         from HR.SHOP_CART_TB cart,
              HR.SHOP_ITEM_TB item,
@@ -88,7 +88,7 @@
         item.ITEM_CODE         as item_code,
         item.ITEM_IMAGE        as item_image,
         options.OPTION_NAME    as option_name,
-        options.OPTION_PRICEUD as option_priceud,
+        options.OPTION_PRICE_UD as option_price_ud,
         options.OPTION_CODE    as option_code
         from HR.SHOP_CART_TB cart,
         HR.SHOP_ITEM_TB item,

@@ -47,7 +47,10 @@
             });
 
             $(document).on("click", "#backMain", function () {
-                location.href = "/item/getItem";
+                location.href = "/item/";
+            });
+            $(document).on("click", "#update", function () {
+                location.href = "/item/${item.itemCode}/update";
             });
 
             $('#myTab a').click(function (e) {
@@ -62,19 +65,21 @@
 <body>
 <div class="container">
     <div class="row">
-        <div class="col-6 m-auto" style="height: 20rem">
+        <div class="col-6 m-auto" style="height: 20rem; text-align: center">
             <img src="${item.itemImage}" style="width: auto; height: 100%; object-fit: cover;" alt="">
         </div>
         <div class="col-6 m-auto">
             <form action="/cart/add" method="post">
                 <div>
-                    <h3>${item.itemName}</h3>
+                    <div>
+                        <h3 style="display: inline-block">${item.itemName}</h3>
+                        <button style="display: inline; margin-left: 5px; margin-bottom: 10px"  class="btn btn-sm btn-primary disabled">${item.country.countryName}</button>
+                    </div>
                     <div>
                         <span class="aa-product-view-price"><fmt:formatNumber pattern="#,### 원"
                                                                               value="${item.itemPrice}"/></span>
-                        <span >${item.country.countryName}</span>
                         <br>
-                        <select name="optionCode" id="optionCode" class="form-select col-12">
+                        <select name="optionCode" id="optionCode" class="form-select col-12" required>
                             <option value="" disabled selected hidden>옵션을 선택하여주세요.(필수)</option>
                             <c:forEach items="${item.itemOptions}" var="itemOption">
                                 <c:if test="${itemOption.optionStock == 0}">
@@ -92,6 +97,10 @@
                         <input type="submit" class="btn btn-lg btn-dark col-8 m-auto" value="장바구니에 담기">
                         <button id="backMain" type="button" class="btn btn-lg btn-secondary col-3 m-auto">취소</button>
                     </div>
+                        <c:if test="${sessionScope.member.memberId == item.memberId}">
+                            <br>
+                        <button id="update" type="button" class="btn btn-primary col-12 m-auto">수정하기</button>
+                        </c:if>
                 </div>
             </form>
         </div>

@@ -4,11 +4,14 @@ import com.shop.myapp.dto.ItemOption;
 import org.apache.ibatis.session.SqlSession;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
+import org.springframework.transaction.annotation.Transactional;
 
+import java.util.Collections;
 import java.util.List;
 import java.util.Optional;
 
 @Service
+@Transactional(rollbackFor = {Exception.class})
 public class ItemOptionService {
     private final com.shop.myapp.repository.ItemOptionRepository itemOptionRepository;
 
@@ -25,17 +28,22 @@ public class ItemOptionService {
     }
 
     public int insertItemOptions(List<ItemOption> options,String itemCode){
+        options.removeAll(Collections.singletonList(null));
         for (ItemOption itemOption : options){
             itemOption.setItemCode(itemCode);
         }
         return itemOptionRepository.insertItemOptions(options);
     }
 
-    public int modifyItemOption(List<ItemOption> itemOptions){
-        return itemOptionRepository.modifyItemOption(itemOptions);
+    public int modifyItemOption(List<ItemOption> itemOptions,String itemCode){
+        int result = deleteByItemCode(itemCode);
+        return itemOptionRepository.insertItemOptions(itemOptions);
     }
 
-    public int deleteItemOption(List<String> optionCodes){
-        return itemOptionRepository.deleteItemOption(optionCodes);
+    public int deleteItemOption(String optionCode){
+        return itemOptionRepository.deleteItemOption(optionCode);
+    }
+    public int deleteByItemCode(String itemCode){
+        return itemOptionRepository.deleteByItemCode(itemCode);
     }
 }

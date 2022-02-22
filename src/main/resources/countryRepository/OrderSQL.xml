@@ -14,6 +14,8 @@
         <id property="buyerPostCode" column="buyer_post_code"/>
         <id property="isPaid" column="is_paid"/>
         <id property="paidAt" column="paid_at"/>
+        <id property="impUid" column="imp_uid"/>
+        <id property="change" column="change"/>
         <collection property="orderDetails" ofType="com.shop.myapp.dto.OrderDetail" javaType="java.util.List">
             <result property="orderDetailCode" column="order_detail_code"/>
             <result property="orderCode" column="order_code"/>
@@ -50,8 +52,11 @@
     </insert>
     <update id="updateIsPaidIntByOrderCode">
         update SHOP_ORDER_TB
-        set IS_PAID = 'Paid'
-        where ORDER_CODE = #{orderCode}
+        set IS_PAID = 'paid',
+            IMP_UID = #{payment.impUid},
+            CHANGE  = #{payment.amount},
+            paid_at = #{payment.paidAt}
+        where ORDER_CODE = #{param1}
     </update>
     <delete id="deleteOrderByOrderCode">
         delete SHOP_ORDER_TB

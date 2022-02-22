@@ -13,6 +13,7 @@ import org.springframework.web.multipart.MultipartFile;
 import org.springframework.web.servlet.mvc.support.RedirectAttributes;
 
 import javax.servlet.http.HttpServletRequest;
+import javax.servlet.http.HttpSession;
 import java.io.IOException;
 import java.util.List;
 import java.util.Map;
@@ -22,7 +23,6 @@ import java.util.Map;
 public class ItemController {
     private final ItemService itemService;
     private final FileService fileService;
-
     public ItemController(ItemService itemService, FileService fileService) {
         this.itemService = itemService;
         this.fileService = fileService;
@@ -30,9 +30,7 @@ public class ItemController {
 
     @GetMapping("")
     public String getItems(@RequestParam(required = false, defaultValue = "1") int page, Model model) {
-        Pagination pagination = new Pagination();
-        int itemListCnt = itemService.getItemListCnt();
-        pagination.pageInfo(page, itemListCnt);
+        Pagination pagination = itemService.getPaginationByPage(page);
         List<Item> items = itemService.getItems(pagination);
         model.addAttribute("items", items);
         model.addAttribute("pagination", pagination);
@@ -78,12 +76,10 @@ public class ItemController {
     public String updateItemForm(@PathVariable String itemCode, Model model) {
         Item item = itemService.getItem(itemCode);
         model.addAttribute("item", item);
-        return "";
+        return "/item/updateItemForm";
     }
-
     @PostMapping("/{itemCode}/update")
     public String updateItem(@PathVariable String itemCode, Item item, RedirectAttributes redirectAttributes) {
-
         itemService.updateItem(item);
         redirectAttributes.addAttribute("itemCode", itemCode);
         return "redirect:/item/{itemCode}";
@@ -94,6 +90,16 @@ public class ItemController {
         itemService.deleteItem(itemCode);
         return "redirect:/item";
     }
+
+    @GetMapping("/search")
+    public String search(@RequestParam(required = false, defaultValue = "1") int page,@RequestParam("q") String search,Model model){
+        Pagination pagination = itemService.getPaginationByPage(page);
+        List<Item> items = itemService.search(search,pagination);
+        model.addAttribute("pagination",pagination);
+        model.addAttribute("items",items);
+        return "item/items";
+    }
+
 
 
 }
