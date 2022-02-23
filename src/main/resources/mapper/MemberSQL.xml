@@ -5,19 +5,25 @@
 <mapper namespace="com.shop.myapp.repository.MemberRepository">
 
     <insert id="insertMember">
-        INSERT INTO SHOP_MEMBER_TB(MEMBER_ID, MEMBER_PWD, MEMBER_LEVEL,
-                                   MEMBER_NAME, MEMBER_ADDRESS,
-                                   MEMBER_TEL, MEMBER_BIRTH,
-                                   BUSINESS_REGISTRATION_NO, BUSINESS_NAME)
-        VALUES (#{memberId}, #{memberPwd}, #{memberLevel, jdbcType=VARCHAR},
-                #{memberName}, #{memberAddress}, #{memberTel}, #{memberBirth}
-                   , #{businessRegistrationNo,jdbcType=VARCHAR}, #{businessName,jdbcType=VARCHAR})
+        INSERT INTO SHOP_MEMBER_TB (MEMBER_ID, MEMBER_PWD,
+         	<if test ="memberLevel == 'SELLER'">
+         			MEMBER_LEVEL,
+         	</if>
+                                   MEMBER_NAME, MEMBER_EMAIL, MEMBER_ADDRESS,
+                                   MEMBER_TEL, MEMBER_BIRTH, BUSINESS_REGISTRATION_NO,
+                                   BUSINESS_NAME, BUSINESS_INFO)
+        VALUES (#{memberId}, #{memberPwd},
+          	<if test ="memberLevel == 'SELLER'">
+        		#{memberLevel},
+        	</if>
+                #{memberName}, #{memberEmail}, #{memberAddress}, #{memberTel}, #{memberBirth}
+                   , #{businessRegistrationNo,jdbcType=VARCHAR}, #{businessName,jdbcType=VARCHAR}
+                   ,#{businessInfo,jdbcType=VARCHAR})
     </insert>
     <update id="updateMember">
         UPDATE SHOP_MEMBER_TB
         SET MEMBER_PWD   = #{memberPwd},
             MEMBER_NAME=#{memberName},
-            MEMBER_ADDRESS=#{memberAddress},
             MEMBER_ADDRESS=#{memberAddress},
             MEMBER_TEL=#{memberTel},
             MEMBER_BIRTH=#{memberBirth}

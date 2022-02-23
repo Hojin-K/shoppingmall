@@ -22,6 +22,8 @@ public class Member {
 	private LocalDate memberBirth;
 	private String businessRegistrationNo;
 	private String businessName;
+	private String businessInfo;
+	private String isDelete;
     private String detailAddress;
     private String address;
 	

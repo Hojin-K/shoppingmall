@@ -24,17 +24,19 @@
 $(function() {
 	$('#btnSearch').click(function () {
 		let chkInfo = $('[name = chk_info]:checked').val();
-		alert(chkInfo);
  		let condition = $('#condition').val();
  		$.ajax({
-            url: '/members/list',
+            url: '/admin/list',
             method: 'POST',
             data: {
             	'chkInfo' : chkInfo,
             	'condition' : condition
             },
-            dataType: 'json',
-            success: function (data) {
+				success : function(data) {
+				
+				data = data.trim();
+				$('#memberList').html(data);
+           /*  success: function (data) {
             	$("#memberList").empty();
             	let view = "<tr><td>ID</td><td>이름</td></tr>";
 	                $.each(data, function (key, member) {
@@ -45,7 +47,7 @@ $(function() {
 	                    view += "<tr><td>"+Id+"</td><td>"+Name+"</td></tr>"
 	        			
 	                });
-        		$("#memberList").append(view);
+        		$("#memberList").append(view); */
             }
         })
 	});
@@ -64,8 +66,11 @@ $(function() {
 			<span style="margin-left: 30px;"><input id="condition" type="text" /></span>
 			<span style="margin-left: 15px;"><input id="btnSearch" type="button" value="검색"/></span>
 		</div>
-		<table id="memberList" style="border: 1px;">
-		</table>
+		<!-- <table id="memberList" style="border: 1px;">
+		</table> -->
+		<div id="memberList">
+		
+		</div>
 		<div id="countryCode"></div>
 	</div>
 </body>
