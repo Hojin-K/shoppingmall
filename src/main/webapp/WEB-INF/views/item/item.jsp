@@ -17,7 +17,7 @@
     </style>
     <script>
         $(function () {
-            test();
+            // test();
 
             $(document).on("click", "#backMain", function () {
                 location.href = "/item/";
@@ -31,16 +31,16 @@
                 $(this).tab('show')
             })
 
-            function test (){
-                $.ajax({
-                    url : "/test",
-                    method : "GET",
-                    success : function (data){
-                        alert(data);
-                        $("#review").html(data);
-                    }
-                })
-            }
+            // function test (){
+            //     $.ajax({
+            //         url : "/test",
+            //         method : "GET",
+            //         success : function (data){
+            //             alert(data);
+            //             $("#review").html(data);
+            //         }
+            //     })
+            // }
 
         });
     </script>

@@ -28,7 +28,7 @@ $(function() {
  		let condition = $('#condition').val();
  		$.ajax({
             url: '/members/list',
-            method: 'GET',
+            method: 'POST',
             data: {
             	'chkInfo' : chkInfo,
             	'condition' : condition

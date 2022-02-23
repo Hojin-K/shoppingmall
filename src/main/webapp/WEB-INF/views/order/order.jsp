@@ -34,11 +34,11 @@
         color: black;
     }
 
-    .content {
+    .tableContent {
         display: table;
     }
 
-    .content span {
+    .tableContent span {
         display: table-cell;
         vertical-align: middle;
     }
@@ -62,7 +62,7 @@
             <c:forEach items="${order.orderDetails}" var="orderDetail">
                 <tr>
                     <td>${order.orderCode}</td>
-                    <td class="content text-start">
+                    <td class="tableContent text-start">
                         <a class="itemLink" href="/item/${orderDetail.itemOption.item.itemCode}">
                             <div style="width:10%; height:100%; float:left;">
                                 <img style="width: 100%;" src="${orderDetail.itemOption.item.itemImage}" alt="">

@@ -80,10 +80,8 @@ public class MemberController {
     }
     
     @ResponseBody
-    @GetMapping("/list")
+    @PostMapping("/list")
     public ResponseEntity<Object> getMemberList(@RequestParam String chkInfo, @RequestParam String condition){
-    	log.info("memberList");
-    	System.out.println(chkInfo);
         List<Member> members = memberService.getMembers(chkInfo, condition);
         return ResponseEntity.ok(members);
     }
@@ -106,7 +104,7 @@ public class MemberController {
             e.printStackTrace();
         }
 
-    	return "redirect:/members";
+    	return "redirect:/item/home";
     }
 
     @GetMapping("/{memberId}")

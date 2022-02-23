@@ -40,26 +40,10 @@
     <!-- mybatis setting -->
     <beans:bean name="dataSource" class="org.springframework.jdbc.datasource.DriverManagerDataSource">
         <beans:property name="driverClassName" value="oracle.jdbc.driver.OracleDriver"/>
-<<<<<<< HEAD
-        <beans:property name="url" value="jdbc:oracle:thin:@localhost:1521:xe"/>
-=======
         <beans:property name="url" value="jdbc:oracle:thin:@192.168.1.115:1521:xe"/>
->>>>>>> d1e0b76f18cafb0836ecdbfc158cc3ef3fdcfdbc
         <beans:property name="username" value="hr"/>
-        <beans:property name="password" value="123456"/>
+        <beans:property name="password" value="1234"/>
     </beans:bean>
-    
-    <!-- <beans:bean id="dataSource" class="net.sf.log4jdbc.Log4jdbcProxyDataSource">
-	<beans:constructor-arg ref="dataSourceSpied" />
-	<beans:property name="logFormatter">
-		<beans:bean class="net.sf.log4jdbc.tools.Log4JdbcCustomFormatter">
-			<beans:property name="loggingType" value="MULTI_LINE" />
-			<beans:property name="sqlPrefix" value="SQL : " />
-		</beans:bean>
-	</beans:property>
-	</beans:bean> -->
-
-
 
     <beans:bean id="sqlSessionFactory" class="org.mybatis.spring.SqlSessionFactoryBean">
         <beans:property name="dataSource" ref="dataSource"/>

@@ -9,6 +9,7 @@
         <id property="totalPay" column="total_pay"/>
         <id property="memberId" column="member_id"/>
         <id property="buyerName" column="buyer_name"/>
+        <id property="buyerTel" column="buyer_tel" />
         <id property="buyerEmail" column="buyer_email"/>
         <id property="buyerAddr" column="buyer_addr"/>
         <id property="buyerPostCode" column="buyer_post_code"/>
