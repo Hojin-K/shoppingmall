@@ -11,12 +11,14 @@
 <html>
 <head>
     <title>Title</title>
-
-
 </head>
 <script>
-    $(function (){
+    $(function () {
+            fnModuleInfo();
 
+        function fnModuleInfo() {
+            $("#sellerModal .modal-content").load("/seller/${seller.memberId}/update");
+        }
     })
 </script>
 <style>
@@ -62,9 +64,9 @@
         white-space: nowrap;
     }
 
-    #sellerBar{
-        background: #2c3e50;  /* fallback for old browsers */
-        background: -webkit-linear-gradient(to right, #3498db, #2c3e50);  /* Chrome 10-25, Safari 5.1-6 */
+    #sellerBar {
+        background: #2c3e50; /* fallback for old browsers */
+        background: -webkit-linear-gradient(to right, #3498db, #2c3e50); /* Chrome 10-25, Safari 5.1-6 */
         background: linear-gradient(to right, #3498db, #2c3e50); /* W3C, IE 10+/ Edge, Firefox 16+, Chrome 26+, Opera 12+, Safari 7+ */
 
     }
@@ -93,7 +95,7 @@
             </form>
             <c:if test="${seller.memberId == sessionScope.member.memberId}">
                 <br>
-                <button id="modify" type="button" class="btn btn-sm btn-light col-3">상점 관리</button>
+                <button id="update" type="button" data-bs-toggle="modal" data-bs-target="#sellerModal" class="btn btn-sm btn-light shadow col-2">상점 관리</button>
             </c:if>
         </div>
         <div class="col-6">
@@ -157,7 +159,13 @@
                 >> </a></li>
         </ul>
     </div>
-    <!-- Gallery Item 1 -->
 </div>
+<div class="modal fade" id="sellerModal" tabindex="-1" role="dialog" aria-labelledby="historyModalLabel" aria-hidden="true">
+    <div class="modal-dialog modal-xl">
+        <div class="modal-content">
+        </div>
+    </div>
+</div>
+
 </body>
 </html>

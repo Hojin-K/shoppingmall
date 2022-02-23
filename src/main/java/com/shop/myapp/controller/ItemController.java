@@ -95,7 +95,7 @@ public class ItemController {
             redirectAttributes.addAttribute("itemCode", itemCode);
             return "redirect:/item/{itemCode}";
         }
-        return "redirect:item";
+        return "redirect:/item";
     }
 
     @GetMapping("/{itemCode}/delete")
@@ -105,7 +105,7 @@ public class ItemController {
             itemService.deleteItem(itemCode);
             return "redirect:/item";
         }
-        return "redirect:item";
+        return "redirect:/item";
     }
 
     @GetMapping("/search")

@@ -103,4 +103,10 @@ public class MemberService {
     public List<Item> getSellerItems(String memberId, Pagination pagination,String search){
         return itemService.getSellerItemByMemberId(memberId, pagination,search);
     }
+
+    public int updateSellerInfo(Member member){
+        MemberRepository memberRepository
+                = sqlSession.getMapper(MemberRepository.class);
+        return memberRepository.updateSeller(member);
+    }
 }

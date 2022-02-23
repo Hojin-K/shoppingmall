@@ -22,6 +22,10 @@
             MEMBER_BIRTH=#{memberBirth}
         WHERE MEMBER_ID = #{memberId}
     </update>
+    <update id="updateSeller" >
+        update HR.SHOP_MEMBER_TB
+set HR.SHOP_MEMBER_TB.BUSINESS_NAME = #{businessName}, business_info = #{businessInfo} where member_id = #{memberId}
+    </update>
     <select id="findAll" resultType="com.shop.myapp.dto.Member" >
         SELECT *
         FROM SHOP_MEMBER_TB
@@ -34,4 +38,6 @@
         FROM SHOP_MEMBER_TB
         WHERE MEMBER_ID = #{memberId}
     </select>
+
+
 </mapper>

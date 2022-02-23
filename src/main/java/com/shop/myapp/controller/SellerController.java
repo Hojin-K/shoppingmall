@@ -7,10 +7,8 @@ import com.shop.myapp.service.ItemService;
 import com.shop.myapp.service.MemberService;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
-import org.springframework.web.bind.annotation.GetMapping;
-import org.springframework.web.bind.annotation.PathVariable;
-import org.springframework.web.bind.annotation.RequestMapping;
-import org.springframework.web.bind.annotation.RequestParam;
+import org.springframework.web.bind.annotation.*;
+import org.springframework.web.servlet.mvc.support.RedirectAttributes;
 
 import javax.servlet.http.HttpSession;
 import java.util.List;
@@ -41,5 +39,20 @@ public class SellerController {
         model.addAttribute("items",items);
         model.addAttribute("pagination",pagination);
         return "/seller/sellerView";
+    }
+
+    @GetMapping("/{memberId}/update")
+    public String updateSellerInfoForm(@PathVariable String memberId,Model model){
+        Member seller = memberService.getMember(memberId);
+        model.addAttribute("seller",seller);
+        return "/modal/sellerModal";
+    }
+
+    @PostMapping("/{memberId}/update")
+    public String updateSellerInfo(@PathVariable String memberId, Member member, RedirectAttributes redirectAttributes){
+        member.setMemberId(memberId);
+        int i = memberService.updateSellerInfo(member);
+        redirectAttributes.addAttribute("memberId",memberId);
+        return "redirect:/seller/{memberId}";
     }
 }
