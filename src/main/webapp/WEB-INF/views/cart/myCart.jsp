@@ -35,11 +35,11 @@
         color: black;
     }
 
-    .content {
+    .tableContent {
         display: table;
     }
 
-    .content span {
+    .tableContent span {
         display: table-cell;
         vertical-align: middle;
     }
@@ -109,14 +109,14 @@
 <div class="container">
     <div class="row">
         <form action="/order/addForm" method="post">
-            <table class="table text-center">
+            <table class="table text-center m-auto">
                 <thead>
                 <tr>
                     <th style="width: 8.33%">선택</th>
-                    <th style="width: 50%">상품</th>
+                    <th style="width: 30%">상품</th>
                     <th style="width: 16.66%">가격</th>
-                    <th style="width: 8.33%">갯수</th>
-                    <th style="width: 8.33%">주문관리</th>
+                    <th style="width: 20.33%">갯수</th>
+                    <th style="width: 10.33%">주문관리</th>
                 </tr>
                 </thead>
                 <tbody>
@@ -124,12 +124,12 @@
                 <c:forEach items="${carts}" var="cart">
                     <tr>
                         <td><input type="checkbox" name="cartCodes[${i}]" value="${cart.cartId}"></td>
-                        <td class="content text-start">
+                        <td class="tableContent text-start">
                             <a class="itemLink" href="/item/${cart.itemOption.item.itemCode}">
-                                <div style="width:10%; height:100%; float:left;">
+                                <div style="width:15%; height:100%; float:left;">
                                     <img style="width: 100%;" src="${cart.itemOption.item.itemImage}" alt="">
                                 </div>
-                                <div style="width:90%; height:100%; float:left;">
+                                <div style="width:80%; height:100%; float:left;">
                                     <b style="font-size: medium">${cart.itemOption.item.itemName}</b>
                                     <p>${cart.itemOption.optionName}size</p>
                                 </div>
@@ -142,7 +142,7 @@
                             <button class="btn btn-secondary btn-sm" type="button" id="plus_${cart.cartId}">+</button>
                         </td>
                         <td>
-                            <button class="btn btn-sm btn-secondary" type="button" id="deleteCart_${cart.cartId}">삭제하기
+                            <button class="btn btn-sm btn-secondary" type="button" id="deleteCart_${cart.cartId}">삭제
                             </button>
                         </td>
                     </tr>

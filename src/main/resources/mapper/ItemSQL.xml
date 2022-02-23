@@ -11,6 +11,7 @@
         <id property="memberId" column="member_id"/>
         <id property="itemImage" column="item_image"/>
         <id property="itemInfo" column="item_info"/>
+        <id property="itemBrand" column="item_brand"/>
         <association property="country" javaType="com.shop.myapp.dto.Country">
             <result property="countryCode" column="country_code"/>
             <result property="countryName" column="country_name"/>
@@ -35,17 +36,25 @@
         item_name,
         item_price,
         item_image,
-        item_info)
+        item_info,
+        ITEM_BRAND)
         values (#{itemCode},
         #{memberId},
         #{countryCode},
         #{itemName},
         #{itemPrice},
         #{itemImage},
-        #{itemInfo})
+        #{itemInfo},
+        #{itemBrand})
     </insert>
     <update id="updateItem" parameterType="com.shop.myapp.dto.Item">
-
+        update HR.SHOP_ITEM_TB
+        set HR.SHOP_ITEM_TB.ITEM_PRICE = ${itemPrice},
+        <if test="itemImage != null">
+            HR.SHOP_ITEM_TB.ITEM_IMAGE = ${itemImage},
+        </if>
+        HR.SHOP_ITEM_TB.ITEM_INFO = ${itemInfo}
+        where HR.SHOP_ITEM_TB.ITEM_CODE = ${itemCode}
     </update>
     <delete id="deleteItem" parameterType="string">
         delete HR.SHOP_ITEM_TB
@@ -58,7 +67,7 @@
                  SELECT ROW_NUMBER() over (order by item.item_code desc ) AS num,
                         item.ITEM_CODE,
                         MEMBER_ID,
-                        item.COUNTRY_CODE as country_code,
+                        item.COUNTRY_CODE                                 as country_code,
                         ITEM_NAME,
                         ITEM_PRICE,
                         ITEM_IMAGE,
@@ -66,24 +75,60 @@
                         COUNTRY_NAME,
                         sum(item_option.OPTION_STOCK)                     as item_stock
                  from HR.SHOP_ITEM_TB item,
-                      HR.SHOP_ITEM_OPTIONS_TB item_option,HR.SHOP_COUNTRY_TB country
+                      HR.SHOP_ITEM_OPTIONS_TB item_option,
+                      HR.SHOP_COUNTRY_TB country
                  WHERE rownum <= #{endList}
-                   and item.ITEM_CODE = item_option.ITEM_CODE and item.country_code = country.country_code
+                   and item.ITEM_CODE = item_option.ITEM_CODE
+                   and item.country_code = country.country_code
                  group by item.ITEM_CODE, MEMBER_ID, item.COUNTRY_CODE, ITEM_NAME, ITEM_PRICE, ITEM_IMAGE, ITEM_INFO,
-                          ITEM_STOCK,country_name)
+                          ITEM_STOCK, country_name)
         WHERE #{startList} < num
-    ]]></select>
+        ]]></select>
 
     <select id="findByItemCode" resultMap="item">
         select *
         from HR.SHOP_ITEM_TB I,
-             HR.SHOP_ITEM_OPTIONS_TB O,HR.SHOP_COUNTRY_TB C
+             HR.SHOP_ITEM_OPTIONS_TB O,
+             HR.SHOP_COUNTRY_TB C
         where I.ITEM_CODE = #{itemCode}
-          and O.ITEM_CODE = #{itemCode} and C.country_code = I.country_code
+          and O.ITEM_CODE = #{itemCode}
+          and C.country_code = I.country_code
     </select>
     <select id="getItemListCnt" resultType="java.lang.Integer">
         select count(*) as listCnt
         from HR.SHOP_ITEM_TB
+    </select>
+    <select id="findAllBySearch" resultType="com.shop.myapp.dto.Item">
+        <![CDATA[
+        SELECT *
+        FROM (
+                 select *
+                 from (
+                          SELECT ROW_NUMBER() over (order by item.item_code desc ) AS num,
+                                 item.ITEM_CODE,
+                                 MEMBER_ID,
+                                 item.COUNTRY_CODE                                 as country_code,
+                                 ITEM_NAME,
+                                 ITEM_PRICE,
+                                 ITEM_IMAGE,
+                                 ITEM_INFO,
+                                 COUNTRY_NAME,
+                                 ITEM_BRAND,
+                                 sum(item_option.OPTION_STOCK)                     as item_stock
+                          from HR.SHOP_ITEM_TB item,
+                               HR.SHOP_ITEM_OPTIONS_TB item_option,
+                               HR.SHOP_COUNTRY_TB country
+                          WHERE ITEM_NAME like '%' || #{search} || '%'
+                             or item_brand like '%' || #{search} || '%'
+                              and item.ITEM_CODE = item_option.ITEM_CODE
+                              and item.country_code = country.country_code
+                          group by item.ITEM_CODE, MEMBER_ID, item.COUNTRY_CODE, ITEM_NAME, ITEM_PRICE, ITEM_IMAGE,
+                                   ITEM_INFO,
+                                   ITEM_STOCK, country_name, item_brand
+                      )
+                 where rownum <= #{pagination.endList})
+        WHERE #{pagination.startList} < num
+        ]]>
     </select>
 
 </mapper>

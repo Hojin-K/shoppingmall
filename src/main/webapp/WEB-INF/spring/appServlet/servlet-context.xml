@@ -21,11 +21,30 @@
         <beans:property name="suffix" value=".jsp"/>
     </beans:bean>
 
+    <!--    tiles-->
+    <beans:bean id="tilesViewResolver" class="org.springframework.web.servlet.view.UrlBasedViewResolver">
+        <beans:property name="viewClass" value="org.springframework.web.servlet.view.tiles3.TilesView"/>
+        <beans:property name="order" value="1"/>
+    </beans:bean>
+
+    <beans:bean id="tilesConfigurer" class="org.springframework.web.servlet.view.tiles3.TilesConfigurer">
+        <beans:property name="definitions">
+            <beans:list>
+                <beans:value>/WEB-INF/spring/tiles-define.xml</beans:value>
+            </beans:list>
+        </beans:property>
+    </beans:bean>
+
+
     <context:component-scan base-package="com.shop.myapp"/>
     <!-- mybatis setting -->
     <beans:bean name="dataSource" class="org.springframework.jdbc.datasource.DriverManagerDataSource">
         <beans:property name="driverClassName" value="oracle.jdbc.driver.OracleDriver"/>
+<<<<<<< HEAD
         <beans:property name="url" value="jdbc:oracle:thin:@localhost:1521:xe"/>
+=======
+        <beans:property name="url" value="jdbc:oracle:thin:@192.168.1.115:1521:xe"/>
+>>>>>>> d1e0b76f18cafb0836ecdbfc158cc3ef3fdcfdbc
         <beans:property name="username" value="hr"/>
         <beans:property name="password" value="123456"/>
     </beans:bean>
@@ -44,7 +63,7 @@
 
     <beans:bean id="sqlSessionFactory" class="org.mybatis.spring.SqlSessionFactoryBean">
         <beans:property name="dataSource" ref="dataSource"/>
-        <beans:property name="mapperLocations" value="classpath:countryRepository/**/*.xml"/>
+        <beans:property name="mapperLocations" value="classpath:mapper/**/*.xml"/>
         <beans:property name="configLocation" value="/WEB-INF/spring/mybatis-config.xml"/>
     </beans:bean>
 
@@ -53,42 +72,42 @@
     </beans:bean>
 
     <beans:bean id="transactionManager" class="org.springframework.jdbc.datasource.DataSourceTransactionManager">
-        <beans:property name="dataSource" ref="dataSource" />
+        <beans:property name="dataSource" ref="dataSource"/>
     </beans:bean>
-<!--    multipartFile 설정-->
+    <!--    multipartFile 설정-->
     <beans:bean id="multipartResolver" class="org.springframework.web.multipart.commons.CommonsMultipartResolver">
-        <beans:property name="maxUploadSize" value="2000000000" />
-        <beans:property name="defaultEncoding" value="UTF-8" />
+        <beans:property name="maxUploadSize" value="2000000000"/>
+        <beans:property name="defaultEncoding" value="UTF-8"/>
     </beans:bean>
 
-      <!-- 인터셉터 객체 생성 -->
+    <!-- 인터셉터 객체 생성 -->
     <beans:bean id="authInterceptor" class="com.shop.myapp.interceptor.AuthInterceptor">
     </beans:bean>
     <!-- Interceptor 설정 -->
     <interceptors>
         <interceptor>
-        <!--권한체크가 필요한 주소들  -->
+            <!--권한체크가 필요한 주소들  -->
             <mapping path="/**"/>
             <beans:ref bean="authInterceptor"/>
         </interceptor>
     </interceptors>
-    
+
     <beans:bean id="loginInterceptor" class="com.shop.myapp.interceptor.loginInterceptor">
     </beans:bean>
     <!-- Interceptor 설정 -->
     <interceptors>
         <interceptor>
-        <!--로그인세션 확인처리할 주소들  -->
+            <!--로그인세션 확인처리할 주소들  -->
             <mapping path="/login"/>
             <beans:ref bean="loginInterceptor"/>
         </interceptor>
     </interceptors>
-    
+
     <annotation-driven>
-         <!-- argument resolver -->
-         <argument-resolvers>
-                  <beans:bean class="com.shop.myapp.interceptor.AuthUserHandlerMethodArgumentResolver" />
-         </argument-resolvers>
-	</annotation-driven>
+        <!-- argument resolver -->
+        <argument-resolvers>
+            <beans:bean class="com.shop.myapp.interceptor.AuthUserHandlerMethodArgumentResolver"/>
+        </argument-resolvers>
+    </annotation-driven>
 
 </beans:beans>

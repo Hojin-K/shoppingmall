@@ -3,7 +3,6 @@ package com.shop.myapp.service;
 import com.shop.myapp.dto.*;
 import com.shop.myapp.repository.OrderRepository;
 import org.apache.ibatis.session.SqlSession;
-import org.json.simple.parser.ParseException;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
@@ -54,17 +53,16 @@ public class OrderService {
         return cartService.findSelectCartByCartIds(cartIds);
     }
 
-    public Payment validateTotalPay(String impUid, String orderCode) throws ParseException {
+    public Payment validateTotalPay(String impUid, String orderCode) {
         try {
             Order order = orderRepository.findByOrderCode(orderCode);
-            System.out.println(order.toString());
             String accessToken = iamPortService.getAccessToken();
 
             Payment payment = iamPortService.getImpAttributes(impUid, accessToken);
-            System.out.println(payment.toString());
             if (order.getTotalPay() == payment.getAmount()) {
-                orderRepository.updateIsPaidIntByOrderCode(orderCode);
+                orderRepository.updateIsPaidIntByOrderCode(orderCode,payment);
                 orderDetailService.updatePostedStatusByOrderCode(orderCode);
+                itemOptionService.modifyItemOptionAfterPay(order.getOrderDetails());
                 cartService.deleteByMemberId(order.getMemberId());
                 return payment;
             }

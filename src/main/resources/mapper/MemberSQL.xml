@@ -17,8 +17,12 @@
         UPDATE SHOP_MEMBER_TB
         SET MEMBER_PWD   = #{memberPwd},
             MEMBER_NAME=#{memberName},
+<<<<<<< HEAD:src/main/resources/countryRepository/MemberSQL.xml
             MEMBER_EMAIL=#{memberEmail},
             MEMBER_ADRESS=#{memberAddress},
+=======
+            MEMBER_ADDRESS=#{memberAddress},
+>>>>>>> d1e0b76f18cafb0836ecdbfc158cc3ef3fdcfdbc:src/main/resources/mapper/MemberSQL.xml
             MEMBER_TEL=#{memberTel},
             MEMBER_BIRTH=#{memberBirth}
         WHERE MEMBER_ID = #{memberId}

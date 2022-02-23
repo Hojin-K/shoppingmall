@@ -11,22 +11,22 @@ import java.util.List;
 @Service
 public class OrderDetailService {
 
-    private OrderDetailRepository orderDetailRepository;
+    private final OrderDetailRepository orderDetailRepository;
 
     public OrderDetailService(@Autowired SqlSession sqlSession) {
         this.orderDetailRepository = sqlSession.getMapper(OrderDetailRepository.class);
     }
 
-    public int insertOrderDetails(List<OrderDetail> orderDetails){
-        return orderDetailRepository.insertOrderDetails(orderDetails);
+    public void insertOrderDetails(List<OrderDetail> orderDetails){
+        orderDetailRepository.insertOrderDetails(orderDetails);
 
     }
 
-    public int deleteOrderDetail(String orderCode){
-        return orderDetailRepository.deleteOrderDetail(orderCode);
+    public void deleteOrderDetail(String orderCode){
+        orderDetailRepository.deleteOrderDetail(orderCode);
     }
 
-    public int updatePostedStatusByOrderCode(String orderCode){
-        return orderDetailRepository.updatePostedStatusByOrderCode(orderCode);
+    public void updatePostedStatusByOrderCode(String orderCode){
+        orderDetailRepository.updatePostedStatusByOrderCode(orderCode);
     }
 }

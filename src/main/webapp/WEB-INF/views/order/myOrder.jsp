@@ -33,7 +33,9 @@
         <tbody>
 <tr>
     <td><a class="itemLink" href="/order/${order.orderCode}">${order.orderCode}</a></td>
+    <c:if test="${not empty order.impUid}">
     <td>${order.paidAtToString()}</td>
+    </c:if>
     <td>${order.isPaid}</td>
 </tr>
 </tbody>
