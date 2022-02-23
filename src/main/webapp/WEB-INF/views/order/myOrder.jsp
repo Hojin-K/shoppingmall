@@ -20,6 +20,7 @@
     </script>
 </head>
 <body>
+<div class="container pt-5">
 <table class="table text-center">
     <thead>
     <tr>
@@ -41,5 +42,6 @@
 </tbody>
     </c:forEach>
 </table>
+</div>
 </body>
 </html>

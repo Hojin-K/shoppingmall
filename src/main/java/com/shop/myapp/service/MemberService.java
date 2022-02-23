@@ -2,9 +2,10 @@ package com.shop.myapp.service;
 
 import java.util.ArrayList;
 import java.util.List;
-import java.util.Map;
 import java.util.Optional;
 
+import com.shop.myapp.dto.Item;
+import com.shop.myapp.dto.Pagination;
 import org.apache.ibatis.session.SqlSession;
 import org.mindrot.jbcrypt.BCrypt;
 import org.springframework.stereotype.Service;
@@ -15,9 +16,11 @@ import com.shop.myapp.repository.MemberRepository;
 @Service
 public class MemberService {
     private final SqlSession sqlSession;
+    private final ItemService itemService;
 
-    public MemberService(SqlSession sqlSession) {
+    public MemberService(SqlSession sqlSession, ItemService itemService) {
         this.sqlSession = sqlSession;
+        this.itemService = itemService;
     }
 
     public Member getMember(String memberId) {
@@ -95,5 +98,9 @@ public class MemberService {
 
         int result = memberRepository.updateMember(member);
         return result;
+    }
+
+    public List<Item> getSellerItems(String memberId, Pagination pagination,String search){
+        return itemService.getSellerItemByMemberId(memberId, pagination,search);
     }
 }

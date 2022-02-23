@@ -14,6 +14,18 @@
         .nav-link:hover {
             color: black;
         }
+        #sellerBar{
+            background: #2c3e50;  /* fallback for old browsers */
+            background: -webkit-linear-gradient(to right, #3498db, #2c3e50);  /* Chrome 10-25, Safari 5.1-6 */
+            background: linear-gradient(to right, #3498db, #2c3e50); /* W3C, IE 10+/ Edge, Firefox 16+, Chrome 26+, Opera 12+, Safari 7+ */
+
+        }
+        #sellerLink{
+            color: white;
+        }
+        #sellerLink:hover{
+            color: black;
+        }
     </style>
     <script>
         $(function () {
@@ -47,12 +59,17 @@
 
 </head>
 <body >
+    <div id="sellerBar" class="p-2 mb-1 bg-light rounded-3">
+    <a id="sellerLink" class="nav-link" href="/seller/${item.memberId}">
+        <h4 class="m-auto" style="font-style: italic; padding-top: 5px">${item.businessName}</h4>
+    </a>
+    </div>
 <div class="container">
     <div class="row">
         <div class="col-6 m-auto" style="height: 20rem; text-align: center">
             <img src="${item.itemImage}" style="width: auto; height: 100%; object-fit: cover;" alt="">
         </div>
-        <div class="col-6 m-auto">
+        <div class="col-5 m-auto" style="background-color: white">
             <form action="/cart/add" method="post">
                 <div>
                     <div>
@@ -79,7 +96,7 @@
                     <br>
                     <div class="row text-center">
                         <input type="submit" class="btn btn-lg btn-dark col-8 m-auto" value="장바구니에 담기">
-                        <button id="backMain" type="button" class="btn btn-lg btn-secondary col-3 m-auto">취소</button>
+                        <button id="backMain" type="button" class="btn btn-lg btn-secondary col-3 m-auto">뒤로</button>
                     </div>
                         <c:if test="${sessionScope.member.memberId == item.memberId}">
                             <br>
@@ -101,7 +118,12 @@
                 </li>
             </ul>
             <div class="tab-content">
-                <div class="tab-pane fade show active text-center" id="qwe">
+                <div class="tab-pane fade show active text-center w-100" id="qwe">
+                    <br>
+                    <div style="text-align: left">
+                    <span style="font-size: x-small; color: #cccccc;"><b style="font-size: large; color: #333333">Info</b>정보</span>
+                    </div>
+                    <br>
                     ${item.itemInfo}
                 </div>
                 <div class="tab-pane fade text-center" id="review">

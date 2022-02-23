@@ -98,7 +98,7 @@ public class ItemController {
         return "redirect:item";
     }
 
-    @PostMapping("/{itemCode}/delete")
+    @GetMapping("/{itemCode}/delete")
     public String deleteItem(@PathVariable String itemCode) {
         Member member = (Member) session.getAttribute("member");
         if (itemService.validateAccessToItem(itemCode, member)) {

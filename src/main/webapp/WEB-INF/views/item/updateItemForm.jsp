@@ -57,8 +57,8 @@
       }
     }
   </script>
-</head>i9
-<body class="pt-5">
+</head>
+<body>
 <div class="container">
   <div class="text-center">
     <h3>상품 등록하기</h3>
