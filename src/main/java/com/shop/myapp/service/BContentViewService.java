@@ -18,13 +18,13 @@ public class BContentViewService implements BServiceInf{
 		Map<String, Object> map=model.asMap();
 //		map->request
 		HttpServletRequest request=(HttpServletRequest) map.get("request");
-		String bid=request.getParameter("bid");
+		String BOARD_ID=request.getParameter("board_id");
+		System.out.println(BOARD_ID);
 		
-		
-		//System.out.println("bName   :  "+bName);
+//		System.out.println("김형철   :  "+BOARD_ID);
 		
 		BoardDao dao=new BoardDao();
-		BoardDto dto=dao.contentView(bid);
+		BoardDto dto=dao.contentView(BOARD_ID);
 		
 		model.addAttribute("content_view",dto);
 	}

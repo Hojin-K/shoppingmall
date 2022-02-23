@@ -11,31 +11,27 @@
 <h2>content_update.jsp</h2>
 <table>
 	<form action="modify" method="post">
-	<input type="hidden" name="bid" value="${content_view.bid }" />
+	<input type="hidden" name="board_id" value="${content_view.BOARD_ID }" />
 		<tr>
 			<td class="left">번호</td>
-			<td>${content_view.bid }</td>
-		</tr>
-		<tr>
-			<td class="left">히트</td>
-			<td>${content_view.bhit }</td>
+			<td>${content_view.BOARD_ID }</td>
 		</tr>
 		<tr>
 			<td class="left">이름</td>
 			<td>
-				<input type="text" name="bName" value="${content_view.bname }" />
+				<input type="text" name="item_code" value="${content_view.ITEM_CODE }" />
 			</td>
 		</tr>
 		<tr>
 			<td class="left">제목</td>
 			<td>
-				<input type="text" name="bTitle" value="${content_view.btitle }" />
+				<input type="text" name="board_title" value="${content_view.BOARD_TITLE }" />
 			</td>
 		</tr>
 		<tr>
 			<td class="left">내용</td>
 			<td>
-				<textarea name="bContent"  rows="10">${content_view.bcontent }</textarea>
+				<textarea name="board_content"  rows="10">${content_view.BOARD_CONTENT }</textarea>
 			</td>
 		</tr>
 		<tr>

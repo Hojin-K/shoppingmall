@@ -22,13 +22,13 @@
 	
 	<c:forEach items="${list }" var="dto">
 		<tr>
-			<td>${dto.board_id }</td>
-			<td>${dto.item_code }</td>
+			<td>${dto.BOARD_ID }</td>
+			<td>${dto.ITEM_CODE }</td>
 			<td>
-				<a href="content_view?bid=${dto.board_id }">${dto.board_title }</a> 
+				<a href="content_view?board_id=${dto.BOARD_ID }">${dto.BOARD_TITLE }</a> 
 			</td>
-			<td>${dto.board_content }</td>
-			<td>${dto.recommend_id }</td>
+			<td>${dto.BOARD_CONTENT }</td>
+			<td>${dto.RECOMMEND_ID }</td>
 		</tr>
 	</c:forEach>
 	<tr>

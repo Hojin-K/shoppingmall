@@ -18,7 +18,7 @@ public class BReplyViewService implements BServiceInf{
 		Map<String, Object> map=model.asMap();
 //		map->request
 		HttpServletRequest request=(HttpServletRequest) map.get("request");
-		String bid=request.getParameter("BOARD_ID");
+		String BOARD_ID=request.getParameter("board_id");
 		
 		
 		

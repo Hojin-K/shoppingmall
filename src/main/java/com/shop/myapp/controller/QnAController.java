@@ -64,25 +64,25 @@ public class QnAController {
 		
 		return "content_update";
 	}
-	@RequestMapping(method=RequestMethod.POST,value="/modify")
-	public String modify(HttpServletRequest request, Model model) {
-		System.out.println("=========pass by modify()=============");
-		model.addAttribute("request",request);
-		commandInf=new BModifyService();
-		commandInf.execute(model);
-		
-		return "redirect:list";
-	}
-	@RequestMapping("/delete")
-	public String delete(HttpServletRequest request, Model model) {
-		System.out.println("=========pass by delete()=============");
-		model.addAttribute("request",request);
-		commandInf=new BDeleteService();
-		commandInf.execute(model);
-		
-		return "redirect:list";
-	}
-	
+//	@RequestMapping(method=RequestMethod.POST,value="/modify")
+//	public String modify(HttpServletRequest request, Model model) {
+//		System.out.println("=========pass by modify()=============");
+//		model.addAttribute("request",request);
+//		commandInf=new BModifyService();
+//		commandInf.execute(model);
+//		
+//		return "redirect:list";
+//	}
+//	@RequestMapping("/delete")
+//	public String delete(HttpServletRequest request, Model model) {
+//		System.out.println("=========pass by delete()=============");
+//		model.addAttribute("request",request);
+//		commandInf=new BDeleteService();
+//		commandInf.execute(model);
+//		
+//		return "redirect:list";
+//	}
+//	
 	@RequestMapping("/reply_view")
 	public String reply_view(HttpServletRequest request, Model model) {
 		System.out.println("=========pass by reply_view()=============");

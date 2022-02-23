@@ -97,68 +97,21 @@ public class BoardDao {
 		}
 		
 	}
-	public void upHit(String sbid) {
-		Connection con=null;
-		PreparedStatement pstmt=null;
-		try {
-			con=dataSource.getConnection();
-			String sql="update replyboard " + 
-					"set bhit=bhit+1 where bid=?"; 
-			pstmt=con.prepareStatement(sql);
-			pstmt.setInt(1, Integer.parseInt(sbid));
-			pstmt.executeUpdate();
-			
-		}catch(Exception e) {
-			
-		} finally {
-			try {
-				if(pstmt!=null) pstmt.close();
-				if(con!=null) con.close();	
-			} catch (Exception e2) {
-				// TODO: handle exception
-			}
-		}
-		
-	}
-	
-	public BoardDto contentView(String sbid) {
-		
-//		upHit(sbid);//조회수 증가
-//		BoardDto dto=null;
+//	public void upHit(String sbid) {
 //		Connection con=null;
 //		PreparedStatement pstmt=null;
-//		ResultSet rs=null;
-//		
 //		try {
 //			con=dataSource.getConnection();
-//			String sql="select bid,bname,btitle,bcontent,bdate,bhit,bgroup,bstep,bindent "
-//					+ "from replyboard where bid=?"; 
+//			String sql="update replyboard " + 
+//					"set bhit=bhit+1 where bid=?"; 
 //			pstmt=con.prepareStatement(sql);
 //			pstmt.setInt(1, Integer.parseInt(sbid));
-//			rs=pstmt.executeQuery();
+//			pstmt.executeUpdate();
 //			
-//			rs.next();
-//			int bid=rs.getInt("bid");
-//			String bname=rs.getString("bname");
-//			String btitle=rs.getString("btitle");
-//			String bcontent=rs.getString("bcontent");
+//		}catch(Exception e) {
 //			
-//			Timestamp bdate=rs.getTimestamp("bdate");
-//			
-//			int bhit=rs.getInt("bhit");
-//			int bgroup=rs.getInt("bgroup");
-//			int bstep=rs.getInt("bstep");
-//			int bindent=rs.getInt("bindent");
-//			
-//			//생성자주입
-//			dto=new BoardDto(bid, bname, btitle, bcontent,
-//					bdate, bhit, bgroup, bstep, bindent);	
-//			
-//		} catch (Exception e) {
-//			// TODO: handle exception
 //		} finally {
 //			try {
-//				if(rs!=null) rs.close();
 //				if(pstmt!=null) pstmt.close();
 //				if(con!=null) con.close();	
 //			} catch (Exception e2) {
@@ -166,62 +119,105 @@ public class BoardDao {
 //			}
 //		}
 //		
-//		return dto;
-		return null;
-	}
-	public void modify(String bid, String bName,
-			String bTitle, String bContent) {
+//	}
+//	
+	public BoardDto contentView(String sBOARD_ID) {
 		
-		
+//		upHit(sBOARD_ID);//조회수 증가
+		BoardDto dto=null;
 		Connection con=null;
 		PreparedStatement pstmt=null;
+		ResultSet rs=null;
 		
 		try {
 			con=dataSource.getConnection();
-			String sql="update replyboard " + 
-					"set bname=?,btitle=?,bcontent=? " + 
-					"where bid=?"; 
+			String sql="select BOARD_ID,ITEM_CODE,MEMBER_ID,BOARD_TITLE,BOARD_CONTENT,RECOMMEND_ID "
+					+ "from SHOP_QNABOARD_TB where BOARD_ID=?"; 
 			pstmt=con.prepareStatement(sql);
-			pstmt.setString(1, bName);
-			pstmt.setString(2, bTitle);
-			pstmt.setString(3, bContent);
-			pstmt.setInt(4, Integer.parseInt(bid));
+			pstmt.setInt(1, Integer.parseInt(sBOARD_ID));
+			rs=pstmt.executeQuery();
 			
-			pstmt.executeUpdate();
+			rs.next();
+			int BOARD_ID=rs.getInt("BOARD_ID");
+			int ITEM_CODE=rs.getInt("ITEM_CODE");
+			String MEMBER_ID=rs.getString("MEMBER_ID");
+			String BOARD_TITLE=rs.getString("BOARD_TITLE");
+			String BOARD_CONTENT=rs.getString("BOARD_CONTENT");
+			int RECOMMEND_ID=rs.getInt("RECOMMEND_ID");
+			
+			//생성자주입
+			dto=new BoardDto(BOARD_ID, ITEM_CODE, MEMBER_ID, BOARD_TITLE,
+					BOARD_CONTENT, RECOMMEND_ID);	
+
 			
 		} catch (Exception e) {
 			// TODO: handle exception
 		} finally {
 			try {
-				if(pstmt!=null) pstmt.close();
-				if(con!=null) con.close();	
-			} catch (Exception e2) {
-				// TODO: handle exception
-			}
-		}	
-	}
-	public void delete(String bid) {
-		Connection con=null;
-		PreparedStatement pstmt=null;
-		try {
-			con=dataSource.getConnection();
-			String sql="delete from replyboard where bid=?"; 
-			pstmt=con.prepareStatement(sql);
-			pstmt.setInt(1, Integer.parseInt(bid));
-			pstmt.executeUpdate();
-			
-		}catch(Exception e) {
-			
-		} finally {
-			try {
+				if(rs!=null) rs.close();
 				if(pstmt!=null) pstmt.close();
 				if(con!=null) con.close();	
 			} catch (Exception e2) {
 				// TODO: handle exception
 			}
 		}
+		
+		return dto;
+
 	}
-	public BoardDto replyView(String BOARD_ID) {
+//	public void modify(String bid, String bName,
+//			String bTitle, String bContent) {
+//		
+//		
+//		Connection con=null;
+//		PreparedStatement pstmt=null;
+//		
+//		try {
+//			con=dataSource.getConnection();
+//			String sql="update replyboard " + 
+//					"set bname=?,btitle=?,bcontent=? " + 
+//					"where bid=?"; 
+//			pstmt=con.prepareStatement(sql);
+//			pstmt.setString(1, bName);
+//			pstmt.setString(2, bTitle);
+//			pstmt.setString(3, bContent);
+//			pstmt.setInt(4, Integer.parseInt(bid));
+//			
+//			pstmt.executeUpdate();
+//			
+//		} catch (Exception e) {
+//			// TODO: handle exception
+//		} finally {
+//			try {
+//				if(pstmt!=null) pstmt.close();
+//				if(con!=null) con.close();	
+//			} catch (Exception e2) {
+//				// TODO: handle exception
+//			}
+//		}	
+//	}
+//	public void delete(String bid) {
+//		Connection con=null;
+//		PreparedStatement pstmt=null;
+//		try {
+//			con=dataSource.getConnection();
+//			String sql="delete from replyboard where bid=?"; 
+//			pstmt=con.prepareStatement(sql);
+//			pstmt.setInt(1, Integer.parseInt(bid));
+//			pstmt.executeUpdate();
+//			
+//		}catch(Exception e) {
+//			
+//		} finally {
+//			try {
+//				if(pstmt!=null) pstmt.close();
+//				if(con!=null) con.close();	
+//			} catch (Exception e2) {
+//				// TODO: handle exception
+//			}
+//		}
+//	}
+	public BoardDto replyView(String sBOARD_ID) {
 		
 		BoardDto dto=null;
 		Connection con=null;
@@ -230,26 +226,22 @@ public class BoardDao {
 		
 		try {
 			con=dataSource.getConnection();
-			String sql="select BOARD_ID,ITEM_CODE,MEMBER_ID,BOARD_TITLE,bdate,bhit,bgroup,bstep,bindent "
-					+ "from replyboard where bid=?"; 
+			String sql="select BOARD_ID,ITEM_CODE,MEMBER_ID,BOARD_TITLE,BOARD_CONTENT,RECOMMEND_ID "
+					+ "from SHOP_QNABOARD_TB where BOARD_ID=?"; 
 			pstmt=con.prepareStatement(sql);
 			pstmt.setInt(1, Integer.parseInt(sBOARD_ID));
 			rs=pstmt.executeQuery();
 			
 			rs.next();
 			int BOARD_ID=rs.getInt("BOARD_ID");
-			String ITEM_CODE=rs.getString("ITEM_CODE");
+			int ITEM_CODE=rs.getInt("ITEM_CODE");
 			String MEMBER_ID=rs.getString("MEMBER_ID");
 			String BOARD_TITLE=rs.getString("BOARD_TITLE");
-								
-			int bhit=rs.getInt("bhit");
-			int bgroup=rs.getInt("bgroup");
-			int bstep=rs.getInt("bstep");
-			int bindent=rs.getInt("bindent");
-			
-			//생성자주입
-			/*dto=new BoardDto(bid, bname, btitle, bcontent,
-					bdate, bhit, bgroup, bstep, bindent);	*/
+			String BOARD_CONTENT=rs.getString("BOARD_CONTENT");
+			int RECOMMEND_ID=rs.getInt("RECOMMEND_ID");
+						
+			dto=new BoardDto(BOARD_ID, ITEM_CODE, MEMBER_ID, BOARD_TITLE,
+					BOARD_CONTENT, RECOMMEND_ID);	
 			
 		} catch (Exception e) {
 			// TODO: handle exception
@@ -265,17 +257,15 @@ public class BoardDao {
 		return dto;
 	}
 	
-	public void replyShape(String bgroup,String bstep) {
-		//현재글의 댓글이 있다면 그 댓글의 step번호 1증가
+	public void replyShape(String RECOMMEND_ID) {
+
 		Connection con=null;
 		PreparedStatement pstmt=null;
 		try {
 			con=dataSource.getConnection();
-			String sql="update replyboard set bstep=bstep+1 " + 
-					"where bgroup=? and bstep>?";			
+			String sql=	"where RECOMMEND_ID=?";			
 			pstmt=con.prepareStatement(sql);
-			pstmt.setInt(1,Integer.parseInt(bgroup));
-			pstmt.setInt(2,Integer.parseInt(bstep));
+			pstmt.setInt(1,Integer.parseInt(RECOMMEND_ID));
 			pstmt.executeUpdate();	
 		} catch (Exception e) {
 			// TODO: handle exception
@@ -290,24 +280,22 @@ public class BoardDao {
 	}
 	public void reply(String BOARD_ID, String ITEM_CODE,
 			String MEMBER_ID, String BOARD_TITLE,
-			String BOARD_CONTENT, String bgroup,
-			String bindent) {
+			String BOARD_CONTENT, String RECOMMEND_ID) {
 		
-		replyShape(bgroup);
+		replyShape(RECOMMEND_ID);
 				
 		Connection con=null;
 		PreparedStatement pstmt=null;	
 		try {
 			con=dataSource.getConnection();
-			String sql="insert into replyboard(bid,bname,btitle,bcontent,bgroup,bstep,bindent) " + 
-					"values(replyboard_seq.nextval,?,?,?,?,?,?)";
+			String sql="insert into shopping(BOARD_ID,ITEM_CODE,MEMBER_ID,BOARD_TITLE,BOARD_CONTENT,RECOMMEND_ID) " + 
+					"values(QNABOARD_SEQ.nextval,?,?,?,?,?,?)";
 			pstmt=con.prepareStatement(sql);
 			pstmt.setString(1,ITEM_CODE);
 			pstmt.setString(2,MEMBER_ID);
 			pstmt.setString(3,BOARD_TITLE);
 			pstmt.setString(4,BOARD_CONTENT);
-			pstmt.setInt(4,Integer.parseInt(bgroup));
-			pstmt.setString(4,RECOMMEND_ID);
+			pstmt.setInt(4,Integer.parseInt(RECOMMEND_ID));
 						
 			pstmt.executeUpdate();
 			

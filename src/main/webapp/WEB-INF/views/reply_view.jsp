@@ -11,34 +11,28 @@
 <h2>reply_view.jsp</h2>
 <table>
 	<form action="reply" method="post">
-	<input type="hidden" name="bid" value="${reply_view.bid }" />
-	<input type="hidden" name="bgroup" value="${reply_view.bgroup }" />
-	<input type="hidden" name="bstep" value="${reply_view.bstep }" />
-	<input type="hidden" name="bindent" value="${reply_view.bindent }" />
+	<input type="hidden" name="BOARD_ID" value="${reply_view.BOARD_ID }" />
+	<input type="hidden" name="RECOMMEND_ID" value="${reply_view.RECOMMEND_ID }" />
 		<tr>
 			<td class="left">번호</td>
-			<td>${reply_view.bid }</td>
-		</tr>
-		<tr>
-			<td class="left">히트</td>
-			<td>${reply_view.bhit }</td>
+			<td>${reply_view.BOARD_ID }</td>
 		</tr>
 		<tr>
 			<td class="left">이름</td>
 			<td>
-				<input type="text" name="bName" value="" />
+				<input type="text" name="MEMBER_ID" value="" />
 			</td>
 		</tr>
 		<tr>
 			<td class="left">제목</td>
 			<td>
-				<input type="text" name="bTitle" value="${reply_view.btitle }" />
+				<input type="text" name="BOARD_TITLE" value="${reply_view.BOARD_TITLE }" />
 			</td>
 		</tr>
 		<tr>
 			<td class="left">내용</td>
 			<td>
-				<textarea name="bContent"  rows="10">${reply_view.bcontent }</textarea>
+				<textarea name="BOARD_CONTENT"  rows="10">${reply_view.BOARD_CONTENT }</textarea>
 			</td>
 		</tr>
 		<tr>

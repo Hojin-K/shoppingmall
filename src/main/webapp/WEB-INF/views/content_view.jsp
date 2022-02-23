@@ -11,33 +11,29 @@
 <h2>content_view.jsp</h2>
 <table>
 	<form action="content_update" method="post">
-	<input type="hidden" name="bid" value="${content_view.bid }" />
+	<input type="hidden" name="board_id" value="${content_view.BOARD_ID }" />
 		<tr>
 			<td class="left">번호</td>
-			<td>${content_view.bid }</td>
+			<td>${content_view.BOARD_ID }</td>
 		</tr>
-		<tr>
-			<td class="left">히트</td>
-			<td>${content_view.bhit }</td>
-		</tr>
-		<tr>
+				<tr>
 			<td class="left">이름</td>
-			<td>${content_view.bname }</td>
+			<td>${content_view.ITEM_CODE }</td>
 		</tr>
 		<tr>
 			<td class="left">제목</td>
-			<td>${content_view.btitle }</td>
+			<td>${content_view.BOARD_TITLE }</td>
 		</tr>
 		<tr>
 			<td class="left">내용</td>
-			<td>${content_view.bcontent }</td>
+			<td>${content_view.BOARD_CONTENT }</td>
 		</tr>
 		<tr>
 			<td colspan="2">
 				<input type="submit" value="수정" /> &nbsp;&nbsp;
 				<a href="list">목록보기</a> &nbsp;&nbsp;
-				<a href="delete?bid=${content_view.bid }">삭제</a>&nbsp;&nbsp;
-				<a href="reply_view?bid=${content_view.bid }">답변</a>&nbsp;&nbsp;
+				<a href="delete?board_id=${content_view.BOARD_ID }">삭제</a>&nbsp;&nbsp;
+				<a href="reply_view?board_id=${content_view.BOARD_ID }">답변</a>&nbsp;&nbsp;
 			</td>
 		</tr>
 	</form>
