@@ -23,10 +23,11 @@
 <script>
 $(function() {
 	$('#btnSearch').click(function () {
-		let chkInfo = $('#chk_info').val();
+		let chkInfo = $('[name = chk_info]:checked').val();
+		alert(chkInfo);
  		let condition = $('#condition').val();
  		$.ajax({
-            url: '/members/memberList',
+            url: '/members/list',
             method: 'GET',
             data: {
             	'chkInfo' : chkInfo,
@@ -56,9 +57,9 @@ $(function() {
 	<div class="container">
 		<div>
 			<h2>회원관리</h2>
-			<input type="radio" id="chk_info" value="member_id" checked /> 
+			<input type="radio" name="chk_info" value="member_id" checked /> 
 			<label for="아이디">아이디</label> 
-			<input type="radio" id="chk_info" value="member_name" /> 
+			<input type="radio" name="chk_info" value="member_name" /> 
 			<label for="이름">이름</label>
 			<span style="margin-left: 30px;"><input id="condition" type="text" /></span>
 			<span style="margin-left: 15px;"><input id="btnSearch" type="button" value="검색"/></span>

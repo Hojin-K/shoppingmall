@@ -50,32 +50,41 @@ public class MemberController {
     	return "redirect:/members";
     }
     
-    @GetMapping("/normalUpdate")
-    public String normalUpdateForm() {
-    	log.info("normalUpdateForm");
-    	return "/members/normalUpdate";
+    @GetMapping("/logout")
+    public String logout(HttpServletRequest request) {
+    	request.getSession().invalidate();
+    	
+    	return "redirect:/item";
     }
     
-    @PostMapping("/normalUpdate")
-    public String normalUpdate(@ModelAttribute Member member) {
+    @GetMapping("/update")
+    public String updateForm() {
+    	log.info("memberUpdateForm");
+    	return "/members/update";
+    }
+    
+    @PostMapping("/update")
+    public String update(@ModelAttribute Member member) {
     	// 에러가 있는지 검사
-    	log.info("normalUpdate");
+    	log.info("Edit member information.");
     	
     	int isSuccess = memberService.updateMember(member);
     	System.out.println(isSuccess);
+    	log.info("update complete.");
     	return "redirect:/members";
     }
     
-    @GetMapping("/memberListView")
+    @GetMapping("/list")
     public String memberList() {
-    	return "/members/memberList";
+    	return "/members/list";
     }
     
     @ResponseBody
-    @GetMapping("/memberList")
-    public ResponseEntity<Object> getMemberList(@RequestParam Map<String, Object> param){
+    @GetMapping("/list")
+    public ResponseEntity<Object> getMemberList(@RequestParam String chkInfo, @RequestParam String condition){
     	log.info("memberList");
-        List<Member> members = memberService.getMembers(param);
+    	System.out.println(chkInfo);
+        List<Member> members = memberService.getMembers(chkInfo, condition);
         return ResponseEntity.ok(members);
     }
     

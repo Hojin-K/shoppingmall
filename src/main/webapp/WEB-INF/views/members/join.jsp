@@ -28,10 +28,7 @@
             });
     })
     window.onload = function() {
-    document.getElementById("address_kakao")
-            .addEventListener(
-                    "click",
-                    function() {
+    document.getElementById("address_kakao").addEventListener("click",function() {
                         new daum.Postcode(
                                 {
                                     oncomplete : function(data) {
@@ -39,6 +36,7 @@
                                     }
                                 }).open();
                     });
+    }
 </script>
 </head>
 <body class="pt-5">

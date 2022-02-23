@@ -13,8 +13,9 @@ import lombok.Setter;
 public class Member {
 	private String memberId;
 	private String memberPwd; 
-	private String memberLevel;
+	private LinkedList<String> memberLevel;
 	private String memberName;
+	private String memberEmail;
 	private String memberAddress;
 	private String memberTel;
 	@DateTimeFormat(pattern = "yyyy-MM-dd")

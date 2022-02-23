@@ -28,12 +28,12 @@ public class MemberService {
 
     }
 
-    public List<Member> getMembers(Map<String, Object> param) {
+    public List<Member> getMembers(String chkInfo, String condition) {
         MemberRepository memberRepository = sqlSession.getMapper(MemberRepository.class);
         List<Member> members = new ArrayList<Member>(); 
         try{
         	System.out.println(1);
-        	members = memberRepository.findAll(param);
+        	members = memberRepository.findAll(chkInfo, condition);
         	System.out.println(2);
         }catch (Exception e) {
 			e.printStackTrace();
