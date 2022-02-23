@@ -23,9 +23,12 @@ import java.util.Map;
 public class ItemController {
     private final ItemService itemService;
     private final FileService fileService;
-    public ItemController(ItemService itemService, FileService fileService) {
+    private final HttpSession session;
+
+    public ItemController(ItemService itemService, FileService fileService, HttpSession session) {
         this.itemService = itemService;
         this.fileService = fileService;
+        this.session = session;
     }
 
     @GetMapping("")
@@ -74,32 +77,45 @@ public class ItemController {
 
     @GetMapping("/{itemCode}/update")
     public String updateItemForm(@PathVariable String itemCode, Model model) {
-        Item item = itemService.getItem(itemCode);
-        model.addAttribute("item", item);
-        return "/item/updateItemForm";
+        Member member = (Member) session.getAttribute("member");
+        if (itemService.validateAccessToItem(itemCode, member)) {
+            Item item = itemService.getItem(itemCode);
+            model.addAttribute("item", item);
+            return "/item/updateItemForm";
+        }
+
+        return "redirect:/item";
     }
+
     @PostMapping("/{itemCode}/update")
     public String updateItem(@PathVariable String itemCode, Item item, RedirectAttributes redirectAttributes) {
-        itemService.updateItem(item);
-        redirectAttributes.addAttribute("itemCode", itemCode);
-        return "redirect:/item/{itemCode}";
+        Member member = (Member) session.getAttribute("member");
+        if (itemService.validateAccessToItem(itemCode, member)) {
+            itemService.updateItem(item);
+            redirectAttributes.addAttribute("itemCode", itemCode);
+            return "redirect:/item/{itemCode}";
+        }
+        return "redirect:item";
     }
 
     @PostMapping("/{itemCode}/delete")
     public String deleteItem(@PathVariable String itemCode) {
-        itemService.deleteItem(itemCode);
-        return "redirect:/item";
+        Member member = (Member) session.getAttribute("member");
+        if (itemService.validateAccessToItem(itemCode, member)) {
+            itemService.deleteItem(itemCode);
+            return "redirect:/item";
+        }
+        return "redirect:item";
     }
 
     @GetMapping("/search")
-    public String search(@RequestParam(required = false, defaultValue = "1") int page,@RequestParam("q") String search,Model model){
+    public String search(@RequestParam(required = false, defaultValue = "1") int page, @RequestParam("q") String search, Model model) {
         Pagination pagination = itemService.getPaginationByPage(page);
-        List<Item> items = itemService.search(search,pagination);
-        model.addAttribute("pagination",pagination);
-        model.addAttribute("items",items);
+        List<Item> items = itemService.search(search, pagination);
+        model.addAttribute("pagination", pagination);
+        model.addAttribute("items", items);
         return "item/items";
     }
-
 
 
 }

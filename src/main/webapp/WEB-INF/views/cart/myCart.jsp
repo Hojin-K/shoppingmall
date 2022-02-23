@@ -35,11 +35,11 @@
         color: black;
     }
 
-    .content {
+    .tableContent {
         display: table;
     }
 
-    .content span {
+    .tableContent span {
         display: table-cell;
         vertical-align: middle;
     }
@@ -109,14 +109,14 @@
 <div class="container">
     <div class="row">
         <form action="/order/addForm" method="post">
-            <table class="table text-center">
+            <table class="table text-center m-auto">
                 <thead>
                 <tr>
                     <th style="width: 8.33%">선택</th>
                     <th style="width: 30%">상품</th>
                     <th style="width: 16.66%">가격</th>
-                    <th style="width: 16.33%">갯수</th>
-                    <th style="width: 16.33%">주문관리</th>
+                    <th style="width: 20.33%">갯수</th>
+                    <th style="width: 10.33%">주문관리</th>
                 </tr>
                 </thead>
                 <tbody>
@@ -124,7 +124,7 @@
                 <c:forEach items="${carts}" var="cart">
                     <tr>
                         <td><input type="checkbox" name="cartCodes[${i}]" value="${cart.cartId}"></td>
-                        <td class="content text-start">
+                        <td class="tableContent text-start">
                             <a class="itemLink" href="/item/${cart.itemOption.item.itemCode}">
                                 <div style="width:15%; height:100%; float:left;">
                                     <img style="width: 100%;" src="${cart.itemOption.item.itemImage}" alt="">

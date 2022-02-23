@@ -1,6 +1,7 @@
 package com.shop.myapp.service;
 
 import com.shop.myapp.dto.ItemOption;
+import com.shop.myapp.dto.OrderDetail;
 import org.apache.ibatis.session.SqlSession;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
@@ -38,6 +39,14 @@ public class ItemOptionService {
     public int modifyItemOption(List<ItemOption> itemOptions,String itemCode){
         int result = deleteByItemCode(itemCode);
         return itemOptionRepository.insertItemOptions(itemOptions);
+    }
+
+    public int modifyItemOptionAfterPay(List<OrderDetail> orderDetails){
+        int result = 0;
+        for (OrderDetail orderDetail : orderDetails){
+            result += itemOptionRepository.modifyItemOptionStockByOptionCode(orderDetail);
+        }
+        return result;
     }
 
     public int deleteItemOption(String optionCode){

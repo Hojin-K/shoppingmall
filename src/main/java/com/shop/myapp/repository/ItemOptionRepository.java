@@ -2,6 +2,7 @@ package com.shop.myapp.repository;
 
 
 import com.shop.myapp.dto.ItemOption;
+import com.shop.myapp.dto.OrderDetail;
 import org.apache.ibatis.annotations.Mapper;
 import org.apache.ibatis.annotations.Param;
 
@@ -16,4 +17,5 @@ public interface ItemOptionRepository {
     int deleteItemOption(String optionCode);
     int deleteByItemCode(String itemCode);
     int modifyItemOption(List<ItemOption> itemOptions);
+    int modifyItemOptionStockByOptionCode(OrderDetail orderDetail);
 }

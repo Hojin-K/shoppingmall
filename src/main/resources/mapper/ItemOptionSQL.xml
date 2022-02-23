@@ -42,8 +42,13 @@
             where OPTION_CODE = #{itemOption.optionCode}
         </foreach>
     </update>
+    <update id="modifyItemOptionStockByOptionCode" parameterType="com.shop.myapp.dto.OrderDetail">
+        update HR.SHOP_ITEM_OPTIONS_TB
+        set OPTION_STOCK = OPTION_STOCK - #{orderDetail.amount} where option_code = #{orderDetail.optionCode}
+    </update>
     <delete id="deleteItemOption">
-            delete HR.SHOP_ITEM_OPTIONS_TB where OPTION_CODE= #{optionCode}
+        delete HR.SHOP_ITEM_OPTIONS_TB
+        where OPTION_CODE = #{optionCode}
     </delete>
     <delete id="deleteByItemCode">
         delete HR.SHOP_ITEM_OPTIONS_TB
