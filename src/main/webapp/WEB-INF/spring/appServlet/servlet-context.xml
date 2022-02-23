@@ -29,6 +29,18 @@
         <beans:property name="username" value="hr"/>
         <beans:property name="password" value="123456"/>
     </beans:bean>
+    
+    <!-- <beans:bean id="dataSource" class="net.sf.log4jdbc.Log4jdbcProxyDataSource">
+	<beans:constructor-arg ref="dataSourceSpied" />
+	<beans:property name="logFormatter">
+		<beans:bean class="net.sf.log4jdbc.tools.Log4JdbcCustomFormatter">
+			<beans:property name="loggingType" value="MULTI_LINE" />
+			<beans:property name="sqlPrefix" value="SQL : " />
+		</beans:bean>
+	</beans:property>
+	</beans:bean> -->
+
+
 
     <beans:bean id="sqlSessionFactory" class="org.mybatis.spring.SqlSessionFactoryBean">
         <beans:property name="dataSource" ref="dataSource"/>

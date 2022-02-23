@@ -57,7 +57,7 @@ public class Order {
     public Order() {
     }
 
-    public String getPaidAtToString(){
+    public String paidAtToString(){
         LocalDateTime d = LocalDateTime.parse(this.paidAt.toString());
         DateTimeFormatter formatter = DateTimeFormatter.ofPattern("yyyy-MM-dd HH:mm:ss");
         return d.format(formatter);

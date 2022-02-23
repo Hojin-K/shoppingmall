@@ -1,6 +1,8 @@
 package com.shop.myapp.service;
 
+import java.util.ArrayList;
 import java.util.List;
+import java.util.Map;
 import java.util.Optional;
 
 import org.apache.ibatis.session.SqlSession;
@@ -26,10 +28,17 @@ public class MemberService {
 
     }
 
-    public List<Member> getMembers() {
+    public List<Member> getMembers(Map<String, Object> param) {
         MemberRepository memberRepository = sqlSession.getMapper(MemberRepository.class);
-        List<Member> members = memberRepository.findAll();
-        members.forEach(member -> System.out.print(member.getMemberName()));
+        List<Member> members = new ArrayList<Member>(); 
+        try{
+        	System.out.println(1);
+        	members = memberRepository.findAll(param);
+        	System.out.println(2);
+        }catch (Exception e) {
+			e.printStackTrace();
+		}
+        //members.forEach(member -> System.out.print(member.getMemberName()));
         for (Member member : members) {
             System.out.println(member.getMemberBirth());
         }
@@ -37,7 +46,8 @@ public class MemberService {
     }
 
     public int insertMember(Member member) {
-
+        System.out.println(member.getMemberBirth().toString());
+        System.out.println(member.getMemberAddress());
         MemberRepository memberRepository
                 = sqlSession.getMapper(MemberRepository.class);
         try {
@@ -61,6 +71,7 @@ public class MemberService {
         if (loginMemberOptional.isPresent()) {
             Member loginMember = loginMemberOptional.get();
             if (BCrypt.checkpw(userPwd, loginMember.getMemberPwd())) {
+                System.out.println("true");
                 return loginMember;
             }
         }

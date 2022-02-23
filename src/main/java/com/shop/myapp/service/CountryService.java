@@ -18,11 +18,9 @@ import java.util.List;
 
 @Service
 public class CountryService {
-    private final SqlSession sqlSession;
-    private CountryRepository countryRepository;
+    private final CountryRepository countryRepository;
 
     public CountryService(SqlSession sqlSession) {
-        this.sqlSession = sqlSession;
         this.countryRepository = sqlSession.getMapper(CountryRepository.class);
     }
 

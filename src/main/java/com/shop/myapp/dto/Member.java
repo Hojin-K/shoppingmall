@@ -21,12 +21,11 @@ public class Member {
 	private LocalDate memberBirth;
 	private String businessRegistrationNo;
 	private String businessName;
+    private String detailAddress;
+    private String address;
 	
-	private String detailAddress;
-	private String address;
-	
-	public void setDetailAddress(String detailAddress) {
-		this.detailAddress = detailAddress;
-		this.memberAddress = this.address +" "+this.detailAddress;
-	}
+    public void setDetailAddress(String detailAddress) {
+        this.detailAddress = detailAddress;
+        this.memberAddress = this.address +" "+this.detailAddress;
+    }
 }

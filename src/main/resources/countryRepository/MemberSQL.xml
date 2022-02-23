@@ -5,20 +5,34 @@
 <mapper namespace="com.shop.myapp.repository.MemberRepository">
 
     <insert id="insertMember">
-       		INSERT INTO SHOP_MEMBER_TB VALUES(#{memberId}, #{memberPwd}, #{memberLevel},
-       		#{memberName}, #{memberAddress}, #{memberTel}, #{memberBirth}
-       		,#{businessRegistrationNo}, #{businessName}
-       		)
+        INSERT INTO SHOP_MEMBER_TB(MEMBER_ID, MEMBER_PWD,
+                                   MEMBER_NAME, MEMBER_ADDRESS,
+                                   MEMBER_TEL, MEMBER_BIRTH,
+                                   BUSINESS_REGISTRATION_NO, BUSINESS_NAME)
+        VALUES (#{memberId}, #{memberPwd},
+                #{memberName}, #{memberAddress}, #{memberTel}, #{memberBirth}
+                   , #{businessRegistrationNo,jdbcType=VARCHAR}, #{businessName,jdbcType=VARCHAR})
     </insert>
     <update id="updateMember">
-    		UPDATE SHOP_MEMBER_TB SET MEMBER_PWD = #{memberPwd}, MEMBER_NAME=#{memberName},
-    		MEMBER_ADRESS=#{memberAddress},MEMBER_TEL=#{memberTel},MEMBER_BIRTH=#{memberBirth}
-    		WHERE MEMBER_ID = #{memberId}
+        UPDATE SHOP_MEMBER_TB
+        SET MEMBER_PWD   = #{memberPwd},
+            MEMBER_NAME=#{memberName},
+            MEMBER_ADRESS=#{memberAddress},
+            MEMBER_TEL=#{memberTel},
+            MEMBER_BIRTH=#{memberBirth}
+        WHERE MEMBER_ID = #{memberId}
     </update>
-    <select id="findAll" resultType="com.shop.myapp.dto.Member">
-			SELECT * FROM SHOP_MEMBER_TB
+    <select id="findAll" parameterType="hashmap" resultType="com.shop.myapp.dto.Member" >
+        SELECT *
+        FROM SHOP_MEMBER_TB
+        WHERE 1=1
+        <if test ="condition !=null and condition !='' ">
+         AND #{chkInfo} LIKE '%'||#{condition}||'%'
+        </if>
     </select>
     <select id="findById" resultType="com.shop.myapp.dto.Member">
-        SELECT * FROM SHOP_MEMBER_TB WHERE MEMBER_ID = #{memberId}
+        SELECT *
+        FROM SHOP_MEMBER_TB
+        WHERE MEMBER_ID = #{memberId}
     </select>
 </mapper>

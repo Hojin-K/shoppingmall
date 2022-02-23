@@ -2,6 +2,7 @@ package com.shop.myapp.service;
 
 import com.shop.myapp.dto.Item;
 import com.shop.myapp.dto.ItemOption;
+import com.shop.myapp.dto.Pagination;
 import com.shop.myapp.repository.ItemOptionRepository;
 import com.shop.myapp.repository.ItemRepository;
 import org.apache.ibatis.session.SqlSession;
@@ -32,8 +33,8 @@ public class ItemService {
         return item.orElseThrow(() -> new IllegalStateException("Not Found Item"));
     }
 
-    public List<Item> getItems() {
-        return itemRepository.findAll();
+    public List<Item> getItems(Pagination pagination) {
+        return itemRepository.findAll(pagination);
     }
 
     public int createItem(Item item) {
@@ -48,5 +49,9 @@ public class ItemService {
     public int updateItem(Item item) {
         itemRepository.updateItem(item);
      return itemOptionService.modifyItemOption(item.getItemOptions());
+    }
+
+    public int getItemListCnt(){
+        return itemRepository.getItemListCnt();
     }
 }
