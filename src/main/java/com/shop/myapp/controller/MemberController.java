@@ -1,6 +1,7 @@
 package com.shop.myapp.controller;
 
 import java.util.List;
+import java.util.Map;
 
 import javax.servlet.http.HttpServletRequest;
 
@@ -8,6 +9,7 @@ import org.springframework.http.ResponseEntity;
 import org.springframework.stereotype.Controller;
 import org.springframework.web.bind.annotation.*;
 
+import com.shop.myapp.dto.Country;
 import com.shop.myapp.dto.Member;
 import com.shop.myapp.service.AuthService;
 import com.shop.myapp.service.AuthServiceImpl;
@@ -49,6 +51,7 @@ public class MemberController {
     }
     
 <<<<<<< HEAD
+<<<<<<< HEAD
     @GetMapping("/sellerJoin")
     public String sellerJoinForm() {
     	//authService.checkMemberId("");
@@ -73,22 +76,42 @@ public class MemberController {
     public String normalUpdateForm() {
     	log.info("normalUpdateForm");
     	return "/member/normalUpdate";
+=======
+    @GetMapping("/logout")
+    public String logout(HttpServletRequest request) {
+    	request.getSession().invalidate();
+    	
+    	return "redirect:/item";
+>>>>>>> 875ab7ec0071a66b6a56e3ea61a39b6460440f90
     }
     
-    @PostMapping("/normalUpdate")
-    public String normalUpdate(@ModelAttribute Member member) {
+    @GetMapping("/update")
+    public String updateForm() {
+    	log.info("memberUpdateForm");
+    	return "/members/update";
+    }
+    
+    @PostMapping("/update")
+    public String update(@ModelAttribute Member member) {
     	// 에러가 있는지 검사
-    	log.info("normalUpdate");
+    	log.info("Edit member information.");
     	
     	int isSuccess = memberService.updateMember(member);
     	System.out.println(isSuccess);
+    	log.info("update complete.");
     	return "redirect:/members";
     }
     
+    @GetMapping("/list")
+    public String memberList() {
+    	return "/members/list";
+    }
+    
     @ResponseBody
-    @GetMapping("")
-    public List<Member> findAll(){
-    	return memberService.getMembers();
+    @PostMapping("/list")
+    public ResponseEntity<Object> getMemberList(@RequestParam String chkInfo, @RequestParam String condition){
+        List<Member> members = memberService.getMembers(chkInfo, condition);
+        return ResponseEntity.ok(members);
     }
     
     @GetMapping("/login")
@@ -109,7 +132,7 @@ public class MemberController {
             e.printStackTrace();
         }
 
-    	return "redirect:/members";
+    	return "redirect:/";
     }
 
     @GetMapping("/{memberId}")

@@ -21,11 +21,10 @@
     </resultMap>
 
 
-
     <update id="insertItemOptions" parameterType="list">
-        insert into HR.SHOP_ITEM_OPTIONS_TB(option_code, item_code, option_name, option_priceud, OPTION_STOCK)
+        insert into HR.SHOP_ITEM_OPTIONS_TB(option_code, item_code, option_name, option_price_ud, OPTION_STOCK)
         SELECT CODE_ITEM_OPTIONS_SQ.nextval AS option_code ,
-               O.* FROM (   <foreach collection="list" item="itemOption" separator="UNION ALL ">
+        O.* FROM (   <foreach collection="list" item="itemOption" separator="UNION ALL ">
         select
         #{itemOption.itemCode} as item_code,
         #{itemOption.optionName} as option_name,
@@ -38,15 +37,22 @@
     <update id="modifyItemOption">
         <foreach collection="list" item="itemOption">
             update HR.SHOP_ITEM_OPTIONS_TB
-            set OPTION_PRICEUD = #{itemOption.optionPriceUd},
+            set OPTION_PRICE_UD = #{itemOption.optionPriceUd},
             OPTION_STOCK = #{itemOption.optionStock}
             where OPTION_CODE = #{itemOption.optionCode}
         </foreach>
     </update>
+    <update id="modifyItemOptionStockByOptionCode" parameterType="com.shop.myapp.dto.OrderDetail">
+        update HR.SHOP_ITEM_OPTIONS_TB
+        set OPTION_STOCK = OPTION_STOCK - #{orderDetail.amount} where option_code = #{orderDetail.optionCode}
+    </update>
     <delete id="deleteItemOption">
-        <foreach collection="list" item="optionCode">
-            delete HR.SHOP_ITEM_OPTIONS_TB where OPTION_CODE= #{optionCode}
-        </foreach>
+        delete HR.SHOP_ITEM_OPTIONS_TB
+        where OPTION_CODE = #{optionCode}
+    </delete>
+    <delete id="deleteByItemCode">
+        delete HR.SHOP_ITEM_OPTIONS_TB
+        where HR.SHOP_ITEM_OPTIONS_TB.ITEM_CODE = #{itemCode}
     </delete>
 
     <select id="findByOptionCode" resultType="com.shop.myapp.dto.ItemOption">

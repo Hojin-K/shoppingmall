@@ -13,6 +13,7 @@ import org.springframework.web.multipart.MultipartFile;
 import org.springframework.web.servlet.mvc.support.RedirectAttributes;
 
 import javax.servlet.http.HttpServletRequest;
+import javax.servlet.http.HttpSession;
 import java.io.IOException;
 import java.util.List;
 import java.util.Map;
@@ -22,17 +23,17 @@ import java.util.Map;
 public class ItemController {
     private final ItemService itemService;
     private final FileService fileService;
+    private final HttpSession session;
 
-    public ItemController(ItemService itemService, FileService fileService) {
+    public ItemController(ItemService itemService, FileService fileService, HttpSession session) {
         this.itemService = itemService;
         this.fileService = fileService;
+        this.session = session;
     }
 
     @GetMapping("")
     public String getItems(@RequestParam(required = false, defaultValue = "1") int page, Model model) {
-        Pagination pagination = new Pagination();
-        int itemListCnt = itemService.getItemListCnt();
-        pagination.pageInfo(page, itemListCnt);
+        Pagination pagination = itemService.getPaginationByPage(page);
         List<Item> items = itemService.getItems(pagination);
         model.addAttribute("items", items);
         model.addAttribute("pagination", pagination);
@@ -76,23 +77,44 @@ public class ItemController {
 
     @GetMapping("/{itemCode}/update")
     public String updateItemForm(@PathVariable String itemCode, Model model) {
-        Item item = itemService.getItem(itemCode);
-        model.addAttribute("item", item);
-        return "";
+        Member member = (Member) session.getAttribute("member");
+        if (itemService.validateAccessToItem(itemCode, member)) {
+            Item item = itemService.getItem(itemCode);
+            model.addAttribute("item", item);
+            return "/item/updateItemForm";
+        }
+
+        return "redirect:/item";
     }
 
     @PostMapping("/{itemCode}/update")
     public String updateItem(@PathVariable String itemCode, Item item, RedirectAttributes redirectAttributes) {
-
-        itemService.updateItem(item);
-        redirectAttributes.addAttribute("itemCode", itemCode);
-        return "redirect:/item/{itemCode}";
+        Member member = (Member) session.getAttribute("member");
+        if (itemService.validateAccessToItem(itemCode, member)) {
+            itemService.updateItem(item);
+            redirectAttributes.addAttribute("itemCode", itemCode);
+            return "redirect:/item/{itemCode}";
+        }
+        return "redirect:/item";
     }
 
-    @PostMapping("/{itemCode}/delete")
+    @GetMapping("/{itemCode}/delete")
     public String deleteItem(@PathVariable String itemCode) {
-        itemService.deleteItem(itemCode);
+        Member member = (Member) session.getAttribute("member");
+        if (itemService.validateAccessToItem(itemCode, member)) {
+            itemService.deleteItem(itemCode);
+            return "redirect:/item";
+        }
         return "redirect:/item";
+    }
+
+    @GetMapping("/search")
+    public String search(@RequestParam(required = false, defaultValue = "1") int page, @RequestParam("q") String search, Model model) {
+        Pagination pagination = itemService.getPaginationByPage(page);
+        List<Item> items = itemService.search(search, pagination);
+        model.addAttribute("pagination", pagination);
+        model.addAttribute("items", items);
+        return "item/items";
     }
 
 

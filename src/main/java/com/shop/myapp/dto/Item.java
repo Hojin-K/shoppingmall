@@ -16,8 +16,10 @@ public class Item {
     private String itemImage;
     private String itemInfo;
     private int itemStock;
+    private String itemBrand;
     private List<ItemOption> itemOptions;
     private Country country;
+    private String businessName;
 
     public void calculateItemStock() {
         for (ItemOption itemOption : itemOptions) {

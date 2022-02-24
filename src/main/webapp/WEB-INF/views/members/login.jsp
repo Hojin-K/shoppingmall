@@ -14,18 +14,18 @@
 </head>
 <body class="pt-5">
 <div class="container">
-	<h2>로그인</h2>
-	<form method="POST" action="/members/login" >
-	<div class="mb-3">
-	     ID <br />
-	     <input class="form-control" type="text" name="memberId" />
-	</div>
-	<div class="mb-3">
-	         비밀번호 <br />
-	     <input class="form-control" type="password" name="memberPwd" />	
-	</div>
-	     <input class="form-control" type="submit" value="로그인">
-	</form>
+    <h2>로그인</h2>
+    <form method="POST" action="/members/login" >
+    <div class="mb-3">
+         ID <br />
+         <input class="form-control" type="text" name="memberId" />
+    </div>
+    <div class="mb-3">
+             비밀번호 <br />
+         <input class="form-control" type="password" name="memberPwd" />    
+    </div>
+         <input class="form-control" type="submit" value="로그인">
+    </form>
 </div>
 </body>
 </html>

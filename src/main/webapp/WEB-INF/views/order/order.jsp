@@ -34,11 +34,11 @@
         color: black;
     }
 
-    .content {
+    .tableContent {
         display: table;
     }
 
-    .content span {
+    .tableContent span {
         display: table-cell;
         vertical-align: middle;
     }
@@ -62,7 +62,7 @@
             <c:forEach items="${order.orderDetails}" var="orderDetail">
                 <tr>
                     <td>${order.orderCode}</td>
-                    <td class="content text-start">
+                    <td class="tableContent text-start">
                         <a class="itemLink" href="/item/${orderDetail.itemOption.item.itemCode}">
                             <div style="width:10%; height:100%; float:left;">
                                 <img style="width: 100%;" src="${orderDetail.itemOption.item.itemImage}" alt="">
@@ -89,7 +89,49 @@
             </tbody>
         </table>
     </div>
+    <br>
+<div class="row">
+<div class="col-6">
+    <table class="table text-center">
+        <tbody>
+        <tr>
+            <th>결제번호</th>
+            <td>${order.impUid}</td>
+        </tr>
+            <tr>
+                <th>결제일</th>
+                <td>${order.paidAtToString()}</td>
+            </th>
+        <tr>
+            <th>결제금액</th>
+            <td>${order.totalPay}원</td>
+        </tr>
+        <tr>
+            <th>환불금액</th>
+            <td>${order.totalPay-order.change}원</td>
+        </tr>
+        </tbody>
+    </table>
 </div>
-
+    <div class="col-6">
+        <table class="table text-center">
+            <tbody>
+            <tr>
+                <th>이름</th>
+                <td>${order.buyerName}</td>
+            </tr>
+            <tr>
+                <th>연락처</th>
+                <td>${order.buyerTel}</td>
+            </tr>
+            <tr>
+                <th>배송주소</th>
+                <td>${order.buyerAddr}</td>
+            </tr>
+            </tbody>
+        </table>
+    </div>
+</div>
+</div>
 </body>
 </html>

@@ -75,7 +75,7 @@ public class IamPortService {
         // access token 을 받을때와 마찬가지로 json 파싱
         // 해당 고유 번호로 결제된 금액 조회
         return Payment.builder()
-                .impUid((String) responseAttributes.get("imp_Uid"))
+                .impUid((String) responseAttributes.get("imp_uid"))
                 .amount((Long) responseAttributes.get("amount"))
                 .buyerName((String) responseAttributes.get("buyer_name"))
                 .buyerTel((String) responseAttributes.get("buyer_tel"))

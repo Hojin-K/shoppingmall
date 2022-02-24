@@ -40,9 +40,9 @@
             function getOptionForm() {
                 let result = "<div style='display: inline-block' name='option" + optionSetting + "' id='option" + optionSetting + "'>"
                 result += '<p>옵션</p>';
-                result += "사이즈<input type='number' name='itemOptions[" + optionSetting + "].optionName'/> "
-                result += "&nbsp;보유 수량<input type='number' name='itemOptions[" + optionSetting + "].optionStock'/> "
-                result += "&nbsp;변동액<input type='number' name='itemOptions[" + optionSetting + "].optionPriceUd'/> "
+                result += "사이즈<input type='text' name='itemOptions[" + optionSetting + "].optionName'/> "
+                result += "&nbsp;보유 수량<input onkeyPress='javascript:checkInputNum();' type='number' name='itemOptions[" + optionSetting + "].optionStock'/> "
+                result += "&nbsp;변동액<input onkeyPress='javascript:checkInputNum();'  type='number' name='itemOptions[" + optionSetting + "].optionPriceUd'/> "
                 result += "<button class='btn btn-danger btn-sm' type='button' name='deleteOption'>삭제</button>"
                 result += "</div>"
                 $("#options").append(result);
@@ -59,6 +59,11 @@
             });
 
         });
+            function checkInputNum(){
+                if ((event.keyCode < 48) || (event.keyCode > 57)){
+                    event.returnValue = false;
+                }
+            }
     </script>
 </head>
 <body class="pt-5">
@@ -82,8 +87,12 @@
             </select>
         </div>
         <div class="mb-3">
+            <label for="itemBrand">브랜드</label>
+            <input class="form-control" type="text" name="itemBrand" id="itemBrand" placeholder="상품의 브랜드를 입력해주세요.">
+        </div>
+        <div class="mb-3">
             <label for="itemPrice">가격</label>
-            <input class="form-control" type="number" name="itemPrice" id="itemPrice" placeholder="가격을 입력해주세요.(한화기준)"
+            <input class="form-control" onkeyPress="javascript:checkInputNum();"  type="number" name="itemPrice" id="itemPrice" placeholder="가격을 입력해주세요.(한화기준)"
                    required>
         </div>
         <div class="mb-3">

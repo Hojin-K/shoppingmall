@@ -29,6 +29,10 @@ public class Order {
     private String buyerPostCode;
 
     private String isPaid;
+    // iamport 결제 고유번호
+    private String impUid;
+    // 결제 된 금액 -> 환불시, 환불금 빠짐.
+    private long change;
 
     @DateTimeFormat(pattern = "yyyy-MM-dd HH:mm:ss")
     private LocalDateTime paidAt;
@@ -41,18 +45,25 @@ public class Order {
         this.orderCode = now.format(formatter);
 
     }
+
     @Builder
-    public Order(String orderCode, String memberId, long totalPay, String buyerName, String buyerEmail, String buyerAddr, String buyerPostCode, String isPaid, List<OrderDetail> orderDetails) {
+    public Order(String orderCode, String memberId, long totalPay, String buyerName, String buyerTel, String buyerEmail, String buyerAddr, String buyerPostCode, String isPaid, String impUid, long change, LocalDateTime paidAt, List<OrderDetail> orderDetails) {
         this.orderCode = orderCode;
         this.memberId = memberId;
         this.totalPay = totalPay;
         this.buyerName = buyerName;
+        this.buyerTel = buyerTel;
         this.buyerEmail = buyerEmail;
         this.buyerAddr = buyerAddr;
         this.buyerPostCode = buyerPostCode;
         this.isPaid = isPaid;
+        this.impUid = impUid;
+        this.change = change;
+        this.paidAt = paidAt;
         this.orderDetails = orderDetails;
     }
+
+
 
     public Order() {
     }

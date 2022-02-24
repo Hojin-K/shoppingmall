@@ -22,7 +22,7 @@ public class Payment {
     private String buyerTel;
     private String buyerAddr;
     private String buyerPostCode;
-    @DateTimeFormat(pattern = "yyyy-MM-dd")
+    @DateTimeFormat(pattern = "yyyy-MM-dd HH:mm:ss")
     private LocalDateTime paidAt;
     private String status;
     /*

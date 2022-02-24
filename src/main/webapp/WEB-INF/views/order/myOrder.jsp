@@ -20,6 +20,7 @@
     </script>
 </head>
 <body>
+<div class="container pt-5">
 <table class="table text-center">
     <thead>
     <tr>
@@ -33,11 +34,14 @@
         <tbody>
 <tr>
     <td><a class="itemLink" href="/order/${order.orderCode}">${order.orderCode}</a></td>
+    <c:if test="${not empty order.impUid}">
     <td>${order.paidAtToString()}</td>
+    </c:if>
     <td>${order.isPaid}</td>
 </tr>
 </tbody>
     </c:forEach>
 </table>
+</div>
 </body>
 </html>

@@ -1,8 +1,11 @@
 package com.shop.myapp.service;
 
+import java.util.ArrayList;
 import java.util.List;
 import java.util.Optional;
 
+import com.shop.myapp.dto.Item;
+import com.shop.myapp.dto.Pagination;
 import org.apache.ibatis.session.SqlSession;
 import org.mindrot.jbcrypt.BCrypt;
 import org.springframework.stereotype.Service;
@@ -13,9 +16,11 @@ import com.shop.myapp.repository.MemberRepository;
 @Service
 public class MemberService {
     private final SqlSession sqlSession;
+    private final ItemService itemService;
 
-    public MemberService(SqlSession sqlSession) {
+    public MemberService(SqlSession sqlSession, ItemService itemService) {
         this.sqlSession = sqlSession;
+        this.itemService = itemService;
     }
 
     public Member getMember(String memberId) {
@@ -26,10 +31,17 @@ public class MemberService {
 
     }
 
-    public List<Member> getMembers() {
+    public List<Member> getMembers(String chkInfo, String condition) {
         MemberRepository memberRepository = sqlSession.getMapper(MemberRepository.class);
-        List<Member> members = memberRepository.findAll();
-        members.forEach(member -> System.out.print(member.getMemberName()));
+        List<Member> members = new ArrayList<Member>(); 
+        try{
+        	System.out.println(1);
+        	members = memberRepository.findAll(chkInfo, condition);
+        	System.out.println(2);
+        }catch (Exception e) {
+			e.printStackTrace();
+		}
+        //members.forEach(member -> System.out.print(member.getMemberName()));
         for (Member member : members) {
             System.out.println(member.getMemberBirth());
         }
@@ -90,5 +102,15 @@ public class MemberService {
 
         int result = memberRepository.updateMember(member);
         return result;
+    }
+
+    public List<Item> getSellerItems(String memberId, Pagination pagination,String search){
+        return itemService.getSellerItemByMemberId(memberId, pagination,search);
+    }
+
+    public int updateSellerInfo(Member member){
+        MemberRepository memberRepository
+                = sqlSession.getMapper(MemberRepository.class);
+        return memberRepository.updateSeller(member);
     }
 }
