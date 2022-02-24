@@ -33,6 +33,13 @@
         update HR.SHOP_MEMBER_TB
 set HR.SHOP_MEMBER_TB.BUSINESS_NAME = #{businessName}, business_info = #{businessInfo} where member_id = #{memberId}
     </update>
+    <update id="updateByAdmin" >
+		UPDATE SHOP_MEMBER_TB
+		SET MEMBER_PWD = #{businessPwd},
+			MEMBER_LEVEL = #{memberLevel},
+			IS_DELETE = #{isDelete}
+		WHERE MEMBER_ID = #{memberId}
+    </update>
     <select id="findAll" resultType="com.shop.myapp.dto.Member" >
         SELECT *
         FROM SHOP_MEMBER_TB

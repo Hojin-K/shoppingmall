@@ -5,6 +5,7 @@ import java.util.List;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.GetMapping;
+import org.springframework.web.bind.annotation.ModelAttribute;
 import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestMapping;
@@ -56,14 +57,23 @@ public class AdminController {
 	}
 	
 	@GetMapping("/{memberId}/detail")
-	public String detail(@PathVariable String memberId,Model model) {
+	public ModelAndView detail(@PathVariable String memberId,Model model) {
 		log.info("member detail!!!");
 		Member member = memberService.getMember(memberId);
-		/*ModelAndView mv = new ModelAndView();
-		mv.setViewName("members/detail");
-		mv.addObject("member", member);*/
-		model.addAttribute("member", member);
+		ModelAndView mv = new ModelAndView();
+		mv.setViewName("modal/memberDetail");
+		mv.addObject("member", member);
+		System.out.println(member.getMemberLevel());
+		/*model.addAttribute("member", member);
 
-		return "/members/detail";
+		return "/modal/memberDetail";*/
+		return mv;
+	}
+	
+	@PostMapping("/memberUpdate")
+	public String memberUpdate(@ModelAttribute Member member) {
+		log.info("member update!!!");
+		memberService.updateMember(member);
+		return "redirect:/admin/list";
 	}
 }

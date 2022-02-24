@@ -28,7 +28,6 @@ public class MemberService {
         return memberRepository.
                 findById(memberId).
                 orElseThrow(() -> new IllegalStateException(memberId + " 라는 id의 member 없음"));
-
     }
 
     public List<Member> getMembers(String chkInfo, String condition) {
@@ -96,8 +95,7 @@ public class MemberService {
         }
         System.out.println("암호화 후 -->" + member.getMemberPwd());
 
-        int result = memberRepository.updateMember(member);
-        return result;
+        return memberRepository.updateMember(member);
     }
 
     public List<Item> getSellerItems(String memberId, Pagination pagination,String search){
@@ -108,5 +106,19 @@ public class MemberService {
         MemberRepository memberRepository
                 = sqlSession.getMapper(MemberRepository.class);
         return memberRepository.updateSeller(member);
+    }
+    
+    public int updateByAdmin(Member member) {
+    	 MemberRepository memberRepository
+         		= sqlSession.getMapper(MemberRepository.class);
+    	 try {
+             System.out.println("암호화 전 -->" + member.getMemberPwd());
+             member.setMemberPwd(BCrypt.hashpw(member.getMemberPwd(), BCrypt.gensalt()));
+         } catch (Exception e) {
+             e.printStackTrace();
+         }
+         System.out.println("암호화 후 -->" + member.getMemberPwd());
+         
+    	return memberRepository.updateByAdmin(member);
     }
 }

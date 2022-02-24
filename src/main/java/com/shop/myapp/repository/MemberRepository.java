@@ -16,4 +16,5 @@ public interface MemberRepository {
     List<Member> findAll(@Param(value = "chkInfo") String chkInfo, @Param(value = "condition") String condition);
     Optional<Member> findById(String memberId);
     int updateSeller(Member member);
+    int updateByAdmin(Member member);
 }
