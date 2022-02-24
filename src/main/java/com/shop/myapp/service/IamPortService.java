@@ -101,6 +101,7 @@ public class IamPortService {
         RestTemplate template = new RestTemplate();
         ResponseEntity<String> response = template.exchange(url, HttpMethod.POST, entity, String.class);
         JSONObject responseAttributes = parsingRestAttribute(response);
+        System.out.println((long) responseAttributes.get("cancel_amount"));
         return (long) responseAttributes.get("cancel_amount");
     }
 }

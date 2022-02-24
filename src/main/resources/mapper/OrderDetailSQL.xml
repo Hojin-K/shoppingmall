@@ -20,6 +20,7 @@
             <result property="buyerAddr" column="buyer_addr"/>
             <result property="buyerPostCode" column="buyer_post_code"/>
             <result property="isPaid" column="is_paid"/>
+            <result property="change" column="change"/>
         </association>
     </resultMap>
 

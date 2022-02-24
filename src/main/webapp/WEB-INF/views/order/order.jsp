@@ -84,9 +84,12 @@
                             ${orderDetail.postedStatus}
                     </td>
                     <td>
+                        <c:if test="${orderDetail.postedStatus != 'refund'}">
+
                         <button id="${orderDetail.orderDetailCode}" data-bs-toggle="modal" data-bs-target="#refundModal" name="refund" class="btn btn-sm btn-secondary"
                                 type="button">취소
                         </button>
+                        </c:if>
                     </td>
                 </tr>
             </c:forEach>
@@ -112,7 +115,7 @@
                 </tr>
                 <tr>
                     <th>환불금액</th>
-                    <td>${order.totalPay-order.change}원</td>
+                    <td>${order.change}원</td>
                 </tr>
                 </tbody>
             </table>

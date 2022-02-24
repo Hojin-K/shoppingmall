@@ -56,7 +56,8 @@ public class OrderDetailService {
         refundDetail.put("amount", (double) orderDetail.getAmount() * orderDetail.getItemOption().getItem().getItemPrice());
         String refundDetailString = objectMapper.writeValueAsString(refundDetail);
         System.out.println(refundDetailString);
-        if (iamPortService.cancel(refundDetailString) == (long) orderDetail.getAmount() * orderDetail.getItemOption().getItem().getItemPrice()) {
+        System.out.println("change = "+(orderDetail.getOrder().getChange()+ (long) orderDetail.getAmount() * orderDetail.getItemOption().getItem().getItemPrice()));
+        if (iamPortService.cancel(refundDetailString) == (orderDetail.getOrder().getChange()+ (long) orderDetail.getAmount() * orderDetail.getItemOption().getItem().getItemPrice())) {
             orderDetailRepository.updateWhenCancel(orderDetail.getOrderDetailCode());
             return true;
         }
