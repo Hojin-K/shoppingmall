@@ -94,7 +94,7 @@ public class MemberController {
             e.printStackTrace();
         }
 
-    	return "redirect:/item/home";
+    	return "redirect:/";
     }
 
     @GetMapping("/{memberId}")

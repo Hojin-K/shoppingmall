@@ -78,4 +78,8 @@ public class ItemService {
         // 관리자거나 상품 작성자와 로그인 정보가 일치하면 true , 틀리면 false
         return item.getMemberId().equals(member.getMemberId()) || member.getMemberLevel().equals("관리자");
     }
+
+    public List<Item> getSellerItemByMemberId(String memberId, Pagination pagination,String search){
+        return itemRepository.findAllByMemberId(memberId,pagination,search);
+    }
 }

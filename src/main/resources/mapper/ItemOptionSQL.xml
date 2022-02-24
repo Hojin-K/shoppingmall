@@ -37,7 +37,7 @@
     <update id="modifyItemOption">
         <foreach collection="list" item="itemOption">
             update HR.SHOP_ITEM_OPTIONS_TB
-            set OPTION_PRICEUD = #{itemOption.optionPriceUd},
+            set OPTION_PRICE_UD = #{itemOption.optionPriceUd},
             OPTION_STOCK = #{itemOption.optionStock}
             where OPTION_CODE = #{itemOption.optionCode}
         </foreach>

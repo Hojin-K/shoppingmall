@@ -116,7 +116,7 @@
         });
     </script>
 </head>
-<body class="pt-5">
+<body >
 <div class="container">
     <h4>주문 정보</h4>
     <div class="text-end">

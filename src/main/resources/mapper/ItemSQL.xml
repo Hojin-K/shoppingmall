@@ -12,6 +12,7 @@
         <id property="itemImage" column="item_image"/>
         <id property="itemInfo" column="item_info"/>
         <id property="itemBrand" column="item_brand"/>
+        <id property="businessName" column="business_name"/>
         <association property="country" javaType="com.shop.myapp.dto.Country">
             <result property="countryCode" column="country_code"/>
             <result property="countryName" column="country_name"/>
@@ -37,7 +38,8 @@
         item_price,
         item_image,
         item_info,
-        ITEM_BRAND)
+        ITEM_BRAND,
+        BUSINESS_NAME)
         values (#{itemCode},
         #{memberId},
         #{countryCode},
@@ -45,7 +47,8 @@
         #{itemPrice},
         #{itemImage},
         #{itemInfo},
-        #{itemBrand})
+        #{itemBrand},
+        #{businessName})
     </insert>
     <update id="updateItem" parameterType="com.shop.myapp.dto.Item">
         update HR.SHOP_ITEM_TB
@@ -56,10 +59,11 @@
         HR.SHOP_ITEM_TB.ITEM_INFO = ${itemInfo}
         where HR.SHOP_ITEM_TB.ITEM_CODE = ${itemCode}
     </update>
-    <delete id="deleteItem" parameterType="string">
-        delete HR.SHOP_ITEM_TB
+    <update id="deleteItem" parameterType="string">
+        update HR.SHOP_ITEM_TB
+        set IS_DELETE = '1'
         where HR.SHOP_ITEM_TB.ITEM_CODE = #{itemCode}
-    </delete>
+    </update>
 
     <select id="findAll" resultMap="item"><![CDATA[
         SELECT *
@@ -77,7 +81,8 @@
                  from HR.SHOP_ITEM_TB item,
                       HR.SHOP_ITEM_OPTIONS_TB item_option,
                       HR.SHOP_COUNTRY_TB country
-                 WHERE rownum <= #{endList}
+                 WHERE item.IS_DELETE = '0'
+                   and rownum <= #{endList}
                    and item.ITEM_CODE = item_option.ITEM_CODE
                    and item.country_code = country.country_code
                  group by item.ITEM_CODE, MEMBER_ID, item.COUNTRY_CODE, ITEM_NAME, ITEM_PRICE, ITEM_IMAGE, ITEM_INFO,
@@ -90,7 +95,8 @@
         from HR.SHOP_ITEM_TB I,
              HR.SHOP_ITEM_OPTIONS_TB O,
              HR.SHOP_COUNTRY_TB C
-        where I.ITEM_CODE = #{itemCode}
+        where I.is_delete = '0'
+          and I.ITEM_CODE = #{itemCode}
           and O.ITEM_CODE = #{itemCode}
           and C.country_code = I.country_code
     </select>
@@ -98,7 +104,7 @@
         select count(*) as listCnt
         from HR.SHOP_ITEM_TB
     </select>
-    <select id="findAllBySearch" resultType="com.shop.myapp.dto.Item">
+    <select id="findAllBySearch" resultMap="item">
         <![CDATA[
         SELECT *
         FROM (
@@ -118,15 +124,47 @@
                           from HR.SHOP_ITEM_TB item,
                                HR.SHOP_ITEM_OPTIONS_TB item_option,
                                HR.SHOP_COUNTRY_TB country
-                          WHERE ITEM_NAME like '%' || #{search} || '%'
-                             or item_brand like '%' || #{search} || '%'
-                              and item.ITEM_CODE = item_option.ITEM_CODE
-                              and item.country_code = country.country_code
+                          WHERE item.IS_DELETE = '0'
+                            and (ITEM_NAME like '%' || #{search} || '%'
+                              or item_brand like '%' || #{search} || '%')
+                            and item.ITEM_CODE = item_option.ITEM_CODE
+                            and item.country_code = country.country_code
                           group by item.ITEM_CODE, MEMBER_ID, item.COUNTRY_CODE, ITEM_NAME, ITEM_PRICE, ITEM_IMAGE,
                                    ITEM_INFO,
                                    ITEM_STOCK, country_name, item_brand
                       )
                  where rownum <= #{pagination.endList})
+        WHERE #{pagination.startList} < num
+        ]]>
+    </select>
+    <select id="findAllByMemberId" resultMap="item">
+        SELECT *
+        FROM (
+        SELECT ROW_NUMBER() over (order by item.item_code desc ) AS num,
+        item.ITEM_CODE,
+        MEMBER_ID,
+        item.COUNTRY_CODE as country_code,
+        ITEM_NAME,
+        ITEM_PRICE,
+        ITEM_IMAGE,
+        ITEM_INFO,
+        COUNTRY_NAME,
+        sum(item_option.OPTION_STOCK) as item_stock
+        from HR.SHOP_ITEM_TB item,
+        HR.SHOP_ITEM_OPTIONS_TB item_option,
+        HR.SHOP_COUNTRY_TB country
+        WHERE item.IS_DELETE = '0'
+        <if test="search != null">
+            and (ITEM_NAME like '%' || #{search} || '%'
+            or item_brand like '%' || #{search} || '%')
+        </if>
+        and item.MEMBER_ID = #{memberId}
+        <![CDATA[
+                   and rownum <= #{pagination.endList}
+                   and item.ITEM_CODE = item_option.ITEM_CODE
+                   and item.country_code = country.country_code
+                 group by item.ITEM_CODE, MEMBER_ID, item.COUNTRY_CODE, ITEM_NAME, ITEM_PRICE, ITEM_IMAGE, ITEM_INFO,
+                          ITEM_STOCK, country_name)
         WHERE #{pagination.startList} < num
         ]]>
     </select>

@@ -19,6 +19,7 @@ public class Item {
     private String itemBrand;
     private List<ItemOption> itemOptions;
     private Country country;
+    private String businessName;
 
     public void calculateItemStock() {
         for (ItemOption itemOption : itemOptions) {

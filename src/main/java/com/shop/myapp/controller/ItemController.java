@@ -95,17 +95,17 @@ public class ItemController {
             redirectAttributes.addAttribute("itemCode", itemCode);
             return "redirect:/item/{itemCode}";
         }
-        return "redirect:item";
+        return "redirect:/item";
     }
 
-    @PostMapping("/{itemCode}/delete")
+    @GetMapping("/{itemCode}/delete")
     public String deleteItem(@PathVariable String itemCode) {
         Member member = (Member) session.getAttribute("member");
         if (itemService.validateAccessToItem(itemCode, member)) {
             itemService.deleteItem(itemCode);
             return "redirect:/item";
         }
-        return "redirect:item";
+        return "redirect:/item";
     }
 
     @GetMapping("/search")

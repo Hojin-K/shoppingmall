@@ -56,21 +56,21 @@
             }
         });
         $("#back-to-top").click(function () {
-            $('html, body').animate({scrollTop: 0}, 1500);
+            $('html, body').animate({scrollTop: 0}, 1200);
             return false;
         });
     });
 </script>
-<nav class="navbar navbar-expand-lg navbar-light bg-light fixed-top">
+<nav class="navbar navbar-expand-lg navbar-light fixed-top" style="border-bottom: 1px solid #cccccc; background-color: white">
     <div class="container-fluid">
-        <a class="navbar-brand" href="/item">Navbar</a>
+        <a class="navbar-brand text-primary" style="font-weight: bolder;" href="/item">AraseoSajo</a>
         <button class="navbar-toggler" type="button" data-bs-toggle="collapse" data-bs-target="#navbarSupportedContent" aria-controls="navbarSupportedContent" aria-expanded="false" aria-label="Toggle navigation">
             <span class="navbar-toggler-icon"></span>
         </button>
 
         <div class="collapse navbar-collapse flex-grow-0" id="navbarSupportedContent">
             <ul class="navbar-nav mb-2 mb-lg-0 text-right">
-            <form action="/item/search"method="GET">
+            <form action="/item/search" method="GET">
                 <div id="custom-search-input" class="col-12">
                     <div class="input-group col-md-12">
                         <input type="text" name="q" class="search-query form-control rounded-pill" placeholder="Search"/>
@@ -86,27 +86,27 @@
                 <c:choose>
                 <c:when test="${not empty sessionScope.member}">
                 <li class="nav-item">
-                    <span class="nav-link">${sessionScope.member.memberName}님</span>
+                    <span class="nav-link"><b class="text-primary">${sessionScope.member.memberName}</b>&nbsp;님</span>
 
                 </li>
-                    <c:if test="${sessionScope.member.memberLevel == '1'}">
+                    <c:if test="${sessionScope.member.memberLevel == 'user'}">
                         <a class="nav-link" href="/members">개인정보</a>
                         <a class="nav-link" href="/cart/myCart">장바구니</a>
                         <a class="nav-link" href="/order/myOrder">주문조회</a>
                     </c:if>
                     <c:if test="${sessionScope.member.memberLevel == 'seller'}">
-                        <a class="nav-link" href="/members">상점관리</a>
+                        <a class="nav-link" href="/seller/${sessionScope.member.memberId}">상점관리</a>
                     </c:if>
                     <c:if test="${sessionScope.member.memberLevel == 'admin'}">
-                        <a class="nav-link" href="/members">관리자모드</a>
+                        <a class="nav-link" href="/admin">관리자모드</a>
                     </c:if>
                 </c:when>
                     <c:otherwise>
                         <li class="nav-item">
-                            <a class="nav-link active" aria-current="page" href="/members/login">login</a>
+                            <a class="nav-link text-primary" aria-current="page" href="/members/login">로그인</a>
                         </li>
                         <li class="nav-item">
-                            <a class="nav-link" href="/members/join">join</a>
+                            <a class="nav-link text-primary" href="/members/join">회원가입</a>
                         </li>
                     </c:otherwise>
                 </c:choose>
