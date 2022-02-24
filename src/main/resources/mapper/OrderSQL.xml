@@ -9,7 +9,7 @@
         <id property="totalPay" column="total_pay"/>
         <id property="memberId" column="member_id"/>
         <id property="buyerName" column="buyer_name"/>
-        <id property="buyerTel" column="buyer_tel" />
+        <id property="buyerTel" column="buyer_tel"/>
         <id property="buyerEmail" column="buyer_email"/>
         <id property="buyerAddr" column="buyer_addr"/>
         <id property="buyerPostCode" column="buyer_post_code"/>
@@ -58,6 +58,11 @@
             CHANGE  = #{payment.amount},
             paid_at = #{payment.paidAt}
         where ORDER_CODE = #{param1}
+    </update>
+    <update id="updateChangeWhenCancel" parameterType="com.shop.myapp.dto.OrderDetail">
+        update HR.SHOP_ORDER_TB
+        set HR.SHOP_ORDER_TB.CHANGE = #{amount} * #{itemOption.item.itemPrice}
+        where order_code = #{orderCode}
     </update>
     <delete id="deleteOrderByOrderCode">
         delete SHOP_ORDER_TB

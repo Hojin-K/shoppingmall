@@ -38,17 +38,22 @@ public class ItemOptionService {
 
     public int modifyItemOption(List<ItemOption> itemOptions, String itemCode) {
         // 기존 옵션 삭제
-        int result = deleteWhenItemUpdate(itemCode);
+        int result = deleteByItemCode(itemCode);
         // 새로 옵션 추가
         return itemOptionRepository.insertItemOptions(itemOptions);
     }
 
     public int modifyItemOptionAfterPay(List<OrderDetail> orderDetails) {
+        // 계산 후, 주문량만큼 아이템의 숫자 갱신
         int result = 0;
         for (OrderDetail orderDetail : orderDetails) {
             result += itemOptionRepository.modifyItemOptionStockByOptionCode(orderDetail);
         }
         return result;
+    }
+
+    public int modifyItemOptionAfterRefund(OrderDetail orderDetail){
+        return itemOptionRepository.modifyItemOptionStockByOptionCodeWhenRefund(orderDetail);
     }
 
     public int deleteByOptionCode(String optionCode) {

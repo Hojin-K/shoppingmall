@@ -10,16 +10,19 @@
 <html>
 <head>
     <title>Title</title>
-    <script src="http://code.jquery.com/jquery-latest.min.js"></script>
-    <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.1.3/dist/js/bootstrap.bundle.min.js"
-            integrity="sha384-ka7Sk0Gln4gmtz2MlQnikT1wXgYsOg+OMhuP+IlRH9sENBO0LRn5q+8nbTov4+1p"
-            crossorigin="anonymous"></script>
-    <script type="text/javascript" src="https://cdn.iamport.kr/js/iamport.payment-1.2.0.js"></script>
-    <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.1.3/dist/css/bootstrap.min.css" rel="stylesheet"
-          integrity="sha384-1BmE4kWBq78iYhFldvKuhfTAU6auU8tT94WrHftjDbrCEXSU1oBoqyl2QvZ6jIW3" crossorigin="anonymous">
-    <link rel="preconnect" href="https://fonts.googleapis.com">
-    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
-    <link href="https://fonts.googleapis.com/css2?family=Bebas+Neue&display=swap" rel="stylesheet">
+    <script>
+        $(function () {
+            $(document).on("click", "[name='refund']", function () {
+                let orderDetailCode = $(this).attr('id');
+                alert(orderDetailCode);
+                fnModuleInfo(orderDetailCode);
+            });
+
+            function fnModuleInfo(orderDetailCode) {
+                $("#refundModal .modal-content").load("/orderDetail/" + orderDetailCode + "/cancel");
+            }
+        })
+    </script>
 </head>
 <style>
     p, h5 {
@@ -44,7 +47,7 @@
     }
 
 </style>
-<body>
+<body class="pt-5">
 <div class="container">
     <div class="row">
         <table class="table text-center">
@@ -78,10 +81,11 @@
                         <span>${orderDetail.amount}</span>
                     </td>
                     <td>
-                        ${orderDetail.postedStatus}
+                            ${orderDetail.postedStatus}
                     </td>
                     <td>
-                        <button class="btn btn-sm btn-secondary" type="button">취소
+                        <button id="${orderDetail.orderDetailCode}" data-bs-toggle="modal" data-bs-target="#refundModal" name="refund" class="btn btn-sm btn-secondary"
+                                type="button">취소
                         </button>
                     </td>
                 </tr>
@@ -90,46 +94,53 @@
         </table>
     </div>
     <br>
-<div class="row">
-<div class="col-6">
-    <table class="table text-center">
-        <tbody>
-        <tr>
-            <th>결제번호</th>
-            <td>${order.impUid}</td>
-        </tr>
-            <tr>
-                <th>결제일</th>
-                <td>${order.paidAtToString()}</td>
-            </th>
-        <tr>
-            <th>결제금액</th>
-            <td>${order.totalPay}원</td>
-        </tr>
-        <tr>
-            <th>환불금액</th>
-            <td>${order.totalPay-order.change}원</td>
-        </tr>
-        </tbody>
-    </table>
-</div>
-    <div class="col-6">
-        <table class="table text-center">
-            <tbody>
-            <tr>
-                <th>이름</th>
-                <td>${order.buyerName}</td>
-            </tr>
-            <tr>
-                <th>연락처</th>
-                <td>${order.buyerTel}</td>
-            </tr>
-            <tr>
-                <th>배송주소</th>
-                <td>${order.buyerAddr}</td>
-            </tr>
-            </tbody>
-        </table>
+    <div class="row">
+        <div class="col-6">
+            <table class="table text-center">
+                <tbody>
+                <tr>
+                    <th>결제번호</th>
+                    <td>${order.impUid}</td>
+                </tr>
+                <tr>
+                    <th>결제일</th>
+                    <td>${order.paidAtToString()}</td>
+                    </th>
+                <tr>
+                    <th>결제금액</th>
+                    <td>${order.totalPay}원</td>
+                </tr>
+                <tr>
+                    <th>환불금액</th>
+                    <td>${order.totalPay-order.change}원</td>
+                </tr>
+                </tbody>
+            </table>
+        </div>
+        <div class="col-6">
+            <table class="table text-center">
+                <tbody>
+                <tr>
+                    <th>이름</th>
+                    <td>${order.buyerName}</td>
+                </tr>
+                <tr>
+                    <th>연락처</th>
+                    <td>${order.buyerTel}</td>
+                </tr>
+                <tr>
+                    <th>배송주소</th>
+                    <td>${order.buyerAddr}</td>
+                </tr>
+                </tbody>
+            </table>
+        </div>
+    </div>
+<div class="modal fade" id="refundModal" tabindex="-1" role="dialog" aria-labelledby="historyModalLabel"
+     aria-hidden="true">
+    <div class="modal-dialog modal-xl">
+        <div class="modal-content">
+        </div>
     </div>
 </div>
 </div>

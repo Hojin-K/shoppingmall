@@ -44,8 +44,8 @@
     </update>
     <update id="modifyItemOptionStockByOptionCode" parameterType="com.shop.myapp.dto.OrderDetail">
         update HR.SHOP_ITEM_OPTIONS_TB
-        set OPTION_STOCK = OPTION_STOCK - #{orderDetail.amount}
-        where option_code = #{orderDetail.optionCode}
+        set OPTION_STOCK = OPTION_STOCK - #{amount}
+        where option_code = #{optionCode}
     </update>
     <update id="isDeleteItemOption">
         update HR.SHOP_ITEM_OPTIONS_TB
@@ -56,6 +56,11 @@
         update HR.SHOP_ITEM_OPTIONS_TB
         set IS_DELETE = '1'
         where HR.SHOP_ITEM_OPTIONS_TB.ITEM_CODE = #{itemCode}
+    </update>
+    <update id="modifyItemOptionStockByOptionCodeWhenRefund">
+        update HR.SHOP_ITEM_OPTIONS_TB
+        set OPTION_STOCK = OPTION_STOCK + #{amount}
+        where option_code = #{optionCode}
     </update>
     <delete id="deleteWhenItemUpdate">
         delete
@@ -82,7 +87,7 @@
         from HR.SHOP_ITEM_OPTIONS_TB O
         where O.IS_DELETE = '0'
           and O.OPTION_STOCK != 0
-          and OPTION_CODE = #{itemCode}
+          and OPTION_CODE = #{optionCode}
     </select>
 
 </mapper>

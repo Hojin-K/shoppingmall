@@ -4,6 +4,7 @@ import com.shop.myapp.dto.*;
 import com.shop.myapp.repository.OrderRepository;
 import org.apache.ibatis.session.SqlSession;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.context.annotation.Lazy;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 
@@ -12,7 +13,7 @@ import java.util.List;
 import java.util.Optional;
 
 @Service
-@Transactional
+@Transactional(rollbackFor = {Exception.class})
 public class OrderService {
 
     private final OrderRepository orderRepository;
@@ -22,7 +23,7 @@ public class OrderService {
     private final IamPortService iamPortService;
 
 
-    public OrderService(@Autowired SqlSession sqlSession, OrderDetailService orderDetailService, ItemOptionService itemOptionService, CartService cartService, IamPortService iamPortService) {
+    public OrderService(@Autowired SqlSession sqlSession, @Lazy OrderDetailService orderDetailService, ItemOptionService itemOptionService, CartService cartService, IamPortService iamPortService) {
         this.orderRepository = sqlSession.getMapper(OrderRepository.class);
         this.orderDetailService = orderDetailService;
         this.itemOptionService = itemOptionService;
@@ -30,7 +31,7 @@ public class OrderService {
         this.iamPortService = iamPortService;
     }
 
-    public Order insertOrder(Order order, List<String> cartIds) {
+    public Order insertOrder(Order order, List<String> cartIds) throws Exception {
         order.setOrderCodeByDate();
         List<Cart> carts = cartService.findSelectCartByCartIds(cartIds);
         List<OrderDetail> orderDetails = new ArrayList<>();
@@ -53,7 +54,7 @@ public class OrderService {
     }
 
     public void optionStockValidate(Cart cart){
-        Optional<ItemOption> itemOptionOptional = itemOptionService.findOptionCodeWhenOrderValidate(cart.getOptionCode());
+        Optional<ItemOption> itemOptionOptional = itemOptionService.findOptionCodeWhenOrderValidate(cart.getItemOption().getOptionCode());
         itemOptionOptional.orElseThrow(() -> new IllegalStateException("삭제되거나 품절된 아이템이 포함되어 있습니다. \n 제거 후, 다시 진행 해주세요."));
     }
 
@@ -64,9 +65,8 @@ public class OrderService {
     public Payment validateTotalPay(String impUid, String orderCode) {
         try {
             Order order = orderRepository.findByOrderCode(orderCode);
-            String accessToken = iamPortService.getAccessToken();
 
-            Payment payment = iamPortService.getImpAttributes(impUid, accessToken);
+            Payment payment = iamPortService.getImpAttributes(impUid);
             if (order.getTotalPay() == payment.getAmount()) {
                 orderRepository.updateIsPaidIntByOrderCode(orderCode,payment);
                 orderDetailService.updatePostedStatusByOrderCode(orderCode);
@@ -101,5 +101,9 @@ public class OrderService {
             }
         }
         return orders;
+    }
+
+    public int updateChangeWhenCancel(OrderDetail orderDetail){
+        return orderRepository.updateChangeWhenCancel(orderDetail);
     }
 }
