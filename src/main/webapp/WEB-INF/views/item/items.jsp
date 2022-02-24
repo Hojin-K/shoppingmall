@@ -60,7 +60,7 @@
 </style>
 <body>
 <div class="container">
-
+<c:if test="${not empty items}">
     <div class="card-colums">
         <div id="card-box" class="cards-box">
             <c:forEach items="${items}" var="item">
@@ -82,6 +82,12 @@
             </c:forEach>
         </div>
     </div>
+</c:if>
+    <c:if test="${empty items}">
+        <div style="text-align: center; margin: 10% auto;">
+        <h5 >찾는 상품이 없습니다.</h5>
+        </div>
+    </c:if>
     <div style="clear: both"></div>
 
     <div id="paginationBox">
