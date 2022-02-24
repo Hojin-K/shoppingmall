@@ -50,39 +50,11 @@ public class MemberController {
     	return "redirect:/members";
     }
     
-<<<<<<< HEAD
-<<<<<<< HEAD
-    @GetMapping("/sellerJoin")
-    public String sellerJoinForm() {
-    	//authService.checkMemberId("");
-    	log.info("sellerJoinForm");
-    	
-    	return "/members/sellerJoin";
-    }
-    
-    @PostMapping("/sellerJoin")
-    public String sellerJoin(@ModelAttribute Seller seller) {
-    	// 에러가 있는지 검사
-    	log.info("sellerJoin");
-    	System.out.println(seller.getBusinessName());
-//    	int isSuccess = memberService.insertSeller(seller);
-//    	System.out.println(isSuccess);
-    	return "redirect:/members";
-    }
-    
-=======
->>>>>>> 9dd63d4b92aeaccad227a4ef950b6ba0b92c8d39
-    @GetMapping("/normalUpdate")
-    public String normalUpdateForm() {
-    	log.info("normalUpdateForm");
-    	return "/member/normalUpdate";
-=======
     @GetMapping("/logout")
     public String logout(HttpServletRequest request) {
     	request.getSession().invalidate();
     	
     	return "redirect:/item";
->>>>>>> 875ab7ec0071a66b6a56e3ea61a39b6460440f90
     }
     
     @GetMapping("/update")

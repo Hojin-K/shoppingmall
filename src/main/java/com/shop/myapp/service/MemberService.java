@@ -49,12 +49,8 @@ public class MemberService {
     }
 
     public int insertMember(Member member) {
-<<<<<<< HEAD
-
-=======
         System.out.println(member.getMemberBirth().toString());
         System.out.println(member.getMemberAddress());
->>>>>>> 9dd63d4b92aeaccad227a4ef950b6ba0b92c8d39
         MemberRepository memberRepository
                 = sqlSession.getMapper(MemberRepository.class);
         try {

@@ -39,10 +39,10 @@ public class ReviewController {
 	}
 	@GetMapping("/{reviewCode}")
 	public String getReviewDetail(@PathVariable String reviewCode, Model model) {
-		List<Review> review = reviewService.getReviews(reviewCode);
+		Review review = reviewService.getReview(reviewCode);
 		model.addAttribute("review",review);
 		
-		return reviewCode;		
+		return "review/review";		
 	}
 	
 	@GetMapping("/{reviewCode}/update")

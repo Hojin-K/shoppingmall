@@ -1,25 +1,18 @@
 package com.shop.myapp.service;
 
-
-import java.util.List;
-import java.util.Optional;
-
-
 import com.shop.myapp.dto.Item;
 import com.shop.myapp.dto.ItemOption;
 import com.shop.myapp.dto.Member;
 import com.shop.myapp.dto.Pagination;
 import com.shop.myapp.repository.ItemOptionRepository;
 import com.shop.myapp.repository.ItemRepository;
-
 import org.apache.ibatis.session.SqlSession;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 
-import com.shop.myapp.dto.Item;
-import com.shop.myapp.repository.ItemOptionRepository;
-import com.shop.myapp.repository.ItemRepository;
+import java.util.List;
+import java.util.Optional;
 
 @Service
 @Transactional(rollbackFor = {Exception.class})
@@ -41,14 +34,8 @@ public class ItemService {
         return item.orElseThrow(() -> new IllegalStateException("Not Found Item"));
     }
 
-
-    public List<Item> getItems() {
-        List<Item> items = itemRepository.findAll();
-        return items;
-
     public List<Item> getItems(Pagination pagination) {
         return itemRepository.findAll(pagination);
-
     }
 
     public int createItem(Item item) {

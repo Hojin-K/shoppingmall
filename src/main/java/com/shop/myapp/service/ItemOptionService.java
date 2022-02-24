@@ -1,25 +1,15 @@
 package com.shop.myapp.service;
 
-<<<<<<< HEAD
-import java.util.List;
-import java.util.Optional;
-
-=======
 import com.shop.myapp.dto.ItemOption;
 import com.shop.myapp.dto.OrderDetail;
->>>>>>> 875ab7ec0071a66b6a56e3ea61a39b6460440f90
 import org.apache.ibatis.session.SqlSession;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 
-<<<<<<< HEAD
-import com.shop.myapp.dto.ItemOption;
-=======
 import java.util.Collections;
 import java.util.List;
 import java.util.Optional;
->>>>>>> 875ab7ec0071a66b6a56e3ea61a39b6460440f90
 
 @Service
 @Transactional(rollbackFor = {Exception.class})

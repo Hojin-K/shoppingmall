@@ -8,6 +8,7 @@ import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 
 import com.shop.myapp.dto.Item;
+import com.shop.myapp.dto.Pagination;
 import com.shop.myapp.dto.Review;
 import com.shop.myapp.repository.ItemRepository;
 import com.shop.myapp.repository.ReviewRepository;
@@ -30,9 +31,8 @@ public class ReviewService {
 	}
 	
 	
-	 public List<Review> getReviews(String reviewCode) {
-	        List<Review> reviews = reviewRepository.findAll(reviewCode);
-	        return reviews;
+	 public List<Review> getReviews(Pagination pagination) {
+	        return reviewRepository.findAll(pagination);
 	    }
 
 	    public int insertReview(Review review) {
