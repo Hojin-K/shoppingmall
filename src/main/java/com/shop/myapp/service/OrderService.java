@@ -36,6 +36,9 @@ public class OrderService {
         List<OrderDetail> orderDetails = new ArrayList<>();
         int total = 0;
         for (Cart cart : carts) {
+            // 제고 확인
+            optionStockValidate(cart);
+            // cart 내부 매서드로 cart -> orderDetail 로 변환
             OrderDetail orderDetail = cart.parseToOrderDetail(order);
             orderDetails.add(orderDetail);
             int amount = cart.getAmount();
@@ -47,6 +50,11 @@ public class OrderService {
         orderRepository.insertOrder(order);
         orderDetailService.insertOrderDetails(orderDetails);
         return order;
+    }
+
+    public void optionStockValidate(Cart cart){
+        Optional<ItemOption> itemOptionOptional = itemOptionService.findOptionCodeWhenOrderValidate(cart.getOptionCode());
+        itemOptionOptional.orElseThrow(() -> new IllegalStateException("삭제되거나 품절된 아이템이 포함되어 있습니다. \n 제거 후, 다시 진행 해주세요."));
     }
 
     public List<Cart> getSelectCartByCartIds(List<String> cartIds) {

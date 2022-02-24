@@ -61,7 +61,7 @@ public class ItemService {
         if (search == null || search.equals("") || search.equals(" ")){
             return itemRepository.findAll(pagination);
         }else {
-        return itemRepository.findAllBySearch(search,pagination);
+            return itemRepository.findAllBySearch(search, pagination);
         }
     }
 
@@ -81,5 +81,9 @@ public class ItemService {
 
     public List<Item> getSellerItemByMemberId(String memberId, Pagination pagination,String search){
         return itemRepository.findAllByMemberId(memberId,pagination,search);
+    }
+
+    public List<Item> findNewItems(){
+        return itemRepository.findNewItems();
     }
 }

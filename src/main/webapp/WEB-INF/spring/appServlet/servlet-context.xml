@@ -92,6 +92,16 @@
         <argument-resolvers>
             <beans:bean class="com.shop.myapp.interceptor.AuthUserHandlerMethodArgumentResolver"/>
         </argument-resolvers>
+<!--RestController converter-->
+        <message-converters>
+            <beans:bean class="org.springframework.http.converter.StringHttpMessageConverter">
+                <beans:property name="supportedMediaTypes">
+                    <beans:list>
+                        <beans:value>text/html;charset=UTF-8</beans:value>
+                    </beans:list>
+                </beans:property>
+            </beans:bean>
+        </message-converters>
     </annotation-driven>
 
 </beans:beans>

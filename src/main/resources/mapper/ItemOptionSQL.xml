@@ -44,28 +44,45 @@
     </update>
     <update id="modifyItemOptionStockByOptionCode" parameterType="com.shop.myapp.dto.OrderDetail">
         update HR.SHOP_ITEM_OPTIONS_TB
-        set OPTION_STOCK = OPTION_STOCK - #{orderDetail.amount} where option_code = #{orderDetail.optionCode}
+        set OPTION_STOCK = OPTION_STOCK - #{orderDetail.amount}
+        where option_code = #{orderDetail.optionCode}
     </update>
-    <delete id="deleteItemOption">
-        delete HR.SHOP_ITEM_OPTIONS_TB
+    <update id="isDeleteItemOption">
+        update HR.SHOP_ITEM_OPTIONS_TB
+        set IS_DELETE ='1'
         where OPTION_CODE = #{optionCode}
-    </delete>
-    <delete id="deleteByItemCode">
-        delete HR.SHOP_ITEM_OPTIONS_TB
+    </update>
+    <update id="isDeleteByItemCode">
+        update HR.SHOP_ITEM_OPTIONS_TB
+        set IS_DELETE = '1'
         where HR.SHOP_ITEM_OPTIONS_TB.ITEM_CODE = #{itemCode}
+    </update>
+    <delete id="deleteWhenItemUpdate">
+        delete
+        from SHOP_ITEM_OPTIONS_TB
+        where ITEM_CODE = #{itemCode};
     </delete>
 
     <select id="findByOptionCode" resultType="com.shop.myapp.dto.ItemOption">
         select *
         from SHOP_ITEM_OPTIONS_TB O
-        where O.OPTION_CODE = #{optionCode}
+        where O.is_delete = '0'
+          and O.OPTION_CODE = #{optionCode}
     </select>
     <select id="findOneByItemCode" resultMap="itemOption">
         select *
         from SHOP_ITEM_OPTIONS_TB O,
              SHOP_ITEM_TB I
-        where O.OPTION_CODE = #{optionCode}
+        where O.IS_DELETE = '0'
+          and O.OPTION_CODE = #{optionCode}
           and O.ITEM_CODE = I.ITEM_CODE
+    </select>
+    <select id="findByOptionCodeWhenOrderValidate" resultType="com.shop.myapp.dto.ItemOption">
+        select *
+        from HR.SHOP_ITEM_OPTIONS_TB O
+        where O.IS_DELETE = '0'
+          and O.OPTION_STOCK != 0
+          and OPTION_CODE = #{itemCode}
     </select>
 
 </mapper>

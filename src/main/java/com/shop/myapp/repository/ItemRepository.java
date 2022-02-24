@@ -13,6 +13,7 @@ public interface ItemRepository {
     List<Item> findAll(Pagination pagination);
     List<Item> findAllBySearch(@Param("search") String search,@Param("pagination") Pagination pagination);
     List<Item> findAllByMemberId(@Param("memberId") String memberId, @Param("pagination") Pagination pagination,@Param("search") String search);
+    List<Item> findNewItems();
     Optional<Item> findByItemCode(String itemCode);
     int insertItem(Item item);
     int deleteItem(String itemCode);
