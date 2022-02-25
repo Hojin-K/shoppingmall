@@ -17,6 +17,7 @@ public interface ItemRepository {
     Optional<Item> findByItemCode(String itemCode);
     int insertItem(Item item);
     int deleteItem(String itemCode);
+    int itemCopyWhenItemDelete(String itemCode);
     int updateItem(Item item);
     int getItemListCnt();
 }
