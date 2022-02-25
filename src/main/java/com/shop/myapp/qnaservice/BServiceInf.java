@@ -1,4 +1,4 @@
-package com.shop.myapp.service;
+package com.shop.myapp.qnaservice;
 
 import org.springframework.ui.Model;
 

@@ -165,37 +165,37 @@ public class BoardDao {
 		return dto;
 
 	}
-//	public void modify(String BOARD_ID, String ITEM_CODE,
-//			String BOARD_TITLE, String BOARD_CONTENT) {
-//		
-//		
-//		Connection con=null;
-//		PreparedStatement pstmt=null;
-//		
-//		try {
-//			con=dataSource.getConnection();
-//			String sql="update SHOP_QNABOARD_TB " + 
-//					"set ITEM_CODE=?,BOARD_TITLE=?,BOARD_CONTENT=? " + 
-//					"where BOARD_ID=?"; 
-//			pstmt=con.prepareStatement(sql);
-//			pstmt.setString(1, ITEM_CODE);
-//			pstmt.setString(2, BOARD_TITLE);
-//			pstmt.setString(3, BOARD_CONTENT);
-//			pstmt.setInt(4, Integer.parseInt(BOARD_ID));
-//			
-//			pstmt.executeUpdate();
-//			
-//		} catch (Exception e) {
-//			// TODO: handle exception
-//		} finally {
-//			try {
-//				if(pstmt!=null) pstmt.close();
-//				if(con!=null) con.close();	
-//			} catch (Exception e2) {
-//				// TODO: handle exception
-//			}
-//		}	
-//	}
+	public void modify(String BOARD_ID, String ITEM_CODE,
+			String BOARD_TITLE, String BOARD_CONTENT) {
+		
+		
+		Connection con=null;
+		PreparedStatement pstmt=null;
+		
+		try {
+			con=dataSource.getConnection();
+			String sql="update SHOP_QNABOARD_TB " + 
+					"set ITEM_CODE=?,BOARD_TITLE=?,BOARD_CONTENT=? " + 
+					"where BOARD_ID=?"; 
+			pstmt=con.prepareStatement(sql);
+			pstmt.setString(1, ITEM_CODE);
+			pstmt.setString(2, BOARD_TITLE);
+			pstmt.setString(3, BOARD_CONTENT);
+			pstmt.setInt(4, Integer.parseInt(BOARD_ID));
+			
+			pstmt.executeUpdate();
+			
+		} catch (Exception e) {
+			// TODO: handle exception
+		} finally {
+			try {
+				if(pstmt!=null) pstmt.close();
+				if(con!=null) con.close();	
+			} catch (Exception e2) {
+				// TODO: handle exception
+			}
+		}	
+	}
 	public void delete(String BOARD_ID) {
 		Connection con=null;
 		PreparedStatement pstmt=null;

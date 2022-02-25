@@ -7,14 +7,14 @@ import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestMethod;
 
-import com.shop.myapp.service.BContentViewService;
-import com.shop.myapp.service.BDeleteService;
-import com.shop.myapp.service.BListService;
-import com.shop.myapp.service.BModifyService;
-import com.shop.myapp.service.BReplyService;
-import com.shop.myapp.service.BReplyViewService;
-import com.shop.myapp.service.BServiceInf;
-import com.shop.myapp.service.BWriteService;
+import com.shop.myapp.qnaservice.BContentViewService;
+import com.shop.myapp.qnaservice.BDeleteService;
+import com.shop.myapp.qnaservice.BListService;
+import com.shop.myapp.qnaservice.BModifyService;
+import com.shop.myapp.qnaservice.BReplyService;
+import com.shop.myapp.qnaservice.BReplyViewService;
+import com.shop.myapp.qnaservice.BServiceInf;
+import com.shop.myapp.qnaservice.BWriteService;
 
 @Controller
 public class QnAController {
@@ -64,15 +64,15 @@ public class QnAController {
 		
 		return "content_update";
 	}
-//	@RequestMapping(method=RequestMethod.POST,value="/modify")
-//	public String modify(HttpServletRequest request, Model model) {
-//		System.out.println("=========pass by modify()=============");
-//		model.addAttribute("request",request);
-//		commandInf=new BModifyService();
-//		commandInf.execute(model);
-//		
-//		return "redirect:list";
-//	}
+	@RequestMapping(method=RequestMethod.POST,value="/modify")
+	public String modify(HttpServletRequest request, Model model) {
+		System.out.println("=========pass by modify()=============");
+		model.addAttribute("request",request);
+		commandInf=new BModifyService();
+		commandInf.execute(model);
+		
+		return "redirect:list";
+	}
 	@RequestMapping("/delete")
 	public String delete(HttpServletRequest request, Model model) {
 		System.out.println("=========pass by delete()=============");

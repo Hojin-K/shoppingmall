@@ -15,11 +15,11 @@
 
 	<tr>
 		<td class="left"> 제목 </td>
-		<td> <input type="text" name="BOARD_TITLE" value="aa"></td>
+		<td> <input type="text" name="BOARD_TITLE" value="제목을 적으세요"></td>
 	</tr>
 	<tr>
 		<td class="left"> 내용 </td>
-		<td> <textarea name="BOARD_CONTENT"  rows="10">aa</textarea> </td>
+		<td> <textarea name="BOARD_CONTENT"  rows="10">내용을 적으세요</textarea> </td>
 	</tr>
 	<tr>
 		<td colspan="2">

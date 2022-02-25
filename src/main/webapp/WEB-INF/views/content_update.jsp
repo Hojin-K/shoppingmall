@@ -11,7 +11,7 @@
 <h2>content_update.jsp</h2>
 <table>
 	<form action="modify" method="post">
-	<input type="hidden" name="board_id" value="${content_view.BOARD_ID }" />
+	<input type="hidden" name="BOARD_ID" value="${content_view.BOARD_ID }" />
 		<tr>
 			<td class="left">번호</td>
 			<td>${content_view.BOARD_ID }</td>
@@ -19,19 +19,19 @@
 		<tr>
 			<td class="left">이름</td>
 			<td>
-				<input type="text" name="item_code" value="${content_view.ITEM_CODE }" />
+				<input type="text" name="ITEM_CODE" value="${content_view.ITEM_CODE }" />
 			</td>
 		</tr>
 		<tr>
 			<td class="left">제목</td>
 			<td>
-				<input type="text" name="board_title" value="${content_view.BOARD_TITLE }" />
+				<input type="text" name="BOARD_TITLE" value="${content_view.BOARD_TITLE }" />
 			</td>
 		</tr>
 		<tr>
 			<td class="left">내용</td>
 			<td>
-				<textarea name="board_content"  rows="10">${content_view.BOARD_CONTENT }</textarea>
+				<textarea name="BOARD_CONTENT"  rows="10">${content_view.BOARD_CONTENT }</textarea>
 			</td>
 		</tr>
 		<tr>
