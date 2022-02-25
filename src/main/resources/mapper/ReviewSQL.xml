@@ -20,10 +20,18 @@
 	<select id="findAll" resultType="com.shop.myapp.dto.Review">
 			SELECT * FROM SHOP_REVIEW_TB
     </select>
+    <select id="getReivewList" resultType="com.shop.myapp.dto.Review">
+    	SELECT * FROM SHOP_REVIEW_TB
+    </select>
     
     <select id="findByReviewCode" resultType="com.shop.myapp.dto.Review">
     		SELECT * FROM HR.SHOP_REVIEW_TB
     		WHERE REVIEW_CODE=#{reviewCode}
+    </select>
+    
+    <select id="getReviewListCnt" resultType="java.lang.Integer">
+        select count(*) as listCnt
+        from SHOP_REVIEW_TB where IS_DELETE = '0'
     </select>
 
 </mapper>

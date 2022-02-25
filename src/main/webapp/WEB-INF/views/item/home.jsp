@@ -20,7 +20,6 @@
 	<title>Home</title>
 </head>
 <body>
-<<<<<<< HEAD
 <h1>
 	Hello world!  
 </h1>
@@ -29,7 +28,7 @@
 <!-- <a href="itemlistView">itemlistView</a> -->
 <a href="members/join">가입</a>
 <a href="members/login">로그인</a>
-=======
+
 <div id="carouselExampleIndicators" class="carousel slide" data-bs-ride="carousel">
 	<div class="carousel-indicators">
 		<button type="button" data-bs-target="#carouselExampleIndicators" data-bs-slide-to="0" class="active" aria-current="true" aria-label="Slide 1"></button>
@@ -56,6 +55,6 @@
 		<span class="visually-hidden">Next</span>
 	</button>
 </div>
->>>>>>> 94773d447c87f5de910ee9fd16caa6136e449f0c
+
 </body>
 </html>

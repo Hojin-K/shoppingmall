@@ -35,10 +35,10 @@ public class ReviewController {
 		Pagination pagination = new Pagination();
 		int reviewListCnt = reviewService.getReviewListCnt();
 		pagination.pageInfo(page,reviewListCnt);
-		List<Review> reviews = reviewService.getReviews(pagination);
+		//List<Review> reviews = reviewService.getReviews(pagination);
 		ResponseEntity.status(300).build();
-		return ResponseEntity.ok(reviews); // 성공 했을 때, 성공했다는 신호와 함께 요청 값을 같이 보내줌.
-
+		//return ResponseEntity.ok(reviews); // 성공 했을 때, 성공했다는 신호와 함께 요청 값을 같이 보내줌.
+		return null;
 	}
 	@PostMapping("/insert") //reviewCode가 sql에서 자동 생성되기 때문에 {reviewCode}를 붙이지 않는다.
 	public ResponseEntity<Object> insertReview(@ModelAttribute Review review){
@@ -46,6 +46,12 @@ public class ReviewController {
 		review.setMemberId(member.getMemberId());
 		reviewService.insertReview(review);
 		return ResponseEntity.ok().build();
+	}
+	
+	@GetMapping("/list")
+	public ResponseEntity<Object> reviewList(){
+		List<Review> reviews = reviewService.reviewList();
+		return ResponseEntity.ok(reviews);
 	}
 	
 	
