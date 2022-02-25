@@ -27,6 +27,9 @@ public class ItemOptionService {
     public Optional<ItemOption> findByOptionCode(String optionCode) {
         return itemOptionRepository.findByOptionCode(optionCode);
     }
+    public Optional<ItemOption> findByOptionCodeForOrder(String optionCode) {
+        return itemOptionRepository.findByOptionCodeForOrder(optionCode);
+    }
 
     public int insertItemOptions(List<ItemOption> options, String itemCode) {
         options.removeAll(Collections.singletonList(null));

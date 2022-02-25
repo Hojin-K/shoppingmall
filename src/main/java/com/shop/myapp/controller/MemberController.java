@@ -1,15 +1,17 @@
 package com.shop.myapp.controller;
 
-import java.util.List;
-import java.util.Map;
-
 import javax.servlet.http.HttpServletRequest;
 
 import org.springframework.http.ResponseEntity;
 import org.springframework.stereotype.Controller;
-import org.springframework.web.bind.annotation.*;
+import org.springframework.web.bind.annotation.GetMapping;
+import org.springframework.web.bind.annotation.ModelAttribute;
+import org.springframework.web.bind.annotation.PathVariable;
+import org.springframework.web.bind.annotation.PostMapping;
+import org.springframework.web.bind.annotation.RequestMapping;
+import org.springframework.web.bind.annotation.RequestMethod;
+import org.springframework.web.bind.annotation.ResponseBody;
 
-import com.shop.myapp.dto.Country;
 import com.shop.myapp.dto.Member;
 import com.shop.myapp.service.AuthService;
 import com.shop.myapp.service.AuthServiceImpl;
@@ -72,18 +74,6 @@ public class MemberController {
     	System.out.println(isSuccess);
     	log.info("update complete.");
     	return "redirect:/members";
-    }
-    
-    @GetMapping("/list")
-    public String memberList() {
-    	return "/members/list";
-    }
-    
-    @ResponseBody
-    @PostMapping("/list")
-    public ResponseEntity<Object> getMemberList(@RequestParam String chkInfo, @RequestParam String condition){
-        List<Member> members = memberService.getMembers(chkInfo, condition);
-        return ResponseEntity.ok(members);
     }
     
     @GetMapping("/login")

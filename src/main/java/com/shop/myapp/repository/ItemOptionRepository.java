@@ -12,6 +12,7 @@ import java.util.Optional;
 @Mapper
 public interface ItemOptionRepository {
     Optional<ItemOption> findByOptionCode(String optionCode);
+    Optional<ItemOption> findByOptionCodeForOrder(String optionCode);
     Optional<ItemOption> findOneByItemCode(@Param("optionCode") String optionCode);
     int insertItemOptions(List<ItemOption> itemOptions);
     int isDeleteItemOption(String optionCode);

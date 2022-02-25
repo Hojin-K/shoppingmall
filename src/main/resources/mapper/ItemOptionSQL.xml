@@ -89,5 +89,10 @@
           and O.OPTION_STOCK != 0
           and OPTION_CODE = #{optionCode}
     </select>
+    <select id="findByOptionCodeForOrder" resultType="com.shop.myapp.dto.ItemOption">
+        select *
+        from SHOP_ITEM_OPTIONS_TB O
+        where O.OPTION_CODE = #{optionCode}
+    </select>
 
 </mapper>

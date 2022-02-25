@@ -95,7 +95,7 @@ public class OrderService {
         for (Order order : orders){
             List<OrderDetail> orderDetails = order.getOrderDetails();
             for(OrderDetail orderDetail : orderDetails){
-                Optional<ItemOption> itemOptionOptional = itemOptionService.findByOptionCode(orderDetail.getOptionCode());
+                Optional<ItemOption> itemOptionOptional = itemOptionService.findByOptionCodeForOrder(orderDetail.getOptionCode());
                 ItemOption itemOption = itemOptionOptional.orElseThrow(() -> new IllegalStateException("없는 아이템"));
                 orderDetail.setItemOption(itemOption);
             }

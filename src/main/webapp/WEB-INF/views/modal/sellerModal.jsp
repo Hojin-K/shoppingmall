@@ -11,9 +11,10 @@
     <div class="table-responsive">
         <div class="container">
 
-            <label for="businessName">businessName</label><input type="text" id="businessName" name="businessName" value="${seller.businessName}">
+            <label for="businessName">businessName</label
+            ><input type="text" id="businessName" name="businessName" value="${seller.businessName}"><br>
             <label for="businessInfo">businessInfo</label>
-            <textarea id="businessInfo" name="businessInfo">${seller.businessInfo}</textarea>
+            <textarea rows="5" cols="50" id="businessInfo" name="businessInfo">${seller.businessInfo}</textarea>
         </div>
     </div>
     <div class="modal-footer">

@@ -55,13 +55,12 @@
         update SHOP_ORDER_TB
         set IS_PAID = 'paid',
             IMP_UID = #{payment.impUid},
-            CHANGE  = #{payment.amount},
             paid_at = #{payment.paidAt}
         where ORDER_CODE = #{param1}
     </update>
     <update id="updateChangeWhenCancel" parameterType="com.shop.myapp.dto.OrderDetail">
         update HR.SHOP_ORDER_TB
-        set HR.SHOP_ORDER_TB.CHANGE = #{amount} * #{itemOption.item.itemPrice}
+        set HR.SHOP_ORDER_TB.CHANGE = HR.SHOP_ORDER_TB.CHANGE + (#{amount} * #{itemOption.item.itemPrice})
         where order_code = #{orderCode}
     </update>
     <delete id="deleteOrderByOrderCode">
@@ -73,7 +72,7 @@
         from HR.SHOP_ORDER_TB O,
              HR.SHOP_ORDER_DETAIL_TB D
         where O.MEMBER_ID = #{memberId}
-          and O.order_code = D.order_code
+          and O.order_code = D.order_code order by paid_at desc
     </select>
     <select id="findByOrderCode" resultMap="order">
         select *

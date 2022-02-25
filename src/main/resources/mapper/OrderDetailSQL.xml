@@ -20,6 +20,7 @@
             <result property="buyerAddr" column="buyer_addr"/>
             <result property="buyerPostCode" column="buyer_post_code"/>
             <result property="isPaid" column="is_paid"/>
+            <result property="change" column="change"/>
         </association>
     </resultMap>
 
@@ -69,6 +70,17 @@
              HR.SHOP_ITEM_OPTIONS_TB IO,
              HR.SHOP_ITEM_TB I
         where D.ORDER_DETAIL_CODE = #{orderDetailCode}
+          and O.ORDER_CODE = D.ORDER_CODE
+          and IO.option_code = D.option_code
+          and I.item_code = IO.item_code
+    </select>
+    <select id="findByMemberIdForSeller" resultMap="orderDetail">
+        select *
+        from HR.SHOP_ORDER_DETAIL_TB D,
+             HR.SHOP_ORDER_TB O,
+             HR.SHOP_ITEM_OPTIONS_TB IO,
+             HR.SHOP_ITEM_TB I
+        where I.MEMBER_ID = #{memberId}
           and O.ORDER_CODE = D.ORDER_CODE
           and IO.option_code = D.option_code
           and I.item_code = IO.item_code

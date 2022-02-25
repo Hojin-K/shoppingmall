@@ -12,4 +12,5 @@ public interface OrderDetailRepository {
     int deleteOrderDetail(String orderCode);
     int updatePostedStatusByOrderCode(String orderCode);
     int updateWhenCancel(String orderDetailCode);
+    List<OrderDetail> findByMemberIdForSeller();
 }

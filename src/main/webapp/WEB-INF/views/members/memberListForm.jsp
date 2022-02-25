@@ -22,35 +22,29 @@
 	crossorigin="anonymous">
 <script>
 $(function() {
-	$('#btnSearch').click(function () {
-		let chkInfo = $('[name = chk_info]:checked').val();
-		alert(chkInfo);
- 		let condition = $('#condition').val();
- 		$.ajax({
-            url: '/members/list',
-            method: 'POST',
-            data: {
-            	'chkInfo' : chkInfo,
-            	'condition' : condition
-            },
-            dataType: 'json',
-            success: function (data) {
-            	$("#memberList").empty();
-            	let view = "<tr><td>ID</td><td>이름</td></tr>";
-	                $.each(data, function (key, member) {
-	                    alert(member.memberId);
-	                    let Id = member.memberId;
-	                    let Name = member.memberName;
-	                    
-	                    view += "<tr><td>"+Id+"</td><td>"+Name+"</td></tr>"
-	        			
-	                });
-        		$("#memberList").append(view);
-            }
-        })
-	});
+	selectList();
 	
+	$('#btnSearch').click(function () {
+		selectList();
+	});
 })
+function selectList() {
+	let chkInfo = $('[name = chk_info]:checked').val();
+		let condition = $('#condition').val();
+		$.ajax({
+        url: '/admin/list',
+        method: 'POST',
+        data: {
+        	'chkInfo' : chkInfo,
+        	'condition' : condition
+        },
+			success : function(data) {
+			
+			data = data.trim();
+			$('#memberList').html(data);
+        }
+    })
+}
 </script>
 </head>
 <body class="pt-5">
@@ -64,8 +58,11 @@ $(function() {
 			<span style="margin-left: 30px;"><input id="condition" type="text" /></span>
 			<span style="margin-left: 15px;"><input id="btnSearch" type="button" value="검색"/></span>
 		</div>
-		<table id="memberList" style="border: 1px;">
-		</table>
+		<!-- <table id="memberList" style="border: 1px;">
+		</table> -->
+		<div id="memberList">
+		
+		</div>
 		<div id="countryCode"></div>
 	</div>
 </body>

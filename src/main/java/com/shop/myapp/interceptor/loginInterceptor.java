@@ -20,7 +20,7 @@ public class loginInterceptor implements HandlerInterceptor{
 			log.info(this.getClass().toString());
 			Member member = (Member)request.getSession().getAttribute("member");
 			String loginId = member.getMemberId();
-			
+
 			if(loginId != null) {
 				return true;
 			}else {

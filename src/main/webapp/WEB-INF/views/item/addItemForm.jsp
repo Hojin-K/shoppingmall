@@ -15,7 +15,7 @@
     <script type="text/javascript" src="<c:url value="/resources/ckeditor/ckeditor.js"/>"></script>
     <script type="text/javascript">
         $(document).ready(function (e) {
-            let optionSetting = 0;
+            let optionSetting = 1;
             getCountries();
             CKEDITOR.replace("content", {
                 uploadUrl: "/file/img/dropUpload"
@@ -41,8 +41,8 @@
                 let result = "<div style='display: inline-block' name='option" + optionSetting + "' id='option" + optionSetting + "'>"
                 result += '<p>옵션</p>';
                 result += "사이즈<input type='text' name='itemOptions[" + optionSetting + "].optionName'/> "
-                result += "&nbsp;보유 수량<input onkeyPress='javascript:checkInputNum();' type='number' name='itemOptions[" + optionSetting + "].optionStock'/> "
-                result += "&nbsp;변동액<input onkeyPress='javascript:checkInputNum();'  type='number' name='itemOptions[" + optionSetting + "].optionPriceUd'/> "
+                result += "&nbsp;보유 수량<input onkeyPress='javascript:checkInputNum();' type='number' name='itemOptions[" + optionSetting + "].optionStock' value='0'/> "
+                result += "&nbsp;변동액<input onkeyPress='javascript:checkInputNum();'  type='number' name='itemOptions[" + optionSetting + "].optionPriceUd' value='0'/> "
                 result += "<button class='btn btn-danger btn-sm' type='button' name='deleteOption'>삭제</button>"
                 result += "</div>"
                 $("#options").append(result);
@@ -79,6 +79,13 @@
         <div class="mb-3">
             <button class="btn btn-secondary btn-sm" type="button" id="createOption">옵션 생성하기</button>
             <div class="mb-3" id="options">
+                <div style='display: inline-block' name='option0' id='option0'>
+                <p>옵션</p>
+                <input type='text' name='itemOptions[0].optionName' value="Free"/>
+                &nbsp;보유 수량<input onkeyPress='javascript:checkInputNum();' type='number' name='itemOptions[0].optionStock' value="0"/>
+                &nbsp;변동액<input onkeyPress='javascript:checkInputNum();'  type='number' name='itemOptions[0].optionPriceUd' value="0"/>
+                <button class='btn btn-danger btn-sm' type='button' name='deleteOption'>삭제</button>
+                </div>
             </div>
         </div>
         <div class="mb-3">

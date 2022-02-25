@@ -40,8 +40,7 @@ public class FileService {
             return fileInfo;
 
         } catch (Exception e){
-            e.printStackTrace();
-        }
         return null;
+        }
     }
 }

@@ -62,10 +62,6 @@ public class ItemController {
         item.setBusinessName(member.getBusinessName());
         Map<String, String> fileInfo = fileService.boardFileUpload(file, absolutePath);
         List<ItemOption> itemOptions = item.getItemOptions();
-        for (ItemOption itemOption : itemOptions) {
-            System.out.println(itemOption.getOptionName());
-            System.out.println(itemOption.getOptionStock());
-        }
         item.setItemImage(fileInfo.get("path"));
         int itemResult = itemService.createItem(item);
         if (itemResult != 0) {
@@ -89,9 +85,16 @@ public class ItemController {
     }
 
     @PostMapping("/{itemCode}/update")
-    public String updateItem(@PathVariable String itemCode, Item item, RedirectAttributes redirectAttributes) {
+    public String updateItem(@PathVariable String itemCode, Item item,MultipartFile file,HttpServletRequest request, RedirectAttributes redirectAttributes) throws IOException {
+        String absolutePath = request.getServletContext().getRealPath("/resources/");
         Member member = (Member) session.getAttribute("member");
         if (itemService.validateAccessToItem(itemCode, member)) {
+            item.setItemCode(itemCode);
+        for (ItemOption itemOption : item.getItemOptions()){
+            itemOption.setItemCode(itemCode);
+        }
+        Map<String, String> fileInfo = fileService.boardFileUpload(file, absolutePath);
+            item.setItemImage(fileInfo.get("path"));
             itemService.updateItem(item);
             redirectAttributes.addAttribute("itemCode", itemCode);
             return "redirect:/item/{itemCode}";
