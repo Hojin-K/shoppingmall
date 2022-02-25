@@ -31,11 +31,25 @@ public class AuthInterceptor implements HandlerInterceptor{
 				HandlerMethod handlerMethod = (HandlerMethod)handler;
 				
 				// 3. @Auth 받아오기
-				Auth auth = handlerMethod.getMethodAnnotation(Auth.class);
-				Auth adminRole = handlerMethod.getMethod().getDeclaringClass().getAnnotation(Auth.class);
+				Auth classAuth = handlerMethod.getMethod().getDeclaringClass().getAnnotation(Auth.class);
+				Auth methodAuth = handlerMethod.getMethodAnnotation(Auth.class);
+				Auth auth;
+				
+				if(classAuth == null) {
+					auth = methodAuth;
+				}else {
+					if(methodAuth != null) {
+						auth = methodAuth;
+					}else {
+						auth = classAuth;
+					}
+				}
+				
+				System.out.println("auth----->"+auth);
 				
 				// 4. method에 @Auth가 없는 경우, 즉 인증이 필요 없는 요청
 				if( auth == null ) {
+					System.out.println("인증 필요 없음");
 					return true;
 				}
 				
@@ -43,6 +57,7 @@ public class AuthInterceptor implements HandlerInterceptor{
 				HttpSession session = request.getSession();
 				if( session == null ) {
 					// 로그인 화면으로 이동
+					System.out.println("세션 없음");
 					response.sendRedirect(request.getContextPath() + "/members/login");
 					return false;
 				}
@@ -50,17 +65,39 @@ public class AuthInterceptor implements HandlerInterceptor{
 				// 6. 세션이 존재하면 유효한 유저인지 확인
 				Member authUser = (Member)session.getAttribute("member");
 				if ( authUser == null ) {
+					System.out.println("유효한 유저가 아님");
 					response.sendRedirect(request.getContextPath() + "/members/login");
 					return false;
 				}
 
 				// 7. admin일 경우
-				if( adminRole != null ) {
-					String role = adminRole.role().toString();
+				if( auth != null ) {
+					System.out.println("어노테이션이 있을경우");
+					String role = auth.role().toString();
 					if( "ADMIN".equals(role) ) {
+						System.out.println("어노테이션이 amdin 인 경우");
 						// admin임을 알 수 있는 조건을 작성한다.
 						// ex) 서비스의 id가 root이면 admin이다.
 						if( authUser.getMemberLevel().toString().contains("ADMIN") == false ){// admin이 아니므로 return false
+							System.out.println("유저 권한이 admin이 아닌 경우");
+							response.sendRedirect(request.getContextPath());
+							return false;
+						}
+					}else if( "SELLER".equals(role) ) {
+						System.out.println("어노테이션이 amdin 인 경우");
+						// admin임을 알 수 있는 조건을 작성한다.
+						// ex) 서비스의 id가 root이면 admin이다.
+						if( authUser.getMemberLevel().toString().contains("SELLER") == false ){// seller가 아니므로 return false
+							System.out.println("유저 권한이 seller가 아닌 경우");
+							response.sendRedirect(request.getContextPath());
+							return false;
+						}
+					}else if( "USER".equals(role) ) {
+						System.out.println("어노테이션이 amdin 인 경우");
+						// admin임을 알 수 있는 조건을 작성한다.
+						// ex) 서비스의 id가 root이면 admin이다.
+						if( authUser.getMemberLevel().toString().contains("USER") == false ){// user가 아니므로 return false
+							System.out.println("유저 권한이 user가 아닌 경우");
 							response.sendRedirect(request.getContextPath());
 							return false;
 						}

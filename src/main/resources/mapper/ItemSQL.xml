@@ -72,13 +72,13 @@
                  SELECT ROW_NUMBER() over (order by item.item_code desc ) AS num,
                         item.ITEM_CODE,
                         MEMBER_ID,
-                        item.COUNTRY_CODE                                 as country_code,
+                        item.COUNTRY_CODE as country_code,
                         ITEM_NAME,
                         ITEM_PRICE,
                         ITEM_IMAGE,
                         ITEM_INFO,
                         COUNTRY_NAME,
-                        sum(item_option.OPTION_STOCK)                     as item_stock
+                        sum(item_option.OPTION_STOCK) as item_stock
                  from HR.SHOP_ITEM_TB item,
                       HR.SHOP_ITEM_OPTIONS_TB item_option,
                       HR.SHOP_COUNTRY_TB country

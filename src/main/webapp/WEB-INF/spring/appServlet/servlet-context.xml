@@ -76,17 +76,6 @@
         </interceptor>
     </interceptors>
 
-    <beans:bean id="loginInterceptor" class="com.shop.myapp.interceptor.loginInterceptor">
-    </beans:bean>
-    <!-- Interceptor 설정 -->
-    <interceptors>
-        <interceptor>
-            <!--로그인세션 확인처리할 주소들  -->
-            <mapping path="/login"/>
-            <beans:ref bean="loginInterceptor"/>
-        </interceptor>
-    </interceptors>
-
     <annotation-driven>
         <!-- argument resolver -->
         <argument-resolvers>
