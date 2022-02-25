@@ -1,6 +1,7 @@
 package com.shop.myapp.controller;
 
 import com.shop.myapp.dto.*;
+import com.shop.myapp.interceptor.Auth;
 import com.shop.myapp.service.OrderService;
 import org.json.simple.parser.ParseException;
 import org.springframework.http.ResponseEntity;
@@ -13,6 +14,7 @@ import java.util.List;
 
 @Controller
 @RequestMapping("/order")
+@Auth(role = Auth.Role.USER)
 public class OrderController {
     private final OrderService orderService;
     private final HttpSession session;

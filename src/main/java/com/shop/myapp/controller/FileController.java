@@ -1,5 +1,6 @@
 package com.shop.myapp.controller;
 
+import com.shop.myapp.interceptor.Auth;
 import com.shop.myapp.service.FileService;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.MediaType;
@@ -18,6 +19,7 @@ import java.util.Map;
 
 @RestController
 @RequestMapping("/file")
+@Auth(role = Auth.Role.SELLER)
 public class FileController {
     private final FileService fileService;
 

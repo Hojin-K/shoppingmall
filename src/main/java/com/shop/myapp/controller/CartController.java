@@ -2,6 +2,7 @@ package com.shop.myapp.controller;
 
 import com.shop.myapp.dto.Cart;
 import com.shop.myapp.dto.Member;
+import com.shop.myapp.interceptor.Auth;
 import com.shop.myapp.service.CartService;
 import org.springframework.http.ResponseEntity;
 import org.springframework.stereotype.Controller;
@@ -14,6 +15,7 @@ import java.util.Optional;
 
 @Controller
 @RequestMapping("/cart")
+@Auth(role = Auth.Role.USER)
 public class CartController {
 
     private final CartService cartService;

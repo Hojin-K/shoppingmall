@@ -34,7 +34,7 @@ public class AuthInterceptor implements HandlerInterceptor{
 				Auth classAuth = handlerMethod.getMethod().getDeclaringClass().getAnnotation(Auth.class);
 				Auth methodAuth = handlerMethod.getMethodAnnotation(Auth.class);
 				Auth auth;
-				
+
 				if(classAuth == null) {
 					auth = methodAuth;
 				}else {
@@ -44,12 +44,11 @@ public class AuthInterceptor implements HandlerInterceptor{
 						auth = classAuth;
 					}
 				}
-				
+
 				System.out.println("auth----->"+auth);
 				
 				// 4. method에 @Auth가 없는 경우, 즉 인증이 필요 없는 요청
 				if( auth == null ) {
-					System.out.println("인증 필요 없음");
 					return true;
 				}
 				
@@ -57,7 +56,6 @@ public class AuthInterceptor implements HandlerInterceptor{
 				HttpSession session = request.getSession();
 				if( session == null ) {
 					// 로그인 화면으로 이동
-					System.out.println("세션 없음");
 					response.sendRedirect(request.getContextPath() + "/members/login");
 					return false;
 				}
@@ -65,7 +63,6 @@ public class AuthInterceptor implements HandlerInterceptor{
 				// 6. 세션이 존재하면 유효한 유저인지 확인
 				Member authUser = (Member)session.getAttribute("member");
 				if ( authUser == null ) {
-					System.out.println("유효한 유저가 아님");
 					response.sendRedirect(request.getContextPath() + "/members/login");
 					return false;
 				}
