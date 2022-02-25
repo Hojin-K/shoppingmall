@@ -4,6 +4,7 @@ import com.shop.myapp.dto.Item;
 import com.shop.myapp.dto.ItemOption;
 import com.shop.myapp.dto.Member;
 import com.shop.myapp.dto.Pagination;
+import com.shop.myapp.interceptor.Auth;
 import com.shop.myapp.service.FileService;
 import com.shop.myapp.service.ItemService;
 import org.springframework.stereotype.Controller;
@@ -20,6 +21,7 @@ import java.util.Map;
 
 @Controller
 @RequestMapping("/item")
+@Auth(role = Auth.Role.SELLER)
 public class ItemController {
     private final ItemService itemService;
     private final FileService fileService;
@@ -40,7 +42,6 @@ public class ItemController {
         return "item/items";
 
     }
-
     @GetMapping("/{itemCode}")
     public String getItemDetail(@PathVariable String itemCode, Model model) {
         Item item = itemService.getItem(itemCode);
@@ -48,12 +49,13 @@ public class ItemController {
         return "item/item";
     }
 
+    @Auth(role = Auth.Role.SELLER)
     @GetMapping("/add")
     public String createItemForm() {
 
         return "/item/addItemForm";
     }
-
+    @Auth(role = Auth.Role.SELLER)
     @PostMapping("/add")
     public String createItem(Item item, MultipartFile file, RedirectAttributes redirectAttributes, HttpServletRequest request) throws IOException {
         String absolutePath = request.getServletContext().getRealPath("/resources/");
@@ -71,7 +73,7 @@ public class ItemController {
             throw new IllegalStateException("아이템 등록 실패");
         }
     }
-
+    @Auth(role = Auth.Role.SELLER)
     @GetMapping("/{itemCode}/update")
     public String updateItemForm(@PathVariable String itemCode, Model model) {
         Member member = (Member) session.getAttribute("member");
@@ -83,7 +85,7 @@ public class ItemController {
 
         return "redirect:/item";
     }
-
+    @Auth(role = Auth.Role.SELLER)
     @PostMapping("/{itemCode}/update")
     public String updateItem(@PathVariable String itemCode, Item item,MultipartFile file,HttpServletRequest request, RedirectAttributes redirectAttributes) throws IOException {
         String absolutePath = request.getServletContext().getRealPath("/resources/");
@@ -101,7 +103,7 @@ public class ItemController {
         }
         return "redirect:/item";
     }
-
+    @Auth(role = Auth.Role.SELLER)
     @GetMapping("/{itemCode}/delete")
     public String deleteItem(@PathVariable String itemCode) {
         Member member = (Member) session.getAttribute("member");

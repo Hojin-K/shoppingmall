@@ -7,7 +7,7 @@ import lombok.Setter;
 @Setter
 public class Pagination {
 
-    private int listSize = 20;                //초기값으로 목록개수를 10으로 셋팅
+    private int listSize = 10;                //초기값으로 목록개수를 10으로 셋팅
     private int page;
     private int listCnt;
     private int pageCnt;
@@ -26,12 +26,13 @@ public class Pagination {
 
         //전체 페이지수
         this.pageCnt = (int) Math.ceil((float) listCnt / listSize);
-
+        System.out.println(pageCnt);
         //게시판 시작번호
         this.startList = (page - 1) * listSize;
+        System.out.println(startList);
 
         this.endList = page * listSize;
-
+        System.out.println(endList);
         if (page >= 3) {
             if (pageCnt - page <= 2){
                 this.startPage = pageCnt - 4;

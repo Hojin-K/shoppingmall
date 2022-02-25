@@ -72,13 +72,13 @@
                  SELECT ROW_NUMBER() over (order by item.item_code desc ) AS num,
                         item.ITEM_CODE,
                         MEMBER_ID,
-                        item.COUNTRY_CODE                                 as country_code,
+                        item.COUNTRY_CODE as country_code,
                         ITEM_NAME,
                         ITEM_PRICE,
                         ITEM_IMAGE,
                         ITEM_INFO,
                         COUNTRY_NAME,
-                        sum(item_option.OPTION_STOCK)                     as item_stock
+                        sum(item_option.OPTION_STOCK) as item_stock
                  from HR.SHOP_ITEM_TB item,
                       HR.SHOP_ITEM_OPTIONS_TB item_option,
                       HR.SHOP_COUNTRY_TB country
@@ -104,7 +104,7 @@
     </select>
     <select id="getItemListCnt" resultType="java.lang.Integer">
         select count(*) as listCnt
-        from HR.SHOP_ITEM_TB
+        from SHOP_ITEM_TB i where i.IS_DELETE = '0'
     </select>
     <select id="findAllBySearch" resultMap="item">
         <![CDATA[
@@ -188,7 +188,7 @@
                       HR.SHOP_ITEM_OPTIONS_TB item_option,
                       HR.SHOP_COUNTRY_TB country
                  WHERE item.IS_DELETE = '0'
-                   and rownum <= 10
+                   and rownum <= 5
                    and item.ITEM_CODE = item_option.ITEM_CODE
                    and item.country_code = country.country_code
                  group by item.ITEM_CODE, MEMBER_ID, item.COUNTRY_CODE, ITEM_NAME, ITEM_PRICE, ITEM_IMAGE, ITEM_INFO,

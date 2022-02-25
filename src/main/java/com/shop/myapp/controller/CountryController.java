@@ -2,6 +2,7 @@ package com.shop.myapp.controller;
 
 import com.shop.myapp.dto.Country;
 import com.shop.myapp.dto.Member;
+import com.shop.myapp.interceptor.Auth;
 import com.shop.myapp.service.CountryService;
 import lombok.extern.slf4j.Slf4j;
 import org.json.simple.parser.ParseException;
@@ -16,6 +17,7 @@ import java.util.List;
 @Controller
 @RequestMapping("/country")
 @Slf4j
+@Auth(role = Auth.Role.ADMIN)
 public class CountryController {
     private final CountryService countryService;
 

@@ -25,8 +25,8 @@ import lombok.extern.slf4j.Slf4j;
 
 @Slf4j
 @Controller
+@Auth(role = Auth.Role.ADMIN)
 @RequestMapping("/admin")
-@Auth(role = Role.ADMIN)
 public class AdminController {
 	private final MemberService memberService;
 	private final AuthService authService;
@@ -42,7 +42,8 @@ public class AdminController {
 
 		return "관리자 메인페이지";
 	}
-
+	
+	//@Auth(role = Auth.Role.ADMIN)
 	@GetMapping("/list")
 	public String memberListForm() {
 		return "/members/memberListForm";

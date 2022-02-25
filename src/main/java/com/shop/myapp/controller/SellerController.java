@@ -3,6 +3,7 @@ package com.shop.myapp.controller;
 import com.shop.myapp.dto.Item;
 import com.shop.myapp.dto.Member;
 import com.shop.myapp.dto.Pagination;
+import com.shop.myapp.interceptor.Auth;
 import com.shop.myapp.service.ItemService;
 import com.shop.myapp.service.MemberService;
 import org.springframework.stereotype.Controller;
@@ -15,6 +16,7 @@ import java.util.List;
 
 @Controller
 @RequestMapping("/seller")
+@Auth(role = Auth.Role.SELLER)
 public class SellerController {
 
     private final HttpSession session;

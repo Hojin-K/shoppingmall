@@ -2,6 +2,7 @@ package com.shop.myapp.controller;
 
 import javax.servlet.http.HttpServletRequest;
 
+import com.shop.myapp.interceptor.Auth;
 import org.springframework.http.ResponseEntity;
 import org.springframework.stereotype.Controller;
 import org.springframework.web.bind.annotation.GetMapping;
@@ -13,6 +14,7 @@ import org.springframework.web.bind.annotation.RequestMethod;
 import org.springframework.web.bind.annotation.ResponseBody;
 
 import com.shop.myapp.dto.Member;
+import com.shop.myapp.interceptor.Auth;
 import com.shop.myapp.service.AuthService;
 import com.shop.myapp.service.AuthServiceImpl;
 import com.shop.myapp.service.MemberService;
@@ -32,7 +34,6 @@ public class MemberController {
         this.memberService = memberService;
         this.authService = authService;
     }
-
     @GetMapping("/join")
     public String joinForm() {
     	//authService.checkMemberId("");
@@ -66,6 +67,7 @@ public class MemberController {
     }
     
     @PostMapping("/update")
+    @Auth(role = Auth.Role.USER)
     public String update(@ModelAttribute Member member) {
     	// 에러가 있는지 검사
     	log.info("Edit member information.");
@@ -75,7 +77,7 @@ public class MemberController {
     	log.info("update complete.");
     	return "redirect:/members";
     }
-    
+
     @GetMapping("/login")
     public String loginForm() {
     	log.info("loginForm");
@@ -87,12 +89,8 @@ public class MemberController {
     public String login(@ModelAttribute Member member, HttpServletRequest request){
         System.out.println("PWD : "+member.getMemberPwd());
     	log.info("login");
-        try{
     	Member mem = memberService.loginMember(member);
     	request.getSession().setAttribute("member",mem);
-        }catch (Exception e){
-            e.printStackTrace();
-        }
 
     	return "redirect:/";
     }
