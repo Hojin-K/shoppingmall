@@ -19,7 +19,7 @@ import com.shop.myapp.service.ReviewService;
 
 public class ReviewTest {
 	
-	@Autowired
+	/*@Autowired
 	private ReviewService reviewService;
 	
 	@Test
@@ -42,7 +42,7 @@ public class ReviewTest {
 		int result = reviewService.insertReview(review);
 		
 		assertEquals(result, 1);
-	}
+	}*/
 	
 	
 

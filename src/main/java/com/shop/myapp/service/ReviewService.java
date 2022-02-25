@@ -1,17 +1,21 @@
 package com.shop.myapp.service;
 
 import java.util.List;
+import java.util.Optional;
 
 import org.apache.ibatis.session.SqlSession;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 
+import com.shop.myapp.dto.Cart;
 import com.shop.myapp.dto.Item;
 import com.shop.myapp.dto.Pagination;
 import com.shop.myapp.dto.Review;
 import com.shop.myapp.repository.ItemRepository;
 import com.shop.myapp.repository.ReviewRepository;
+
+import lombok.Builder;
 
 
 @Service
@@ -44,13 +48,17 @@ public class ReviewService {
 	        return reviewRepository.deleteReview(review);
 	    }
 
-	    public int updateReview(Review review) {
-	    	reviewRepository.updateReview(review);
-	     return reviewRepository.updateReview(review);
+	    public int updateReview(String reviewCode, String reviewContent) {
+	     return reviewRepository.updateReview(reviewCode, reviewContent);
 	    }
 	
 	    public int getReviewListCnt() {
 	    	return reviewRepository.getReviewListCnt();
+	    }
+	    
+	    public Review findByReviewId(String memberId){
+	        return reviewRepository.findByReviewId(memberId);
+
 	    }
 
 }

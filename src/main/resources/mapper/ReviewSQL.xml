@@ -9,7 +9,7 @@
 	 		#{reviewContent})
 	</insert>
 	<update id="updateReview">
-			UPDATE SHOP_REVIEW_TB SET REVIEW_CONTENT=#{REVIEW_CONTENT} WHERE REVIEW_CODE=#{REVIEW_CODE}
+			UPDATE SHOP_REVIEW_TB SET REVIEW_CONTENT=#{reviewContent} WHERE REVIEW_CODE=#{reviewCode}
 	</update>
 
 	<delete id="deleteReview">
