@@ -25,7 +25,7 @@ import lombok.extern.slf4j.Slf4j;
 
 @Slf4j
 @Controller
-@Auth(role = Auth.Role.ADMIN)
+//@Auth(role = Auth.Role.ADMIN)
 @RequestMapping("/admin")
 public class AdminController {
 	private final MemberService memberService;

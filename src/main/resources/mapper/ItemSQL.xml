@@ -87,7 +87,7 @@
                    and item.ITEM_CODE = item_option.ITEM_CODE
                    and item.country_code = country.country_code
                  group by item.ITEM_CODE, MEMBER_ID, item.COUNTRY_CODE, ITEM_NAME, ITEM_PRICE, ITEM_IMAGE, ITEM_INFO,
-                          ITEM_STOCK, country_name)
+                          'ITEM_STOCK', country_name)
         WHERE #{startList} < num
         ]]></select>
 
@@ -133,7 +133,7 @@
                             and item.country_code = country.country_code
                           group by item.ITEM_CODE, MEMBER_ID, item.COUNTRY_CODE, ITEM_NAME, ITEM_PRICE, ITEM_IMAGE,
                                    ITEM_INFO,
-                                   ITEM_STOCK, country_name, item_brand
+                                   'ITEM_STOCK', country_name, item_brand
                       )
                  where rownum <= #{pagination.endList})
         WHERE #{pagination.startList} < num
@@ -166,7 +166,7 @@
                    and item.ITEM_CODE = item_option.ITEM_CODE
                    and item.country_code = country.country_code
                  group by item.ITEM_CODE, MEMBER_ID, item.COUNTRY_CODE, ITEM_NAME, ITEM_PRICE, ITEM_IMAGE, ITEM_INFO,
-                          ITEM_STOCK, country_name)
+                          'ITEM_STOCK', country_name)
         WHERE #{pagination.startList} < num
         ]]>
     </select>
@@ -192,7 +192,7 @@
                    and item.ITEM_CODE = item_option.ITEM_CODE
                    and item.country_code = country.country_code
                  group by item.ITEM_CODE, MEMBER_ID, item.COUNTRY_CODE, ITEM_NAME, ITEM_PRICE, ITEM_IMAGE, ITEM_INFO,
-                          ITEM_STOCK, country_name)
+                          'ITEM_STOCK', country_name)
         WHERE 0 < num
         ]]>
     </select>

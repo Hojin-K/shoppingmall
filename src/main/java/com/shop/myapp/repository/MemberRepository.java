@@ -1,7 +1,6 @@
 package com.shop.myapp.repository;
 
 import java.util.List;
-import java.util.Map;
 import java.util.Optional;
 
 import org.apache.ibatis.annotations.Mapper;
