@@ -1,6 +1,7 @@
 package com.shop.myapp.service;
 
 import org.springframework.stereotype.Service;
+import org.springframework.transaction.annotation.Transactional;
 import org.springframework.web.multipart.MultipartFile;
 
 import java.io.IOException;
@@ -11,6 +12,7 @@ import java.util.HashMap;
 import java.util.Map;
 
 @Service
+@Transactional(rollbackFor = {Exception.class})
 public class FileService {
     public Map<String,String> boardFileUpload(MultipartFile file,String absolutePath) throws IOException {
         try{
@@ -38,8 +40,7 @@ public class FileService {
             return fileInfo;
 
         } catch (Exception e){
-            e.printStackTrace();
-        }
         return null;
+        }
     }
 }

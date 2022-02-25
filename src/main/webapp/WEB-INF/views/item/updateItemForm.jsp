@@ -58,17 +58,16 @@
     }
   </script>
 </head>
-<body>
+<body class="pt-5">
 <div class="container">
   <div class="text-center">
-    <h3>상품 등록하기</h3>
+    <h3>상품 수정하기</h3>
   </div>
-  <form action="/item/add" method="post" enctype="multipart/form-data" id="addForm">
+  <form action="/item/${item.itemCode}/update" method="post" enctype="multipart/form-data" id="addForm">
 
     <div class="mb-3">
-      <label for="file">상품 이미지</label>
-      <div class="mb-3 h-25" style="">
-        <img src="${item.itemImage}" style="height: 100%; width: 100%; object-fit: cover;" alt="">
+      <div class="mb-3 h-25" style="text-align: center">
+        <img src="${item.itemImage}" style="height: 50%; width: 50%; object-fit: cover;" alt="">
       </div>
       <input class="form-control" type="file" name="file" id="file" >
     </div>
@@ -81,6 +80,7 @@
       <button class="btn btn-secondary btn-sm" type="button" id="createOption" style="margin-bottom: 5px">옵션 생성하기</button>
         <br >
         <c:set var="i" value="${0}"/>
+
         <c:forEach items="${item.itemOptions}" var="itemOption">
           <div style='display: inline-block; margin-bottom: 5px' name='option${i}' id='option${i}'>
             사이즈<input type='text' value="${itemOption.optionName}" name='itemOptions[${i}].optionName'/>

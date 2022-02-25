@@ -23,6 +23,7 @@
             <result property="optionName" column="option_name"/>
             <result property="optionStock" column="option_stock"/>
             <result property="optionPriceUd" column="option_price_ud"/>
+            <result property="isDelete" column="is_delete"/>
         </collection>
     </resultMap>
 
@@ -52,12 +53,12 @@
     </insert>
     <update id="updateItem" parameterType="com.shop.myapp.dto.Item">
         update HR.SHOP_ITEM_TB
-        set HR.SHOP_ITEM_TB.ITEM_PRICE = ${itemPrice},
+        set ITEM_PRICE = #{itemPrice},
         <if test="itemImage != null">
-            HR.SHOP_ITEM_TB.ITEM_IMAGE = ${itemImage},
+            ITEM_IMAGE = #{itemImage},
         </if>
-        HR.SHOP_ITEM_TB.ITEM_INFO = ${itemInfo}
-        where HR.SHOP_ITEM_TB.ITEM_CODE = ${itemCode}
+        ITEM_INFO = #{itemInfo}
+        where ITEM_CODE = #{itemCode}
     </update>
     <update id="deleteItem" parameterType="string">
         update HR.SHOP_ITEM_TB
@@ -96,6 +97,7 @@
              HR.SHOP_ITEM_OPTIONS_TB O,
              HR.SHOP_COUNTRY_TB C
         where I.is_delete = '0'
+          and O.IS_DELETE = '0'
           and I.ITEM_CODE = #{itemCode}
           and O.ITEM_CODE = #{itemCode}
           and C.country_code = I.country_code
@@ -166,6 +168,32 @@
                  group by item.ITEM_CODE, MEMBER_ID, item.COUNTRY_CODE, ITEM_NAME, ITEM_PRICE, ITEM_IMAGE, ITEM_INFO,
                           ITEM_STOCK, country_name)
         WHERE #{pagination.startList} < num
+        ]]>
+    </select>
+    <select id="findNewItems" resultType="com.shop.myapp.dto.Item">
+        <![CDATA[
+        SELECT *
+        FROM (
+                 SELECT ROW_NUMBER() over (order by item.item_code desc ) AS num,
+                        item.ITEM_CODE,
+                        MEMBER_ID,
+                        item.COUNTRY_CODE                                 as country_code,
+                        ITEM_NAME,
+                        ITEM_PRICE,
+                        ITEM_IMAGE,
+                        ITEM_INFO,
+                        COUNTRY_NAME,
+                        sum(item_option.OPTION_STOCK)                     as item_stock
+                 from HR.SHOP_ITEM_TB item,
+                      HR.SHOP_ITEM_OPTIONS_TB item_option,
+                      HR.SHOP_COUNTRY_TB country
+                 WHERE item.IS_DELETE = '0'
+                   and rownum <= 10
+                   and item.ITEM_CODE = item_option.ITEM_CODE
+                   and item.country_code = country.country_code
+                 group by item.ITEM_CODE, MEMBER_ID, item.COUNTRY_CODE, ITEM_NAME, ITEM_PRICE, ITEM_IMAGE, ITEM_INFO,
+                          ITEM_STOCK, country_name)
+        WHERE 0 < num
         ]]>
     </select>
 

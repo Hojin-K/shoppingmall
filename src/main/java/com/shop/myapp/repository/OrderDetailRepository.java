@@ -8,7 +8,9 @@ import java.util.List;
 @Mapper
 public interface OrderDetailRepository {
     int insertOrderDetails(List<OrderDetail> orderDetails);
-    OrderDetail findOrderDetailByOrderId();
+    OrderDetail findByOrderDetailCode(String orderDetailCode);
     int deleteOrderDetail(String orderCode);
     int updatePostedStatusByOrderCode(String orderCode);
+    int updateWhenCancel(String orderDetailCode);
+    List<OrderDetail> findByMemberIdForSeller();
 }

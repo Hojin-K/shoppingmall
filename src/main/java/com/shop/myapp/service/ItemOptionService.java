@@ -20,39 +20,59 @@ public class ItemOptionService {
         this.itemOptionRepository = sqlSession.getMapper(com.shop.myapp.repository.ItemOptionRepository.class);
     }
 
-    public Optional<ItemOption> findByItemCode(String optionCode){
+    public Optional<ItemOption> findByItemCode(String optionCode) {
         return itemOptionRepository.findOneByItemCode(optionCode);
     }
 
-    public Optional<ItemOption> findByOptionCode(String optionCode){
+    public Optional<ItemOption> findByOptionCode(String optionCode) {
         return itemOptionRepository.findByOptionCode(optionCode);
     }
+    public Optional<ItemOption> findByOptionCodeForOrder(String optionCode) {
+        return itemOptionRepository.findByOptionCodeForOrder(optionCode);
+    }
 
-    public int insertItemOptions(List<ItemOption> options,String itemCode){
+    public int insertItemOptions(List<ItemOption> options, String itemCode) {
         options.removeAll(Collections.singletonList(null));
-        for (ItemOption itemOption : options){
+        for (ItemOption itemOption : options) {
             itemOption.setItemCode(itemCode);
         }
         return itemOptionRepository.insertItemOptions(options);
     }
 
-    public int modifyItemOption(List<ItemOption> itemOptions,String itemCode){
+    public int modifyItemOption(List<ItemOption> itemOptions, String itemCode) {
+        // 기존 옵션 삭제
         int result = deleteByItemCode(itemCode);
+        // 새로 옵션 추가
         return itemOptionRepository.insertItemOptions(itemOptions);
     }
 
-    public int modifyItemOptionAfterPay(List<OrderDetail> orderDetails){
+    public int modifyItemOptionAfterPay(List<OrderDetail> orderDetails) {
+        // 계산 후, 주문량만큼 아이템의 숫자 갱신
         int result = 0;
-        for (OrderDetail orderDetail : orderDetails){
+        for (OrderDetail orderDetail : orderDetails) {
             result += itemOptionRepository.modifyItemOptionStockByOptionCode(orderDetail);
         }
         return result;
     }
 
-    public int deleteItemOption(String optionCode){
-        return itemOptionRepository.deleteItemOption(optionCode);
+    public int modifyItemOptionAfterRefund(OrderDetail orderDetail){
+        return itemOptionRepository.modifyItemOptionStockByOptionCodeWhenRefund(orderDetail);
     }
-    public int deleteByItemCode(String itemCode){
-        return itemOptionRepository.deleteByItemCode(itemCode);
+
+    public int deleteByOptionCode(String optionCode) {
+        return itemOptionRepository.isDeleteItemOption(optionCode);
     }
+
+    public int deleteByItemCode(String itemCode) {
+        return itemOptionRepository.isDeleteByItemCode(itemCode);
+    }
+
+    public int deleteWhenItemUpdate(String itemCode){
+        return itemOptionRepository.deleteWhenItemUpdate(itemCode);
+    }
+
+    public Optional<ItemOption> findOptionCodeWhenOrderValidate(String optionCode){
+        return itemOptionRepository.findByOptionCodeWhenOrderValidate(optionCode);
+    }
+
 }

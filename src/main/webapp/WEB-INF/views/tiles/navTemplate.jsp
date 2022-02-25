@@ -89,17 +89,18 @@
                     <span class="nav-link"><b class="text-primary">${sessionScope.member.memberName}</b>&nbsp;님</span>
 
                 </li>
-                    <c:if test="${sessionScope.member.memberLevel == 'user'}">
+                    <c:if test="${sessionScope.member.memberLevel == 'USER'}">
                         <a class="nav-link" href="/members">개인정보</a>
                         <a class="nav-link" href="/cart/myCart">장바구니</a>
                         <a class="nav-link" href="/order/myOrder">주문조회</a>
                     </c:if>
-                    <c:if test="${sessionScope.member.memberLevel == 'seller'}">
+                    <c:if test="${sessionScope.member.memberLevel == 'SELLER'}">
                         <a class="nav-link" href="/seller/${sessionScope.member.memberId}">상점관리</a>
                     </c:if>
-                    <c:if test="${sessionScope.member.memberLevel == 'admin'}">
+                    <c:if test="${sessionScope.member.memberLevel == 'ADMIN'}">
                         <a class="nav-link" href="/admin">관리자모드</a>
                     </c:if>
+                    <a class="nav-link" href="/members/logout">로그아웃</a>
                 </c:when>
                     <c:otherwise>
                         <li class="nav-item">

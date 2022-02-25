@@ -14,12 +14,17 @@
 </head>
 <script>
     $(function () {
+        $(document).on("click", "[id='update']", function () {
             fnModuleInfo();
+        });
+        $(document).on("click", "[id='add']", function () {
+            location.href = "/item/add";
+        });
 
+    })
         function fnModuleInfo() {
             $("#sellerModal .modal-content").load("/seller/${seller.memberId}/update");
         }
-    })
 </script>
 <style>
     p, h5 {
@@ -45,8 +50,13 @@
         transform: scale(1.2);
     }
 
+    .itemLink{
+        color: black;
+        text-decoration-line: none;
+    }
     .itemLink:hover {
         color: black;
+        text-decoration-line: none;
     }
 
     .cards-box {
@@ -62,6 +72,12 @@
         overflow: hidden;
         text-overflow: ellipsis;
         white-space: nowrap;
+    }
+    #sellerModal{
+        position: fixed;
+        top: 50%;
+        left: 50%;
+        transform: translate(-50%, -50%);
     }
 
     #sellerBar {
@@ -96,10 +112,11 @@
             <c:if test="${seller.memberId == sessionScope.member.memberId}">
                 <br>
                 <button id="update" type="button" data-bs-toggle="modal" data-bs-target="#sellerModal" class="btn btn-sm btn-light shadow col-2">상점 관리</button>
+                <button id="add" type="button" class="btn btn-sm btn-light shadow col-2">상품 등록</button>
             </c:if>
         </div>
         <div class="col-6">
-            <h5 style="line-height: 250%">${seller.businessInfo}</h5>
+            <h6 style="line-height: 250%;">${seller.businessInfo}</h6>
         </div>
     </div>
 </div>
@@ -119,7 +136,7 @@
                             <br>
                             <span class="card-text mt-5"><c:out value="${item.itemPrice}원"/></span>
                             <button style="display: inline; margin-left: 5px; margin-bottom: 10px"
-                                    class="btn btn-sm btn-primary disabled">${item.country.countryName}</button>
+                                    class="btn btn-sm btn-primary disabled ">${item.country.countryName}</button>
                             <c:if test="${seller.memberId == sessionScope.member.memberId}">
                             </c:if>
                         </div>

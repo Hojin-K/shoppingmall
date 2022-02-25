@@ -12,6 +12,7 @@
         <association property="itemOption" column="option_code" resultMap="itemOption"/>
         <association property="order" javaType="com.shop.myapp.dto.Order">
             <result property="orderCode" column="order_code"/>
+            <result property="impUid" column="imp_uid"/>
             <result property="totalPay" column="total_pay"/>
             <result property="memberId" column="member_id"/>
             <result property="buyerName" column="buyer_name"/>
@@ -19,6 +20,7 @@
             <result property="buyerAddr" column="buyer_addr"/>
             <result property="buyerPostCode" column="buyer_post_code"/>
             <result property="isPaid" column="is_paid"/>
+            <result property="change" column="change"/>
         </association>
     </resultMap>
 
@@ -52,17 +54,36 @@
         set HR.SHOP_ORDER_DETAIL_TB.POSTED_STATUS = 'paid'
         where HR.SHOP_ORDER_DETAIL_TB.ORDER_CODE = #{orderCode}
     </update>
+    <update id="updateWhenCancel">
+        update HR.SHOP_ORDER_DETAIL_TB
+        set HR.SHOP_ORDER_DETAIL_TB.POSTED_STATUS = 'refund'
+        where HR.SHOP_ORDER_DETAIL_TB.ORDER_DETAIL_CODE = ${orderDetailCode}
+    </update>
     <delete id="deleteOrderDetail">
         delete HR.SHOP_ORDER_DETAIL_TB
         where HR.SHOP_ORDER_DETAIL_TB.ORDER_CODE = #{orderCode}
     </delete>
-    <select id="findOrderDetailByOrderId" resultMap="orderDetail">
+    <select id="findByOrderDetailCode" resultMap="orderDetail">
         select *
         from HR.SHOP_ORDER_DETAIL_TB D,
-             HR.SHOP_ORDER_TB O, HR.SHOP_ITEM_OPTIONS_TB IO,HR.SHOP_ITEM_TB I
-        where D.ORDER_DETAIL_CODE = #{order_detail_code}
+             HR.SHOP_ORDER_TB O,
+             HR.SHOP_ITEM_OPTIONS_TB IO,
+             HR.SHOP_ITEM_TB I
+        where D.ORDER_DETAIL_CODE = #{orderDetailCode}
           and O.ORDER_CODE = D.ORDER_CODE
-and IO.option_code = D.option_code and I.item_code = IO.item_code
+          and IO.option_code = D.option_code
+          and I.item_code = IO.item_code
+    </select>
+    <select id="findByMemberIdForSeller" resultMap="orderDetail">
+        select *
+        from HR.SHOP_ORDER_DETAIL_TB D,
+             HR.SHOP_ORDER_TB O,
+             HR.SHOP_ITEM_OPTIONS_TB IO,
+             HR.SHOP_ITEM_TB I
+        where I.MEMBER_ID = #{memberId}
+          and O.ORDER_CODE = D.ORDER_CODE
+          and IO.option_code = D.option_code
+          and I.item_code = IO.item_code
     </select>
 
 </mapper>

@@ -10,16 +10,19 @@
 <html>
 <head>
     <title>Title</title>
-    <script src="http://code.jquery.com/jquery-latest.min.js"></script>
-    <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.1.3/dist/js/bootstrap.bundle.min.js"
-            integrity="sha384-ka7Sk0Gln4gmtz2MlQnikT1wXgYsOg+OMhuP+IlRH9sENBO0LRn5q+8nbTov4+1p"
-            crossorigin="anonymous"></script>
-    <script type="text/javascript" src="https://cdn.iamport.kr/js/iamport.payment-1.2.0.js"></script>
-    <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.1.3/dist/css/bootstrap.min.css" rel="stylesheet"
-          integrity="sha384-1BmE4kWBq78iYhFldvKuhfTAU6auU8tT94WrHftjDbrCEXSU1oBoqyl2QvZ6jIW3" crossorigin="anonymous">
-    <link rel="preconnect" href="https://fonts.googleapis.com">
-    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
-    <link href="https://fonts.googleapis.com/css2?family=Bebas+Neue&display=swap" rel="stylesheet">
+    <script>
+        $(function () {
+            $(document).on("click", "[name='refund']", function () {
+                let orderDetailCode = $(this).attr('id');
+                alert(orderDetailCode);
+                fnModuleInfo(orderDetailCode);
+            });
+
+            function fnModuleInfo(orderDetailCode) {
+                $("#refundModal .modal-content").load("/orderDetail/" + orderDetailCode + "/cancel");
+            }
+        })
+    </script>
 </head>
 <style>
     p, h5 {
@@ -44,92 +47,104 @@
     }
 
 </style>
-<body>
+<body class="pt-5">
 <div class="container">
-    <div class="row">
-        <table class="table text-center">
-            <thead>
-            <tr>
-                <th style="width: 8.33%">주문번호</th>
-                <th style="width: 40%">상품</th>
-                <th style="width: 16.66%">가격</th>
-                <th style="width: 8.33%">갯수</th>
-                <th style="width: 8.33%">주문 상태</th>
-                <th style="width: 16.66%">주문관리</th>
-            </tr>
-            </thead>
-            <tbody>
-            <c:forEach items="${order.orderDetails}" var="orderDetail">
-                <tr>
-                    <td>${order.orderCode}</td>
-                    <td class="tableContent text-start">
-                        <a class="itemLink" href="/item/${orderDetail.itemOption.item.itemCode}">
-                            <div style="width:10%; height:100%; float:left;">
-                                <img style="width: 100%;" src="${orderDetail.itemOption.item.itemImage}" alt="">
-                            </div>
-                            <div style="width:90%; height:100%; float:left;">
-                                <b style="font-size: medium">${orderDetail.itemOption.item.itemName}</b>
-                                <p>${orderDetail.itemOption.optionName}size</p>
-                            </div>
-                        </a>
-                    </td>
-                    <td>${orderDetail.itemOption.item.itemPrice}</td>
-                    <td>
-                        <span>${orderDetail.amount}</span>
-                    </td>
-                    <td>
-                        ${orderDetail.postedStatus}
-                    </td>
-                    <td>
-                        <button class="btn btn-sm btn-secondary" type="button">취소
-                        </button>
-                    </td>
-                </tr>
-            </c:forEach>
-            </tbody>
-        </table>
+    <div class="accordion" id="accordionExample">
+        <c:set var="i" value="${0}"/>
+        <c:forEach items="${order.orderDetails}" var="orderDetail">
+            <div class="accordion-item">
+                <h2 class="accordion-header" id="heading${i}">
+                    <button class="accordion-button" type="button" data-bs-toggle="collapse"
+                            data-bs-target="#collapse${i}" aria-expanded="true" aria-controls="collapse${i}">
+                        <table>
+                            <tr>
+                                <td>${order.orderCode}</td>
+                                <td class="tableContent text-start">
+                                        <div style="width:10%; height:100%; float:left;">
+                                            <img style="width: 100%;" src="${orderDetail.itemOption.item.itemImage}"
+                                                 alt="">
+                                        </div>
+                                        <div style="width:90%; height:100%; float:left;">
+                                            <b style="font-size: medium">${orderDetail.itemOption.item.itemName}</b>
+                                            <p>${orderDetail.itemOption.optionName}size</p>
+                                        </div>
+                                </td>
+                                <td style="width: 16.66%">${orderDetail.itemOption.item.itemPrice}원</td>
+                                <td style="width: 8.33%">
+                                    <span>${orderDetail.amount}개</span>
+                                </td>
+                                <td style="width: 8.33%">
+                                        ${orderDetail.postedStatus}
+                                </td>
+                            </tr>
+                        </table>
+                    </button>
+                </h2>
+                <div id="collapse${i}" class="accordion-collapse collapse" aria-labelledby="heading${i}"
+                     data-bs-parent="#accordionExample">
+                    <div class="accordion-body">
+                        <c:if test="${orderDetail.postedStatus != 'refund'}">
+                            <button id="${orderDetail.orderDetailCode}" data-bs-toggle="modal"
+                                    data-bs-target="#refundModal" name="refund"
+                                    class="btn btn-sm btn-secondary"
+                                    type="button">환불하기
+                            </button>
+                        </c:if>
+                        <strong>This is the first item's accordion body.</strong> It is shown by default, until the...
+                    </div>
+                </div>
+            </div>
+            <c:set var="i" value="${i+1}"/>
+        </c:forEach>
     </div>
     <br>
-<div class="row">
-<div class="col-6">
-    <table class="table text-center">
-        <tbody>
-        <tr>
-            <th>결제번호</th>
-            <td>${order.impUid}</td>
-        </tr>
-            <tr>
-                <th>결제일</th>
-                <td>${order.paidAtToString()}</td>
-            </th>
-        <tr>
-            <th>결제금액</th>
-            <td>${order.totalPay}원</td>
-        </tr>
-        <tr>
-            <th>환불금액</th>
-            <td>${order.totalPay-order.change}원</td>
-        </tr>
-        </tbody>
-    </table>
-</div>
-    <div class="col-6">
-        <table class="table text-center">
-            <tbody>
-            <tr>
-                <th>이름</th>
-                <td>${order.buyerName}</td>
-            </tr>
-            <tr>
-                <th>연락처</th>
-                <td>${order.buyerTel}</td>
-            </tr>
-            <tr>
-                <th>배송주소</th>
-                <td>${order.buyerAddr}</td>
-            </tr>
-            </tbody>
-        </table>
+    <div class="row">
+        <div class="col-6">
+            <table class="table text-center">
+                <tbody>
+                <tr>
+                    <th>결제번호</th>
+                    <td>${order.impUid}</td>
+                </tr>
+                <tr>
+                    <th>결제일</th>
+                    <td>${order.paidAtToString()}</td>
+                    </th>
+                <tr>
+                    <th>결제금액</th>
+                    <td>${order.totalPay}원</td>
+                </tr>
+                <tr>
+                    <th>환불금액</th>
+                    <td>${order.change}원</td>
+                </tr>
+                </tbody>
+            </table>
+        </div>
+        <div class="col-6">
+            <table class="table text-center">
+                <tbody>
+                <tr>
+                    <th>이름</th>
+                    <td>${order.buyerName}</td>
+                </tr>
+                <tr>
+                    <th>연락처</th>
+                    <td>${order.buyerTel}</td>
+                </tr>
+                <tr>
+                    <th>배송주소</th>
+                    <td>${order.buyerAddr}</td>
+                </tr>
+                </tbody>
+            </table>
+        </div>
+    </div>
+<div class="modal fade" id="refundModal" tabindex="-1" role="dialog" aria-labelledby="historyModalLabel"
+     aria-hidden="true">
+    <div class="modal-dialog modal-xl">
+        <div class="modal-content">
+        </div>
     </div>
 </div>
 </div>
