@@ -29,11 +29,9 @@ import lombok.extern.slf4j.Slf4j;
 @RequestMapping("/admin")
 public class AdminController {
 	private final MemberService memberService;
-	private final AuthService authService;
-	
-	public AdminController(MemberService memberService, AuthServiceImpl authService) {
+
+	public AdminController(MemberService memberService) {
         this.memberService = memberService;
-        this.authService = authService;
     }
 
 	@PostMapping("/updateMemberInfo")
