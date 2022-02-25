@@ -14,8 +14,12 @@ public interface ItemOptionRepository {
     Optional<ItemOption> findByOptionCode(String optionCode);
     Optional<ItemOption> findOneByItemCode(@Param("optionCode") String optionCode);
     int insertItemOptions(List<ItemOption> itemOptions);
-    int deleteItemOption(String optionCode);
-    int deleteByItemCode(String itemCode);
+    int isDeleteItemOption(String optionCode);
+    int isDeleteByItemCode(String itemCode);
+    int deleteWhenItemUpdate(String itemCode);
     int modifyItemOption(List<ItemOption> itemOptions);
     int modifyItemOptionStockByOptionCode(OrderDetail orderDetail);
+    int modifyItemOptionStockByOptionCodeWhenRefund(OrderDetail orderDetail);
+    Optional<ItemOption> findByOptionCodeWhenOrderValidate(String optionCode);
+
 }

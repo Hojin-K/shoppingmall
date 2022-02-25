@@ -38,11 +38,11 @@
     </insert>
     <update id="amountSetByCartId">
         update HR.SHOP_CART_TB set HR.SHOP_CART_TB.AMOUNT = HR.SHOP_CART_TB.AMOUNT
-    <choose>
-        <when test='mathSign == "+"'>+</when>
-        <when test='mathSign == "-"'>-</when>
-    </choose>
-    1 where CART_ID = #{cartId}
+        <choose>
+            <when test='mathSign == "+"'>+</when>
+            <when test='mathSign == "-"'>-</when>
+        </choose>
+        1 where CART_ID = #{cartId}
     </update>
     <delete id="deleteCartByCartId">
         delete HR.SHOP_CART_TB
@@ -53,16 +53,16 @@
         where MEMBER_ID = #{memberId}
     </delete>
     <select id="findByMemberId" resultMap="cart">
-        select cart.CART_ID           as cart_id,
-               cart.MEMBER_ID         as member_id,
-               cart.AMOUNT            as amount,
-               item.ITEM_NAME         as item_name,
+        select cart.CART_ID            as cart_id,
+               cart.MEMBER_ID          as member_id,
+               cart.AMOUNT             as amount,
+               item.ITEM_NAME          as item_name,
                item.ITEM_PRICE         as item_price,
-               item.ITEM_CODE         as item_code,
-               item.ITEM_IMAGE        as item_image,
-               options.OPTION_NAME    as option_name,
+               item.ITEM_CODE          as item_code,
+               item.ITEM_IMAGE         as item_image,
+               options.OPTION_NAME     as option_name,
                options.OPTION_PRICE_UD as option_price_ud,
-               options.OPTION_CODE    as option_code
+               options.OPTION_CODE     as option_code
         from HR.SHOP_CART_TB cart,
              HR.SHOP_ITEM_TB item,
              HR.SHOP_ITEM_OPTIONS_TB options
@@ -80,16 +80,17 @@
         where CART_ID = #{cartId}
     </select>
     <select id="findSelectCartByCartCodes" resultMap="cart">
-        select cart.CART_ID           as cart_id,
-        cart.MEMBER_ID         as member_id,
-        cart.AMOUNT            as amount,
-        item.ITEM_NAME         as item_name,
-        item.ITEM_PRICE         as item_price,
-        item.ITEM_CODE         as item_code,
-        item.ITEM_IMAGE        as item_image,
-        options.OPTION_NAME    as option_name,
+        select cart.CART_ID as cart_id,
+        cart.MEMBER_ID as member_id,
+        cart.AMOUNT as amount,
+        cart.OPTION_CODE,
+        item.ITEM_NAME as item_name,
+        item.ITEM_PRICE as item_price,
+        item.ITEM_CODE as item_code,
+        item.ITEM_IMAGE as item_image,
+        options.OPTION_NAME as option_name,
         options.OPTION_PRICE_UD as option_price_ud,
-        options.OPTION_CODE    as option_code
+        options.OPTION_CODE as option_code
         from HR.SHOP_CART_TB cart,
         HR.SHOP_ITEM_TB item,
         HR.SHOP_ITEM_OPTIONS_TB options

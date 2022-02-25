@@ -59,6 +59,7 @@ public class ItemController {
         String absolutePath = request.getServletContext().getRealPath("/resources/");
         Member member = (Member) request.getSession().getAttribute("member");
         item.setMemberId(member.getMemberId());
+        item.setBusinessName(member.getBusinessName());
         Map<String, String> fileInfo = fileService.boardFileUpload(file, absolutePath);
         List<ItemOption> itemOptions = item.getItemOptions();
         for (ItemOption itemOption : itemOptions) {

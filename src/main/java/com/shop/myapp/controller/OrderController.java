@@ -34,12 +34,18 @@ public class OrderController {
     public ResponseEntity<Object> addOrder(@ModelAttribute FormList formList, @ModelAttribute Order order) {
         Member member = (Member) session.getAttribute("member");
         order.setMemberId(member.getMemberId());
+        try {
         Order responseOrder = orderService.insertOrder(order, formList.getCartCodes());
+
         System.out.println(order.getOrderCode());
         for (OrderDetail orderDetail : responseOrder.getOrderDetails()) {
             orderDetail.setOrder(null);
         }
+        System.out.println(order.getTotalPay());
         return ResponseEntity.ok(responseOrder);
+        } catch (Exception e){
+            e.printStackTrace(); return ResponseEntity.status(402).build();
+        }
     }
 
     @PostMapping("/{orderCode}/validate")
@@ -83,5 +89,6 @@ public class OrderController {
         }
         throw new IllegalStateException("아이디 불일치(접근 권한 없음)");
     }
+
 
 }

@@ -100,6 +100,7 @@
                     <c:if test="${sessionScope.member.memberLevel == 'admin'}">
                         <a class="nav-link" href="/admin">관리자모드</a>
                     </c:if>
+                    <a class="nav-link" href="/members/logout">로그아웃</a>
                 </c:when>
                     <c:otherwise>
                         <li class="nav-item">

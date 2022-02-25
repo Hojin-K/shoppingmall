@@ -5,22 +5,26 @@ import lombok.extern.slf4j.Slf4j;
 import org.json.simple.JSONObject;
 import org.json.simple.parser.JSONParser;
 import org.json.simple.parser.ParseException;
-import org.springframework.http.HttpEntity;
-import org.springframework.http.HttpHeaders;
-import org.springframework.http.HttpMethod;
-import org.springframework.http.ResponseEntity;
+import org.springframework.http.*;
 import org.springframework.stereotype.Service;
+import org.springframework.transaction.annotation.Transactional;
 import org.springframework.util.LinkedMultiValueMap;
 import org.springframework.util.MultiValueMap;
 import org.springframework.web.client.RestTemplate;
 
+import java.util.Collections;
+import java.util.HashMap;
+import java.util.Map;
+
 @Service
 @Slf4j
+@Transactional(rollbackFor = {Exception.class})
 public class IamPortService {
 
     public JSONObject parsingRestAttribute(ResponseEntity<String> restResponse) throws ParseException {
         JSONParser parser = new JSONParser();
         JSONObject responseBody = (JSONObject) parser.parse(restResponse.getBody());
+        System.out.println(responseBody.toJSONString());
         // ResponseEntity 에 저장되어 있는 body(json 형태로 된 String)을 JSONObject 로 파싱
         // body 안에 json 형태의 String 으로 저장되어 있는 response(실제 저장 값들)를 JSONObject 로 다시 파싱
         return (JSONObject) responseBody.get("response");
@@ -59,13 +63,13 @@ public class IamPortService {
         return accessToken;
     }
 
-    public Payment getImpAttributes(String impUid, String accessToken) throws ParseException {
+    public Payment getImpAttributes(String impUid) throws ParseException {
         // access token 을 전달할 httpHeaders 생성
         HttpHeaders headers = new HttpHeaders();
         // httpEntity 에 담아 header 전달
         HttpEntity<String> entity = new HttpEntity<>("", headers);
         // HttpEntity 에 headers 를 삽입
-        headers.add("Authorization", accessToken);
+        headers.add("Authorization", getAccessToken());
         // 구매자가 결제한 결제 번호의 정보를 요청 -> db에 저장된 결제 되어야하는 금액과 실제 결제된 금액을 대조
         String url = "https://api.iamport.kr/payments/" + impUid;
         // exchange()를 사용하면 postForEntity()에 비해 더 많은 정보를 전달할 수 있음
@@ -85,5 +89,18 @@ public class IamPortService {
                 .name((String) responseAttributes.get("name"))
                 .paidAt((long) responseAttributes.get("paid_at"))
                 .build();
+    }
+
+    public long cancel(String refundDetail) throws ParseException {
+        HttpHeaders headers = new HttpHeaders();
+        headers.setContentType(MediaType.APPLICATION_JSON);
+        headers.setAccept(Collections.singletonList(MediaType.APPLICATION_JSON));
+        HttpEntity<String> entity = new HttpEntity<>(refundDetail, headers);
+        headers.add("Authorization", getAccessToken());
+        String url = "https://api.iamport.kr/payments/cancel";
+        RestTemplate template = new RestTemplate();
+        ResponseEntity<String> response = template.exchange(url, HttpMethod.POST, entity, String.class);
+        JSONObject responseAttributes = parsingRestAttribute(response);
+        return (long) responseAttributes.get("cancel_amount");
     }
 }

@@ -4,15 +4,15 @@
         "http://tiles.apache.org/dtds/tiles-config_3_0.dtd">
 
 <tiles-definitions>
+    <definition name="modal-layout" template="/WEB-INF/views/tiles/modal-layout.jsp">
+        <put-attribute name="modal" value="" />
+    </definition>
     <!-- main layout -->
     <definition name="layout-tiles" template="/WEB-INF/views/tiles/tiles-layout.jsp">
         <put-attribute name="header" value="/WEB-INF/views/tiles/headerTemplate.jsp" />
         <put-attribute name="nav" value="/WEB-INF/views/tiles/navTemplate.jsp" />
         <put-attribute name="body" value="" />
         <put-attribute name="foot" value="/WEB-INF/views/tiles/footerTemplate.jsp" />
-    </definition>
-    <definition name="modal-layout" template="/WEB-INF/views/tiles/modal-layout.jsp">
-        <put-attribute name="modal" value="" />
     </definition>
 
 
