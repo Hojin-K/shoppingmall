@@ -57,7 +57,7 @@
         <if test="itemImage != null">
             ITEM_IMAGE = #{itemImage},
         </if>
-        ITEM_INFO = ${itemInfo}
+        ITEM_INFO = #{itemInfo}
         where ITEM_CODE = #{itemCode}
     </update>
     <update id="deleteItem" parameterType="string">

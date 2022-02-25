@@ -74,5 +74,16 @@
           and IO.option_code = D.option_code
           and I.item_code = IO.item_code
     </select>
+    <select id="findByMemberIdForSeller" resultMap="orderDetail">
+        select *
+        from HR.SHOP_ORDER_DETAIL_TB D,
+             HR.SHOP_ORDER_TB O,
+             HR.SHOP_ITEM_OPTIONS_TB IO,
+             HR.SHOP_ITEM_TB I
+        where I.MEMBER_ID = #{memberId}
+          and O.ORDER_CODE = D.ORDER_CODE
+          and IO.option_code = D.option_code
+          and I.item_code = IO.item_code
+    </select>
 
 </mapper>
