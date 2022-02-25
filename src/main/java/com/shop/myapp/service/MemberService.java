@@ -70,14 +70,14 @@ public class MemberService {
         String userPwd = member.getMemberPwd();
         //로그인한 유저 id를 조회한다.
         Optional<Member> loginMemberOptional = memberRepository.findById(member.getMemberId());
-        if (loginMemberOptional.isPresent()) {
-            Member loginMember = loginMemberOptional.get();
-            if (BCrypt.checkpw(userPwd, loginMember.getMemberPwd())) {
-                System.out.println("true");
-                return loginMember;
-            }
+        Member loginMember = loginMemberOptional.
+        		orElseThrow(() -> new IllegalStateException("아이디가 틀리거나 없는 회원입니다.") );
+        if (BCrypt.checkpw(userPwd, loginMember.getMemberPwd())) {
+            System.out.println("true");
+            return loginMember;
+        } else {
+        	throw new IllegalStateException("비밀번호 오류입니다.");
         }
-        return null;
     }
 
     public boolean isManager(String memberLevel) {

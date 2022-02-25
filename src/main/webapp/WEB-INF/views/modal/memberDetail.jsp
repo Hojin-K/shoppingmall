@@ -11,8 +11,7 @@
 	});
 	function setLevels() {
 		
-		let levelLength = '${member.levelList.size()}';
-		alert(levelLength);
+		let levelLength = '${member.memberLevel.size()}';
 		if(levelLength == 1){
 			$("#comboBox option:eq(0)").prop("selected", true);
 		}else if(levelLength == 2){
@@ -20,13 +19,6 @@
 		}else if(levelLength == 3){
 			$("#comboBox option:eq(2)").prop("selected", true);
 		}
-	}
-	function getSelectedLevel() {
-		alert("fdsafdsafds");
-		//let level = $("#comboBox").value;
-		let level = document.getElementById("comboBox").value;
-		alert(level);
-		document.getElementById("selectedLevel");
 	}
 
 </script>
@@ -49,7 +41,7 @@
 	                </th>
 	                <td>
 	                	<div class="mb-3">
-		                	${member.memberId }
+		                	<input type="text" value="${member.memberId }" name="memberId" readonly/>
 	                	</div>
 	                </td>
 	            </tr>
@@ -68,12 +60,11 @@
 	                                      권한
 	                </th>
 	                <td>
-	                	<select id="comboBox" class="form-control" onchange="getSelectedLevel();">
-						  <option>USER</option>
-						  <option>SELLER</option>
-						  <option>ADMIN</option>
+	                	<select id="comboBox" class="form-control" name="memberLevel" >
+						  <option value="USER">USER</option>
+						  <option value="USER,SELLER">SELLER</option>
+						  <option value="USER,SELLER,ADMIN">ADMIN</option>
 						</select>
-						<input type="hidden" id="selectedLevel"/>
 	                </td>
 	            </tr>
 	            <tr class="content">
@@ -91,6 +82,6 @@
 	    </div>
 	</div>
 	<div class="modal-footer">
-	    <button type="submit" form="updateForm" class="btn btn-secondary" data-bs-dismiss="modal">Update</button>
+	    <button type="submit" form="updateForm" class="btn btn-secondary" data-bs-dismiss="modal" onclick="getSelectedLevel();">Update</button>
 	    <button class="btn btn-secondary" type="button" data-bs-dismiss="modal">Cancel</button>
 	</div>

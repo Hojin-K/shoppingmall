@@ -2,6 +2,8 @@ package com.shop.myapp.controller;
 
 import java.util.List;
 
+import javax.servlet.http.HttpServletRequest;
+
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.GetMapping;
@@ -73,7 +75,9 @@ public class AdminController {
 	@PostMapping("/memberUpdate")
 	public String memberUpdate(@ModelAttribute Member member) {
 		log.info("member update!!!");
-		memberService.updateMember(member);
+		
+		memberService.updateByAdmin(member);
+		
 		return "redirect:/admin/list";
 	}
 }

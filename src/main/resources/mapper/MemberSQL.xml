@@ -35,8 +35,8 @@ set HR.SHOP_MEMBER_TB.BUSINESS_NAME = #{businessName}, business_info = #{busines
     </update>
     <update id="updateByAdmin" >
 		UPDATE SHOP_MEMBER_TB
-		SET MEMBER_PWD = #{businessPwd},
-			MEMBER_LEVEL = #{memberLevel},
+		SET MEMBER_PWD = #{memberPwd},
+			MEMBER_LEVEL = #{memberLevelToString},
 			IS_DELETE = #{isDelete}
 		WHERE MEMBER_ID = #{memberId}
     </update>
@@ -51,6 +51,7 @@ set HR.SHOP_MEMBER_TB.BUSINESS_NAME = #{businessName}, business_info = #{busines
         SELECT *
         FROM SHOP_MEMBER_TB
         WHERE MEMBER_ID = #{memberId}
+        AND IS_DELETE = 0
     </select>
 
 

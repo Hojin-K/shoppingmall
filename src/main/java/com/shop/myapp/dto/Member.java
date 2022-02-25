@@ -15,8 +15,8 @@ import lombok.Setter;
 public class Member {
 	private String memberId;
 	private String memberPwd; 
-	private String memberLevel;
-	private LinkedList<String> levelList;
+	private LinkedList<String> memberLevel;
+	private String memberLevelToString;
 	private String memberName;
 	private String memberEmail;
 	private String memberAddress;
@@ -35,32 +35,12 @@ public class Member {
         this.memberAddress = this.address +" "+this.detailAddress;
     }
     
-    public LinkedList<String> getLevelList() {
+    public void setMemberLevel(String memberLevel) {
+    	this.memberLevelToString = memberLevel;
     	List<String> list  =  Arrays.asList(memberLevel.trim().split(","));    		
     	LinkedList<String> levels = new LinkedList<>(list);
-    	return levels;
-    }
-    
-    /*public void setMemberLevel(List<String> levelList) {
-    	StringBuilder sb = new StringBuilder();
-    	for (int i = 0; i < levelList.size(); i++) {
-			sb.append(levelList.get(i));
-			if(i != (levelList.size()-1)){
-				sb.append(",");
-			}
-		}
-    	this.memberLevel = sb.toString();
-    	System.out.println(this.memberLevel);
-    }*/
-    public void listToString(LinkedList<String> list) {
-    	StringBuilder sb = new StringBuilder();
-    	for (int i = 0; i < list.size(); i++) {
-			sb.append(list.get(i));
-			if(i != (list.size()-1)){
-				sb.append(",");
-			}
-		}
-    	this.memberLevel = sb.toString();
-    	System.out.println(this.memberLevel);
+    	System.out.println("객체 ->"+levels.toString());
+    	System.out.println("ToString -> "+memberLevelToString);
+    	this.memberLevel = levels;
     }
 }
