@@ -9,19 +9,18 @@
 </head>
 <body>
 <h2>reply_view.jsp</h2>
-<table>
 	<form action="reply" method="post">
 	<input type="hidden" name="BOARD_ID" value="${reply_view.BOARD_ID }" />
-	<input type="hidden" name="RECOMMEND_ID" value="${reply_view.RECOMMEND_ID }" />
+	<input type="hidden" name="ITEM_CODE" value="${reply_view.ITEM_CODE }" />
+	<input type="hidden" name="MEMBER_ID" value="${reply_view.MEMBER_ID }" />
+<table>
 		<tr>
 			<td class="left">번호</td>
 			<td>${reply_view.BOARD_ID }</td>
 		</tr>
 		<tr>
-			<td class="left">이름</td>
-			<td>
-				<input type="text" name="MEMBER_ID" value="" />
-			</td>
+			<td class="left">구매자</td>
+			<td>${reply_view.ITEM_CODE }</td>
 		</tr>
 		<tr>
 			<td class="left">제목</td>
@@ -41,9 +40,9 @@
 				<a href="list">목록보기</a> &nbsp;&nbsp;
 			</td>
 		</tr>
-	</form>
 
 </table>
+	</form>
 
 </body>
 </html>

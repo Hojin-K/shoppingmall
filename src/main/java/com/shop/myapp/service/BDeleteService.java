@@ -17,12 +17,12 @@ public class BDeleteService implements BServiceInf{
 		Map<String, Object> map=model.asMap();
 //		map->request
 		HttpServletRequest request=(HttpServletRequest) map.get("request");
-		String bid=request.getParameter("bid");
+		String BOARD_ID=request.getParameter("board_id");
 		
 		
 		//System.out.println("bName   :  "+bName);
 		
 		BoardDao dao=new BoardDao();
-		dao.delete(bid);
+		dao.delete(BOARD_ID);
 	}
 }

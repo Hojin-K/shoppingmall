@@ -17,13 +17,13 @@ public class BModifyService implements BServiceInf{
 		Map<String, Object> map=model.asMap();
 //		map->request
 		HttpServletRequest request=(HttpServletRequest) map.get("request");
-		String bid=request.getParameter("bid");
-		String bName=request.getParameter("bName");
-		String bTitle=request.getParameter("bTitle");
-		String bContent=request.getParameter("bContent");
+		String BOARD_ID=request.getParameter("BOARD_ID");
+		String ITEM_CODE=request.getParameter("ITEM_CODE");
+		String BOARD_TITLE=request.getParameter("BOARD_TITLE");
+		String BOARD_CONTENT=request.getParameter("BOARD_CONTENT");
 		
 		
 		BoardDao dao=new BoardDao();
-		dao.modify(bid,bName,bTitle,bContent);
+		dao.modify(BOARD_ID,ITEM_CODE,BOARD_TITLE,BOARD_CONTENT);
 	}
 }

@@ -24,7 +24,6 @@ public class BReplyService implements BServiceInf{
 		String BOARD_CONTENT=request.getParameter("BOARD_CONTENT");
 		String RECOMMEND_ID=request.getParameter("RECOMMEND_ID");
 		
-	
 		BoardDao dao=new BoardDao();
 		dao.reply(BOARD_ID,ITEM_CODE,MEMBER_ID,
 				BOARD_TITLE,BOARD_CONTENT,RECOMMEND_ID);

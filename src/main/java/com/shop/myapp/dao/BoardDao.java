@@ -37,7 +37,7 @@ public class BoardDao {
 			con=dataSource.getConnection();
 			
 			String sql="select BOARD_ID, ITEM_CODE, MEMBER_ID,BOARD_TITLE, BOARD_CONTENT, RECOMMEND_ID "
-					+ "from SHOP_QNABOARD_TB"; 
+					+ "from SHOP_QNABOARD_TB order by RECOMMEND_ID desc"; 
 			
 			pstmt=con.prepareStatement(sql);
 			rs=pstmt.executeQuery();
@@ -165,8 +165,8 @@ public class BoardDao {
 		return dto;
 
 	}
-//	public void modify(String bid, String bName,
-//			String bTitle, String bContent) {
+//	public void modify(String BOARD_ID, String ITEM_CODE,
+//			String BOARD_TITLE, String BOARD_CONTENT) {
 //		
 //		
 //		Connection con=null;
@@ -174,14 +174,14 @@ public class BoardDao {
 //		
 //		try {
 //			con=dataSource.getConnection();
-//			String sql="update replyboard " + 
-//					"set bname=?,btitle=?,bcontent=? " + 
-//					"where bid=?"; 
+//			String sql="update SHOP_QNABOARD_TB " + 
+//					"set ITEM_CODE=?,BOARD_TITLE=?,BOARD_CONTENT=? " + 
+//					"where BOARD_ID=?"; 
 //			pstmt=con.prepareStatement(sql);
-//			pstmt.setString(1, bName);
-//			pstmt.setString(2, bTitle);
-//			pstmt.setString(3, bContent);
-//			pstmt.setInt(4, Integer.parseInt(bid));
+//			pstmt.setString(1, ITEM_CODE);
+//			pstmt.setString(2, BOARD_TITLE);
+//			pstmt.setString(3, BOARD_CONTENT);
+//			pstmt.setInt(4, Integer.parseInt(BOARD_ID));
 //			
 //			pstmt.executeUpdate();
 //			
@@ -196,27 +196,27 @@ public class BoardDao {
 //			}
 //		}	
 //	}
-//	public void delete(String bid) {
-//		Connection con=null;
-//		PreparedStatement pstmt=null;
-//		try {
-//			con=dataSource.getConnection();
-//			String sql="delete from replyboard where bid=?"; 
-//			pstmt=con.prepareStatement(sql);
-//			pstmt.setInt(1, Integer.parseInt(bid));
-//			pstmt.executeUpdate();
-//			
-//		}catch(Exception e) {
-//			
-//		} finally {
-//			try {
-//				if(pstmt!=null) pstmt.close();
-//				if(con!=null) con.close();	
-//			} catch (Exception e2) {
-//				// TODO: handle exception
-//			}
-//		}
-//	}
+	public void delete(String BOARD_ID) {
+		Connection con=null;
+		PreparedStatement pstmt=null;
+		try {
+			con=dataSource.getConnection();
+			String sql="delete from SHOP_QNABOARD_TB where BOARD_ID=?"; 
+			pstmt=con.prepareStatement(sql);
+			pstmt.setInt(1, Integer.parseInt(BOARD_ID));
+			pstmt.executeUpdate();
+			
+		}catch(Exception e) {
+			
+		} finally {
+			try {
+				if(pstmt!=null) pstmt.close();
+				if(con!=null) con.close();	
+			} catch (Exception e2) {
+				// TODO: handle exception
+			}
+		}
+	}
 	public BoardDto replyView(String sBOARD_ID) {
 		
 		BoardDto dto=null;
@@ -288,14 +288,14 @@ public class BoardDao {
 		PreparedStatement pstmt=null;	
 		try {
 			con=dataSource.getConnection();
-			String sql="insert into shopping(BOARD_ID,ITEM_CODE,MEMBER_ID,BOARD_TITLE,BOARD_CONTENT,RECOMMEND_ID) " + 
-					"values(QNABOARD_SEQ.nextval,?,?,?,?,?,?)";
+			String sql="insert into SHOP_QNABOARD_TB(BOARD_ID,ITEM_CODE,MEMBER_ID,BOARD_TITLE,BOARD_CONTENT,RECOMMEND_ID) " + 
+					"values(SHOP_QNABOARD_TB_seq.nextval,?,?,?,?,?)";
 			pstmt=con.prepareStatement(sql);
 			pstmt.setString(1,ITEM_CODE);
 			pstmt.setString(2,MEMBER_ID);
 			pstmt.setString(3,BOARD_TITLE);
 			pstmt.setString(4,BOARD_CONTENT);
-			pstmt.setInt(4,Integer.parseInt(RECOMMEND_ID));
+			pstmt.setInt(5,Integer.parseInt(RECOMMEND_ID));
 						
 			pstmt.executeUpdate();
 			

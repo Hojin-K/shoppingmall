@@ -17,7 +17,6 @@
 		<td>구매자</td>
 		<td>제목</td>
 		<td>내용</td>
-		<td>판매자</td>
 	</tr>
 	
 	<c:forEach items="${list }" var="dto">
@@ -25,10 +24,10 @@
 			<td>${dto.BOARD_ID }</td>
 			<td>${dto.ITEM_CODE }</td>
 			<td>
-				<a href="content_view?board_id=${dto.BOARD_ID }">${dto.BOARD_TITLE }</a> 
+				<a href="content_view?board_id=${dto.BOARD_ID }">${dto.BOARD_TITLE }</a>
+			</td> 
 			</td>
 			<td>${dto.BOARD_CONTENT }</td>
-			<td>${dto.RECOMMEND_ID }</td>
 		</tr>
 	</c:forEach>
 	<tr>
