@@ -5,7 +5,6 @@
 <mapper namespace="com.shop.myapp.repository.MemberRepository">
 
     <insert id="insertMember">
-<<<<<<< HEAD:src/main/resources/countryRepository/MemberSQL.xml
        		INSERT INTO SHOP_MEMBER_TB(member_id,member_pwd,MEMBER_NAME,MEMBER_ADdRESS,MEMBER_TEL,MEMBER_BIRTH) 
        		VALUES(#{memberId}, #{memberPwd},
        		#{memberName}, #{memberAddress}, #{memberTel}, #{memberBirth})
@@ -20,11 +19,10 @@
         INSERT INTO SHOP_MEMBER_TB(member_id, member_pwd,
                                    member_name, member_address,
                                    member_tel, member_birth,
-=======
+
         INSERT INTO SHOP_MEMBER_TB(MEMBER_ID, MEMBER_PWD, MEMBER_LEVEL,
                                    MEMBER_NAME,MEMBER_EMAIL, MEMBER_ADDRESS,
                                    MEMBER_TEL, MEMBER_BIRTH,
->>>>>>> 875ab7ec0071a66b6a56e3ea61a39b6460440f90:src/main/resources/mapper/MemberSQL.xml
                                    BUSINESS_REGISTRATION_NO, BUSINESS_NAME)
         VALUES (#{memberId}, #{memberPwd}, #{memberLevel, jdbcType=VARCHAR},
                 #{memberName},#{memberEmail}, #{memberAddress}, #{memberTel}, #{memberBirth}
