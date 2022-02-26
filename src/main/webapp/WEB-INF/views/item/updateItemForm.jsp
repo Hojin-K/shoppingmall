@@ -21,11 +21,12 @@
       }); // 편집기
 
       function getOptionForm() {
-        let result = "<div style='display: inline-block; margin-bottom: 5px' name='option" + optionSetting + "' id='option" + optionSetting + "'>"
-        result += "사이즈<input type='text' name='itemOptions[" + optionSetting + "].optionName'/> "
-        result += "&nbsp;보유 수량<input onkeyPress='javascript:checkInputNum();' type='number' name='itemOptions[" + optionSetting + "].optionStock'/> "
-        result += "&nbsp;변동액<input onkeyPress='javascript:checkInputNum();'  type='number' name='itemOptions[" + optionSetting + "].optionPriceUd'/> "
-        result += "<button class='btn btn-danger btn-sm' type='button' name='deleteOption'>삭제</button>"
+        let result = "<div style='display: inline-block; margin-bottom: 5px' name='option" + optionSetting + "'>";
+        result += "사이즈<input type='text' name='itemOptions[" + optionSetting + "].optionName'/> ";
+        result += "&nbsp;보유 수량<input onkeyPress='javascript:checkInputNum();' type='number' name='itemOptions[" + optionSetting + "].optionStock'/> ";
+        result += "&nbsp;변동액<input onkeyPress='javascript:checkInputNum();'  type='number' name='itemOptions[" + optionSetting + "].optionPriceUd'/> ";
+        result += "<input type='hidden' name='itemOptions["+optionSetting+"].isDelete' value='0'>"
+        result += "<button class='btn btn-danger btn-sm' type='button' name='deleteOption_"+optionSetting+"'>삭제</button>"
         result += "</div>"
         $("#options").append(result);
         optionSetting += 1;
@@ -35,9 +36,17 @@
         getOptionForm();
       });
 
-      $(document).on("click","[name='deleteOption']",function() {
+      $(document).on("click","[name^='deleteOption']",function() {
         let optionDiv = $(this).closest("div");
-        optionDiv.remove();
+        let divId = optionDiv.attr("name");
+        if (divId === 'oldOption'){
+        let attr = $(this).attr("name");
+        let selectedOption = attr.split("_")[1];
+        $("input[name='itemOptions["+selectedOption+"].isDelete']").val('1');
+        optionDiv.hide();
+        }else {
+          optionDiv.remove();
+        }
       });
 
       $(document).on("click","[id='deleteItem']",function() {
@@ -82,11 +91,12 @@
         <c:set var="i" value="${0}"/>
 
         <c:forEach items="${item.itemOptions}" var="itemOption">
-          <div style='display: inline-block; margin-bottom: 5px' name='option${i}' id='option${i}'>
+          <div style='display: inline-block; margin-bottom: 5px' name='oldOption' id='${itemOption.optionCode}'>
             사이즈<input type='text' value="${itemOption.optionName}" name='itemOptions[${i}].optionName'/>
             &nbsp;보유 수량<input onkeyPress='javascript:checkInputNum();' value="${itemOption.optionStock}" type='number' name='itemOptions[${i}].optionStock'/>
             &nbsp;변동액<input onkeyPress='javascript:checkInputNum();' value="${itemOption.optionPriceUd}"  type='number' name='itemOptions[${i}].optionPriceUd'/>
-            <button class='btn btn-danger btn-sm' type='button' name='deleteOption'>삭제</button>
+            <input type='hidden' name='itemOptions[${i}].isDelete' value='${itemOption.isDelete}'>
+            <button class='btn btn-danger btn-sm' type='button' name='deleteOption_${i}'>삭제</button>
             <c:set var="i" value="${i+1}"/>
           </div>
         </c:forEach>

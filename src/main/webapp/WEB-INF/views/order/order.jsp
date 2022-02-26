@@ -56,34 +56,30 @@
                 <h2 class="accordion-header" id="heading${i}">
                     <button class="accordion-button" type="button" data-bs-toggle="collapse"
                             data-bs-target="#collapse${i}" aria-expanded="true" aria-controls="collapse${i}">
-                        <table>
-                            <tr>
-                                <td>${order.orderCode}</td>
-                                <td class="tableContent text-start">
-                                        <div style="width:10%; height:100%; float:left;">
-                                            <img style="width: 100%;" src="${orderDetail.itemOption.item.itemImage}"
-                                                 alt="">
-                                        </div>
-                                        <div style="width:90%; height:100%; float:left;">
-                                            <b style="font-size: medium">${orderDetail.itemOption.item.itemName}</b>
-                                            <p>${orderDetail.itemOption.optionName}size</p>
-                                        </div>
-                                </td>
-                                <td style="width: 16.66%">${orderDetail.itemOption.item.itemPrice}원</td>
-                                <td style="width: 8.33%">
-                                    <span>${orderDetail.amount}개</span>
-                                </td>
-                                <td style="width: 8.33%">
-                                        ${orderDetail.postedStatus}
-                                </td>
-                            </tr>
-                        </table>
+                            <div style="width: 8.33%">${order.orderCode}</div>
+                            <div class="tableContent text-start" style="width: 30%; margin-left: 50px">
+                                <div style="width:10%; height:100%; float:left;">
+                                    <img style="width: 100%;" src="${orderDetail.itemOption.item.itemImage}"
+                                         alt="">
+                                </div>
+                                <div style="width:90%; height:100%; float:left;">
+                                    <b style="font-size: medium">${orderDetail.itemOption.item.itemName}</b>
+                                    <p>${orderDetail.itemOption.optionName}size</p>
+                                </div>
+                            </div>
+                            <div style="width: 16.66%">${orderDetail.itemOption.item.itemPrice}원</div>
+                            <div style="width: 8.33%">
+                                <span>${orderDetail.amount}개</span>
+                            </div>
+                            <div style="width: 8.33%">
+                                    ${orderDetail.postedStatus}
+                            </div>
                     </button>
                 </h2>
                 <div id="collapse${i}" class="accordion-collapse collapse" aria-labelledby="heading${i}"
                      data-bs-parent="#accordionExample">
                     <div class="accordion-body">
-                        <c:if test="${orderDetail.postedStatus != 'refund'}">
+                        <c:if test="${orderDetail.postedStatus != 'Refund'}">
                             <button id="${orderDetail.orderDetailCode}" data-bs-toggle="modal"
                                     data-bs-target="#refundModal" name="refund"
                                     class="btn btn-sm btn-secondary"

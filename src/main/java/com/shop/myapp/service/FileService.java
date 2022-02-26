@@ -15,7 +15,8 @@ import java.util.Map;
 @Transactional(rollbackFor = {Exception.class})
 public class FileService {
     public Map<String,String> boardFileUpload(MultipartFile file,String absolutePath) throws IOException {
-        try{
+        if(!file.isEmpty()){
+
             Map<String, String> fileInfo = new HashMap<>();
             // 디렉토리 이름
             LocalDateTime now = LocalDateTime.now(ZoneId.of("Asia/Seoul"));
@@ -39,8 +40,7 @@ public class FileService {
             file.transferTo(f);
             return fileInfo;
 
-        } catch (Exception e){
-        return null;
         }
+        return null;
     }
 }

@@ -152,7 +152,7 @@
             <tbody>
             <c:set var="i" value="0" scope="page"/>
             <c:forEach items="${carts}" var="cart">
-                <c:set var="total" value="${total+cart.itemOption.item.itemPrice}" scope="page"/>
+                <c:set var="total" value="${total+(cart.itemOption.item.itemPrice * cart.amount) + (cart.itemOption.item.country.countryPostPrice * cart.amount)}" scope="page"/>
                 <tr>
                     <td class="content text-start">
                         <input type="hidden" name="cartCodes[${pageScope.i}]" value="${cart.cartId}">
@@ -160,7 +160,7 @@
                             <img style="width: 100%;" src="${cart.itemOption.item.itemImage}" alt="">
                         </div>
                         <div style="width:90%; height:100%; float:left;">
-                            <b style="font-size: medium" class="itemName">${cart.itemOption.item.itemName}</b>
+                            <b style="font-size: medium" class="itemName">${cart.itemOption.item.itemName} <span style="color: #0f74a8">(${cart.itemOption.item.country.countryName})</span></b>
                             <p>${cart.itemOption.optionName}size</p>
                         </div>
                     </td>
@@ -168,6 +168,11 @@
                     <td id="amount_${cart.cartId}">${cart.amount}</td>
                 </tr>
                 <c:set var="i" value="${i+1}" scope="page"/>
+            <tr>
+                <td style="border: none; text-align: left">
+                    <p>배송비 : <b id="post_${cart.cartId}">${cart.itemOption.item.country.countryPostPrice}</b>원</p>
+                </td>
+            </tr>
             </c:forEach>
             </tbody>
         </table>

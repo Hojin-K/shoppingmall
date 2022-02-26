@@ -20,6 +20,7 @@ public class Item {
     private List<ItemOption> itemOptions;
     private Country country;
     private String businessName;
+    private String isDelete;
 
     public void calculateItemStock() {
         for (ItemOption itemOption : itemOptions) {

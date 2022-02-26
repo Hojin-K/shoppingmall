@@ -12,6 +12,8 @@ public class Country {
 
     private String countryName;
 
+    private int countryPostPrice;
+
 //    국가별 배송비 random (10,000 ~ 15,000)
 
     @Builder
