@@ -21,6 +21,7 @@ public class Member {
 	private String memberName;
 	private String memberEmail;
 	private String memberAddress;
+	private String memberDetailAddress;
 	private String memberTel;
 	@DateTimeFormat(pattern = "yyyy-MM-dd")
 	private LocalDate memberBirth;
@@ -28,14 +29,7 @@ public class Member {
 	private String businessName;
 	private String businessInfo;
 	private String isDelete;
-    private String detailAddress;
-    private String address;
 	
-    public void setDetailAddress(String detailAddress) {
-        this.detailAddress = detailAddress;
-        this.memberAddress = this.address +" "+this.detailAddress;
-    }
-    
     public void setMemberLevel(String memberLevel) {
     	System.out.println("객체접근");
     	this.memberLevelToString = memberLevel;

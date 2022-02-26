@@ -20,21 +20,23 @@ import lombok.extern.slf4j.Slf4j;
 public class MemberService {
     private final SqlSession sqlSession;
     private final ItemService itemService;
+    private final MemberRepository memberRepository;
 
     public MemberService(SqlSession sqlSession, ItemService itemService) {
         this.sqlSession = sqlSession;
         this.itemService = itemService;
+        this.memberRepository = sqlSession.getMapper(MemberRepository.class);
     }
 
     public Member getMember(String memberId) {
-        MemberRepository memberRepository = sqlSession.getMapper(MemberRepository.class);
+        //MemberRepository memberRepository = sqlSession.getMapper(MemberRepository.class);
         return memberRepository.
                 findById(memberId).
                 orElseThrow(() -> new IllegalStateException(memberId + " 라는 id의 member 없음"));
     }
 
     public List<Member> getMembers(String chkInfo, String condition) {
-        MemberRepository memberRepository = sqlSession.getMapper(MemberRepository.class);
+        //MemberRepository memberRepository = sqlSession.getMapper(MemberRepository.class);
         List<Member> members = new ArrayList<Member>(); 
         try{
         	System.out.println(1);
@@ -54,8 +56,7 @@ public class MemberService {
     	log.info(this.getClass()+"--->>> [MEMBER INSERT]");
     	System.out.println("1--> " +member.getMemberLevel());
     	System.out.println("2--> " +member.getMemberLevelToString());
-    	MemberRepository memberRepository
-                = sqlSession.getMapper(MemberRepository.class);
+    	//MemberRepository memberRepository = sqlSession.getMapper(MemberRepository.class);
         try {
             System.out.println("암호화 전 -->" + member.getMemberPwd());
             member.setMemberPwd(BCrypt.hashpw(member.getMemberPwd(), BCrypt.gensalt()));
@@ -69,8 +70,7 @@ public class MemberService {
     }
 
     public Member loginMember(Member member) {
-        MemberRepository memberRepository
-                = sqlSession.getMapper(MemberRepository.class);
+        //MemberRepository memberRepository = sqlSession.getMapper(MemberRepository.class);
         String userPwd = member.getMemberPwd();
         //로그인한 유저 id를 조회한다.
         Optional<Member> loginMemberOptional = memberRepository.findById(member.getMemberId());
@@ -89,11 +89,12 @@ public class MemberService {
     }
 
     public int updateMember(Member member) {
-        MemberRepository memberRepository
-                = sqlSession.getMapper(MemberRepository.class);
+        //MemberRepository memberRepository = sqlSession.getMapper(MemberRepository.class);
         try {
-            System.out.println("암호화 전 -->" + member.getMemberPwd());
-            member.setMemberPwd(BCrypt.hashpw(member.getMemberPwd(), BCrypt.gensalt()));
+        	if(member.getMemberPwd() != null && !member.getMemberPwd().equals("")) {
+        		System.out.println("암호화 전 -->" + member.getMemberPwd());
+        		member.setMemberPwd(BCrypt.hashpw(member.getMemberPwd(), BCrypt.gensalt()));
+        	}
         } catch (Exception e) {
             e.printStackTrace();
         }
@@ -101,20 +102,22 @@ public class MemberService {
 
         return memberRepository.updateMember(member);
     }
+    
+    public int deleteMember(String memberId) {
+    	return memberRepository.deleteMember(memberId);
+    }
 
     public List<Item> getSellerItems(String memberId, Pagination pagination,String search){
         return itemService.getSellerItemByMemberId(memberId, pagination,search);
     }
 
     public int updateSellerInfo(Member member){
-        MemberRepository memberRepository
-                = sqlSession.getMapper(MemberRepository.class);
+        //MemberRepository memberRepository = sqlSession.getMapper(MemberRepository.class);
         return memberRepository.updateSeller(member);
     }
     
     public int updateByAdmin(Member member) {
-    	 MemberRepository memberRepository
-         		= sqlSession.getMapper(MemberRepository.class);
+    	 //MemberRepository memberRepository = sqlSession.getMapper(MemberRepository.class);
     	 try {
              System.out.println("암호화 전 -->" + member.getMemberPwd());
              member.setMemberPwd(BCrypt.hashpw(member.getMemberPwd(), BCrypt.gensalt()));

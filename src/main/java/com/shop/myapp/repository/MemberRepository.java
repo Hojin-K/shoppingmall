@@ -13,6 +13,7 @@ import com.shop.myapp.dto.Member;
 public interface MemberRepository {
     int insertMember(Member member);
     int updateMember(Member member);
+    int deleteMember(String memberId);
     List<Member> findAll(@Param(value = "chkInfo") String chkInfo, @Param(value = "condition") String condition);
     Optional<Member> findById(String memberId);
     int updateSeller(Member member);
