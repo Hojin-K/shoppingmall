@@ -67,12 +67,5 @@ public class ItemOptionService {
         return itemOptionRepository.isDeleteByItemCode(itemCode);
     }
 
-    public int deleteWhenItemUpdate(String itemCode){
-        return itemOptionRepository.deleteWhenItemUpdate(itemCode);
-    }
-
-    public Optional<ItemOption> findOptionCodeWhenOrderValidate(String optionCode){
-        return itemOptionRepository.findByOptionCodeWhenOrderValidate(optionCode);
-    }
 
 }

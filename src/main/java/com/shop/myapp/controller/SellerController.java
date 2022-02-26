@@ -16,7 +16,6 @@ import java.util.List;
 
 @Controller
 @RequestMapping("/seller")
-@Auth(role = Auth.Role.SELLER)
 public class SellerController {
 
     private final HttpSession session;
@@ -42,14 +41,14 @@ public class SellerController {
         model.addAttribute("pagination",pagination);
         return "/seller/sellerView";
     }
-
+    @Auth(role = Auth.Role.SELLER)
     @GetMapping("/{memberId}/update")
     public String updateSellerInfoForm(@PathVariable String memberId,Model model){
         Member seller = memberService.getMember(memberId);
         model.addAttribute("seller",seller);
         return "/modal/sellerModal";
     }
-
+    @Auth(role = Auth.Role.SELLER)
     @PostMapping("/{memberId}/update")
     public String updateSellerInfo(@PathVariable String memberId, Member member, RedirectAttributes redirectAttributes){
         member.setMemberId(memberId);

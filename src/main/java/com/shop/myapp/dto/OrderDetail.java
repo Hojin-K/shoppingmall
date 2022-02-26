@@ -17,19 +17,21 @@ public class OrderDetail {
     private ItemOption itemOption;
     private int amount;
     private String postedStatus;
+    private int orderPrice;
     private Order order;
 
     public OrderDetail() {
     }
 
     @Builder
-    public OrderDetail(String orderCode, String orderDetailCode, String optionCode, ItemOption itemOption, int amount, String postedStatus, Order order) {
+    public OrderDetail(String orderCode, String orderDetailCode, String optionCode, ItemOption itemOption, int amount, String postedStatus,int orderPrice, Order order) {
         this.orderCode = orderCode;
         this.orderDetailCode = orderDetailCode;
         this.optionCode = optionCode;
         this.itemOption = itemOption;
         this.amount = amount;
         this.postedStatus = postedStatus;
+        this.orderPrice = orderPrice;
         this.order = order;
     }
 }

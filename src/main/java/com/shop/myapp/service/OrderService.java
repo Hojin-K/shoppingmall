@@ -38,13 +38,18 @@ public class OrderService {
         int total = 0;
         for (Cart cart : carts) {
             // 제고 확인
-            optionStockValidate(cart);
+            boolean isValidated = optionStockValidate(cart);
+            System.out.println(isValidated);
+            if (isValidated){
             // cart 내부 매서드로 cart -> orderDetail 로 변환
             OrderDetail orderDetail = cart.parseToOrderDetail(order);
             orderDetails.add(orderDetail);
             int amount = cart.getAmount();
-            int itemPrice = cart.getItemOption().getItem().getItemPrice();
-            total += amount * itemPrice;
+                int itemPrice = cart.getItemOption().getItem().getItemPrice();
+                int countryPostPrice = cart.getItemOption().getItem().getCountry().getCountryPostPrice();
+                int orderDetailPrice = itemPrice + countryPostPrice;
+            total += amount * orderDetailPrice;
+            }
         }
         order.setTotalPay(total);
         order.setOrderDetails(orderDetails);
@@ -53,9 +58,9 @@ public class OrderService {
         return order;
     }
 
-    public void optionStockValidate(Cart cart){
-        Optional<ItemOption> itemOptionOptional = itemOptionService.findOptionCodeWhenOrderValidate(cart.getItemOption().getOptionCode());
-        itemOptionOptional.orElseThrow(() -> new IllegalStateException("삭제되거나 품절된 아이템이 포함되어 있습니다. \n 제거 후, 다시 진행 해주세요."));
+    public boolean optionStockValidate(Cart cart){
+        ItemOption itemOption = cart.getItemOption();
+        return itemOption.getOptionStock() != 0 && !itemOption.getIsDelete().equals("1") && !itemOption.getItem().getIsDelete().equals("1");
     }
 
     public List<Cart> getSelectCartByCartIds(List<String> cartIds) {
