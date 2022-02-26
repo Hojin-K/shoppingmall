@@ -111,7 +111,7 @@
                     <a class="nav-link active" data-toggle="tab" href="#qwe">상세보기</a>
                 </li>
                 <li class="nav-item">
-                    <a class="nav-link" data-toggle="tab" href="#review">리뷰1</a>
+                    <a class="nav-link" data-toggle="tab" href="#review">리뷰</a>
                 </li>
                 <li class="nav-item">
                     <a class="nav-link" data-toggle="tab" href="#zxc">QNA</a>

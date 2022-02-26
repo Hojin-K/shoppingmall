@@ -55,7 +55,7 @@ public class MemberController {
     	
     	return "redirect:/";
     }
-<<<<<<< HEAD
+
     @GetMapping("/update")
     @Auth(role = Auth.Role.USER)
     public String updateForm() {
@@ -64,9 +64,6 @@ public class MemberController {
     }
     
     @PostMapping("/update")
-=======
-    
->>>>>>> 5b59aee8d1aa71a5f539e017b6dcb52a894ab7cc
     @Auth(role = Auth.Role.USER)
     @GetMapping("/{memberId}/info")
     public String infoForm(@PathVariable String memberId, HttpServletRequest request) {
