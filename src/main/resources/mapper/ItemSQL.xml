@@ -78,7 +78,7 @@
                         ITEM_IMAGE,
                         ITEM_INFO,
                         COUNTRY_NAME,
-                        sum(item_option.OPTION_STOCK) as item_stock
+                        sum(item_option.OPTION_STOCK) as ITEM_STOCK
                  from HR.SHOP_ITEM_TB item,
                       HR.SHOP_ITEM_OPTIONS_TB item_option,
                       HR.SHOP_COUNTRY_TB country
@@ -122,7 +122,7 @@
                                  ITEM_INFO,
                                  COUNTRY_NAME,
                                  ITEM_BRAND,
-                                 sum(item_option.OPTION_STOCK)                     as item_stock
+                                 sum(item_option.OPTION_STOCK)                     as ITEM_STOCK
                           from HR.SHOP_ITEM_TB item,
                                HR.SHOP_ITEM_OPTIONS_TB item_option,
                                HR.SHOP_COUNTRY_TB country
@@ -151,7 +151,7 @@
         ITEM_IMAGE,
         ITEM_INFO,
         COUNTRY_NAME,
-        sum(item_option.OPTION_STOCK) as item_stock
+        sum(item_option.OPTION_STOCK) as ITEM_STOCK
         from HR.SHOP_ITEM_TB item,
         HR.SHOP_ITEM_OPTIONS_TB item_option,
         HR.SHOP_COUNTRY_TB country
@@ -183,7 +183,7 @@
                         ITEM_IMAGE,
                         ITEM_INFO,
                         COUNTRY_NAME,
-                        sum(item_option.OPTION_STOCK)                     as item_stock
+                        sum(item_option.OPTION_STOCK)                     as ITEM_STOCK
                  from HR.SHOP_ITEM_TB item,
                       HR.SHOP_ITEM_OPTIONS_TB item_option,
                       HR.SHOP_COUNTRY_TB country

@@ -3,6 +3,8 @@ package com.shop.myapp.controller;
 import javax.servlet.http.HttpServletRequest;
 
 import com.shop.myapp.interceptor.Auth;
+
+import org.apache.ibatis.session.SqlSession;
 import org.springframework.http.ResponseEntity;
 import org.springframework.stereotype.Controller;
 import org.springframework.web.bind.annotation.GetMapping;
@@ -40,21 +42,20 @@ public class MemberController {
    
     @PostMapping("/join")
     public String join(@ModelAttribute Member member) {
-        System.out.println("member.getMemberPwd() = " + member.getMemberPwd());
     	// 에러가 있는지 검사
     	log.info("join");
-    	System.out.println(member.getMemberAddress());
     	int isSuccess = memberService.insertMember(member);
-    	System.out.println(isSuccess);
-    	return "redirect:/members";
+    	System.out.println("회원가입 성공("+isSuccess+")");
+    	return "redirect:/";
     }
     
     @GetMapping("/logout")
     public String logout(HttpServletRequest request) {
     	request.getSession().invalidate();
     	
-    	return "redirect:/item";
+    	return "redirect:/";
     }
+<<<<<<< HEAD
     @GetMapping("/update")
     @Auth(role = Auth.Role.USER)
     public String updateForm() {
@@ -63,15 +64,41 @@ public class MemberController {
     }
     
     @PostMapping("/update")
+=======
+    
+>>>>>>> 5b59aee8d1aa71a5f539e017b6dcb52a894ab7cc
     @Auth(role = Auth.Role.USER)
+    @GetMapping("/{memberId}/info")
+    public String infoForm(@PathVariable String memberId, HttpServletRequest request) {
+    	log.info("memberUpdateForm");
+    	Member member = memberService.getMember(memberId); 
+    	request.getSession().setAttribute("member", member);
+    	return "/members/info";
+    }
+    
+    @Auth(role = Auth.Role.USER)
+    @PostMapping("/{memberId}/update")
     public String update(@ModelAttribute Member member) {
     	// 에러가 있는지 검사
     	log.info("Edit member information.");
     	
     	int isSuccess = memberService.updateMember(member);
     	System.out.println(isSuccess);
+    	System.out.println("회원정보 수정 성공("+isSuccess+")");
+    	return "redirect:/";
+    }
+    
+    @Auth(role = Auth.Role.USER)
+    @GetMapping("/{memberId}/delete")
+    public String delete(@PathVariable String memberId, HttpServletRequest request) {
+    	// 에러가 있는지 검사
+    	log.info("delete member.");
+    	
+    	int isDelete = memberService.deleteMember(memberId);
+    	System.out.println("회원탈퇴 성공("+isDelete+")");
     	log.info("update complete.");
-    	return "redirect:/members";
+    	request.getSession().invalidate();
+    	return "redirect:/";
     }
 
     @GetMapping("/login")
