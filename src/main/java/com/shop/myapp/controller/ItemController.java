@@ -21,7 +21,6 @@ import java.util.Map;
 
 @Controller
 @RequestMapping("/item")
-@Auth(role = Auth.Role.SELLER)
 public class ItemController {
     private final ItemService itemService;
     private final FileService fileService;
