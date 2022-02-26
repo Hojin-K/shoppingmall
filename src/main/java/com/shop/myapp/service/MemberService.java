@@ -13,6 +13,9 @@ import org.springframework.stereotype.Service;
 import com.shop.myapp.dto.Member;
 import com.shop.myapp.repository.MemberRepository;
 
+import lombok.extern.slf4j.Slf4j;
+
+@Slf4j
 @Service
 public class MemberService {
     private final SqlSession sqlSession;
@@ -48,9 +51,10 @@ public class MemberService {
     }
 
     public int insertMember(Member member) {
-        System.out.println(member.getMemberBirth().toString());
-        System.out.println(member.getMemberAddress());
-        MemberRepository memberRepository
+    	log.info(this.getClass()+"--->>> [MEMBER INSERT]");
+    	System.out.println("1--> " +member.getMemberLevel());
+    	System.out.println("2--> " +member.getMemberLevelToString());
+    	MemberRepository memberRepository
                 = sqlSession.getMapper(MemberRepository.class);
         try {
             System.out.println("암호화 전 -->" + member.getMemberPwd());

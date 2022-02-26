@@ -6,15 +6,15 @@
 
     <insert id="insertMember">
         INSERT INTO SHOP_MEMBER_TB (MEMBER_ID, MEMBER_PWD,
-         	<if test ="memberLevel.contains('SELLER')">
+         	<if test ="memberLevelToString != 'USER'">
          			MEMBER_LEVEL,
          	</if>
                                    MEMBER_NAME, MEMBER_EMAIL, MEMBER_ADDRESS,
                                    MEMBER_TEL, MEMBER_BIRTH, BUSINESS_REGISTRATION_NO,
                                    BUSINESS_NAME, BUSINESS_INFO)
         VALUES (#{memberId}, #{memberPwd},
-          	<if test ="memberLevel.contains('SELLER')">
-        		#{memberLevel},
+          	<if test ="memberLevelToString != 'USER'">
+        		#{memberLevelToString},
         	</if>
                 #{memberName}, #{memberEmail}, #{memberAddress}, #{memberTel}, #{memberBirth}
                    , #{businessRegistrationNo,jdbcType=VARCHAR}, #{businessName,jdbcType=VARCHAR}

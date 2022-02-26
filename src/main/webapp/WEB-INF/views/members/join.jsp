@@ -9,9 +9,11 @@
 <script>
     $(function() {
         $("[name='chk_info']").change(
-            function() {                                if (this.value === "판매자") {
+            function() {
+            	if (this.value === "판매자") {
                     let text = "<div class='mb-3' id='seller'> 사업자명 <br /> <input class='form-control' type='text' name='businessName' />"
-                    text += " 사업자번호 <br /> <input class='form-control' type='text' name='businessRegistrationNo' /></div>"
+                    text += " 사업자번호 <br /> <input class='form-control' type='text' name='businessRegistrationNo' />"
+                    text += "<input type='hidden' value='USER,SELLER' name='memberLevel'/></div>"
                     $("#inputDiv").append(text);
                 } else {
                     $("#seller").remove();

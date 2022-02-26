@@ -44,12 +44,9 @@ public class MemberController {
    
     @PostMapping("/join")
     public String join(@ModelAttribute Member member) {
-        System.out.println("member.getMemberPwd() = " + member.getMemberPwd());
     	// 에러가 있는지 검사
     	log.info("join");
-    	System.out.println(member.getMemberAddress());
     	int isSuccess = memberService.insertMember(member);
-    	System.out.println(isSuccess);
     	return "redirect:/members";
     }
     
