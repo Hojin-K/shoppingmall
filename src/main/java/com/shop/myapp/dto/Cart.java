@@ -20,7 +20,8 @@ public class Cart {
                 .orderCode(order.getOrderCode())
                 .amount(this.amount)
                 .optionCode(this.optionCode)
-                .orderPrice(this.itemOption.getItem().getItemPrice() + this.itemOption.getItem().getCountry().getCountryPostPrice())
+                .orderPrice(this.itemOption.getItem().getItemPrice())
+                .postPrice(this.itemOption.getItem().getCountry().getCountryPostPrice())
                 .order(order)
                 .build();
     }

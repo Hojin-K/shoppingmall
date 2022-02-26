@@ -79,7 +79,7 @@
                 <div id="collapse${i}" class="accordion-collapse collapse" aria-labelledby="heading${i}"
                      data-bs-parent="#accordionExample">
                     <div class="accordion-body">
-                        <c:if test="${orderDetail.postedStatus != 'refund'}">
+                        <c:if test="${orderDetail.postedStatus != 'Refund'}">
                             <button id="${orderDetail.orderDetailCode}" data-bs-toggle="modal"
                                     data-bs-target="#refundModal" name="refund"
                                     class="btn btn-sm btn-secondary"

@@ -43,12 +43,16 @@ public class OrderService {
             if (isValidated){
             // cart 내부 매서드로 cart -> orderDetail 로 변환
             OrderDetail orderDetail = cart.parseToOrderDetail(order);
+            // orderDetail 삽입
             orderDetails.add(orderDetail);
+            // 상품 갯수
             int amount = cart.getAmount();
+            // 상품 가격
                 int itemPrice = cart.getItemOption().getItem().getItemPrice();
+                // 상품 배송비
                 int countryPostPrice = cart.getItemOption().getItem().getCountry().getCountryPostPrice();
-                int orderDetailPrice = itemPrice + countryPostPrice;
-            total += amount * orderDetailPrice;
+                // (상품 가격 * 갯수) + (상품 배송비 * 갯수)
+            total += (itemPrice * amount) + (countryPostPrice * amount);
             }
         }
         order.setTotalPay(total);
@@ -111,4 +115,5 @@ public class OrderService {
     public int updateChangeWhenCancel(OrderDetail orderDetail){
         return orderRepository.updateChangeWhenCancel(orderDetail);
     }
+
 }

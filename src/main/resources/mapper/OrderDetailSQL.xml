@@ -9,7 +9,8 @@
         <id property="optionCode" column="option_code"/>
         <id property="amount" column="amount"/>
         <id property="postedStatus" column="posted_status"/>
-        <association property="itemOption" column="option_code" resultMap="itemOption"/>
+        <id property="orderPrice" column="order_price"/>
+        <id property="postPrice" column="post_price" />
         <association property="order" javaType="com.shop.myapp.dto.Order">
             <result property="orderCode" column="order_code"/>
             <result property="impUid" column="imp_uid"/>
@@ -21,7 +22,9 @@
             <result property="buyerPostCode" column="buyer_post_code"/>
             <result property="isPaid" column="is_paid"/>
             <result property="change" column="change"/>
+            <result property="paidAt" column="paid_at" />
         </association>
+        <association property="itemOption" column="option_code" resultMap="itemOption"/>
     </resultMap>
 
     <resultMap id="itemOption" type="com.shop.myapp.dto.ItemOption">
@@ -38,7 +41,7 @@
     </resultMap>
 
     <update id="insertOrderDetails" parameterType="list">
-        insert into HR.SHOP_ORDER_DETAIL_TB(order_detail_code, order_code, option_code, AMOUNT,ORDER_PRICE)
+        insert into HR.SHOP_ORDER_DETAIL_TB(order_detail_code, order_code, option_code, AMOUNT,ORDER_PRICE,POST_PRICE)
         SELECT CODE_ORDER_DETAIL_SQ.nextval AS order_detail_code
              ,T.*
         FROM (<foreach collection="list" item="orderDetail" separator="UNION ALL ">
@@ -46,18 +49,19 @@
         #{orderDetail.orderCode} as order_code,
         #{orderDetail.itemOption.optionCode} as option_code,
         #{orderDetail.amount} as amount,
-        #{orderDetail.orderPrice} as order_price
+        #{orderDetail.orderPrice} as order_price,
+               #{orderDetail.postPrice} as post_price
         from dual
     </foreach> ) T
     </update>
     <update id="updatePostedStatusByOrderCode">
         update HR.SHOP_ORDER_DETAIL_TB
-        set HR.SHOP_ORDER_DETAIL_TB.POSTED_STATUS = 'paid'
+        set HR.SHOP_ORDER_DETAIL_TB.POSTED_STATUS = 'Paid'
         where HR.SHOP_ORDER_DETAIL_TB.ORDER_CODE = #{orderCode}
     </update>
     <update id="updateWhenCancel">
         update HR.SHOP_ORDER_DETAIL_TB
-        set HR.SHOP_ORDER_DETAIL_TB.POSTED_STATUS = 'refund'
+        set HR.SHOP_ORDER_DETAIL_TB.POSTED_STATUS = 'Refund'
         where HR.SHOP_ORDER_DETAIL_TB.ORDER_DETAIL_CODE = ${orderDetailCode}
     </update>
     <delete id="deleteOrderDetail">

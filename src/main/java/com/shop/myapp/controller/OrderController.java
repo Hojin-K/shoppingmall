@@ -37,10 +37,7 @@ public class OrderController {
         Member member = (Member) session.getAttribute("member");
         order.setMemberId(member.getMemberId());
         Order responseOrder = orderService.insertOrder(order, formList.getCartCodes());
-        System.out.println(order.getOrderCode());
-        for (OrderDetail orderDetail : responseOrder.getOrderDetails()) {
-            orderDetail.setOrder(null);
-        }
+        order.setOrderDetails(null);
         return ResponseEntity.ok(responseOrder);
     }
 
