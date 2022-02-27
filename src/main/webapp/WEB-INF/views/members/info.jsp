@@ -52,11 +52,11 @@
             </div>
             <div class="mb-3">
                 이름 <br />
-                <input class="form-control" type="text" name="memberName" value="${member.memberName }"/>
+                <input class="form-control" type="text" name="memberName" value="${member.memberName}"/>
             </div>
             <div class="mb-3">
                 이메일 <br />
-                <input class="form-control" type="text" name="memberEmail" value="${member.memberEmail }"/> 
+                <input class="form-control" type="text" name="memberEmail" value="${member.memberEmail}"/>
             </div>
             <div class="mb-3">
                 비밀번호 <br />
