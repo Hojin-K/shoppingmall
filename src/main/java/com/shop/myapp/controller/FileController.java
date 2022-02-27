@@ -1,7 +1,12 @@
 package com.shop.myapp.controller;
 
-import com.shop.myapp.interceptor.Auth;
-import com.shop.myapp.service.FileService;
+import java.io.IOException;
+import java.util.HashMap;
+import java.util.List;
+import java.util.Map;
+
+import javax.servlet.http.HttpServletRequest;
+
 import org.springframework.http.HttpStatus;
 import org.springframework.http.MediaType;
 import org.springframework.http.ResponseEntity;
@@ -11,11 +16,8 @@ import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.bind.annotation.RestController;
 import org.springframework.web.multipart.MultipartFile;
 
-import javax.servlet.http.HttpServletRequest;
-import java.io.IOException;
-import java.util.HashMap;
-import java.util.List;
-import java.util.Map;
+import com.shop.myapp.interceptor.Auth;
+import com.shop.myapp.service.FileService;
 
 @RestController
 @RequestMapping("/file")

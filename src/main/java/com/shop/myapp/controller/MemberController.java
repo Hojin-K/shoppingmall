@@ -2,27 +2,22 @@ package com.shop.myapp.controller;
 
 import javax.servlet.http.HttpServletRequest;
 
-import com.shop.myapp.interceptor.Auth;
-
-import org.apache.ibatis.session.SqlSession;
 import org.springframework.http.ResponseEntity;
 import org.springframework.stereotype.Controller;
+import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.ModelAttribute;
 import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestMapping;
-import org.springframework.web.bind.annotation.RequestMethod;
 import org.springframework.web.bind.annotation.ResponseBody;
 
 import com.shop.myapp.dto.Member;
+import com.shop.myapp.dto.MemberSession;
 import com.shop.myapp.interceptor.Auth;
-import com.shop.myapp.service.AuthService;
-import com.shop.myapp.service.AuthServiceImpl;
 import com.shop.myapp.service.MemberService;
 
 import lombok.extern.slf4j.Slf4j;
-
 
 @Slf4j
 @Controller
@@ -60,10 +55,10 @@ public class MemberController {
     
     @Auth(role = Auth.Role.USER)
     @GetMapping("/{memberId}/info")
-    public String infoForm(@PathVariable String memberId, HttpServletRequest request) {
+    public String infoForm(@PathVariable String memberId, Model model) {
     	log.info("memberUpdateForm");
     	Member member = memberService.getMember(memberId); 
-    	request.getSession().setAttribute("member", member);
+    	model.addAttribute("member", member);
     	return "/members/info";
     }
     
@@ -98,13 +93,17 @@ public class MemberController {
     	return "/members/login";
     }
     
-    @RequestMapping(value="/login", produces="application/json;charset=UTF-8", 
-    method=RequestMethod.POST)
+    @PostMapping("/login")
     public String login(@ModelAttribute Member member, HttpServletRequest request){
         System.out.println("PWD : "+member.getMemberPwd());
     	log.info("login");
     	Member mem = memberService.loginMember(member);
-    	request.getSession().setAttribute("member",mem);
+    	
+    	MemberSession mSession = new MemberSession();
+    	mSession.setMemberId(mem.getMemberId());
+    	mSession.setMemberLevel(mem.getMemberLevel());
+    	
+    	request.getSession().setAttribute("member",mSession);
 
     	return "redirect:/";
     }

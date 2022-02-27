@@ -1,17 +1,25 @@
 package com.shop.myapp.controller;
 
-import com.shop.myapp.dto.Cart;
-import com.shop.myapp.dto.Member;
-import com.shop.myapp.interceptor.Auth;
-import com.shop.myapp.service.CartService;
+import java.util.List;
+import java.util.Optional;
+
+import javax.servlet.http.HttpSession;
+
 import org.springframework.http.ResponseEntity;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
-import org.springframework.web.bind.annotation.*;
+import org.springframework.web.bind.annotation.GetMapping;
+import org.springframework.web.bind.annotation.ModelAttribute;
+import org.springframework.web.bind.annotation.PathVariable;
+import org.springframework.web.bind.annotation.PostMapping;
+import org.springframework.web.bind.annotation.RequestMapping;
+import org.springframework.web.bind.annotation.RequestParam;
+import org.springframework.web.bind.annotation.ResponseBody;
 
-import javax.servlet.http.HttpSession;
-import java.util.List;
-import java.util.Optional;
+import com.shop.myapp.dto.Cart;
+import com.shop.myapp.dto.MemberSession;
+import com.shop.myapp.interceptor.Auth;
+import com.shop.myapp.service.CartService;
 
 @Controller
 @RequestMapping("/cart")
@@ -28,7 +36,7 @@ public class CartController {
 
     @PostMapping("/add")
     public String insertCart(@ModelAttribute Cart cartItem) {
-        Member member = (Member) session.getAttribute("member");
+    	MemberSession member = (MemberSession) session.getAttribute("member");
         System.out.println(cartItem.getOptionCode());
         cartItem.setMemberId(member.getMemberId());
         cartItem.setAmount(1);
@@ -42,7 +50,7 @@ public class CartController {
 
     @GetMapping("/myCart")
     public String myCart(Model model) {
-        Member member = (Member) session.getAttribute("member");
+    	MemberSession member = (MemberSession) session.getAttribute("member");
         List<Cart> carts = cartService.findCartDetailByMemberId(member.getMemberId());
         model.addAttribute("carts", carts);
         return "/cart/myCart";
@@ -51,7 +59,7 @@ public class CartController {
     @PostMapping("/{cartCode}/delete")
     @ResponseBody
     public ResponseEntity<Object> deleteCart(@PathVariable String cartCode) {
-        Member member = (Member) session.getAttribute("member");
+    	MemberSession member = (MemberSession) session.getAttribute("member");
         Optional<Cart> cartOptional = cartService.findByCartId(cartCode);
         Cart cart = cartOptional.orElseThrow(() -> new IllegalStateException("cart 정보 없음"));
         if (cart.getMemberId().equals(member.getMemberId())) {
@@ -68,7 +76,7 @@ public class CartController {
     @PostMapping("/{cartCode}/setAmount")
     @ResponseBody
     public ResponseEntity<Object> setCartAmount(@PathVariable String cartCode, @RequestParam String mathSign) {
-        Member member = (Member) session.getAttribute("member");
+    	MemberSession member = (MemberSession) session.getAttribute("member");
         Optional<Cart> cartOptional = cartService.findByCartId(cartCode);
         Cart cart = cartOptional.orElseThrow(() -> new IllegalStateException("cart 정보 없음"));
         // 갯수가 0일경우, 처리 로직 추가 필요.

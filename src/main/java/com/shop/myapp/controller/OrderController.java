@@ -1,16 +1,29 @@
 package com.shop.myapp.controller;
 
-import com.shop.myapp.dto.*;
-import com.shop.myapp.interceptor.Auth;
-import com.shop.myapp.service.OrderService;
+import java.util.List;
+
+import javax.servlet.http.HttpSession;
+
 import org.json.simple.parser.ParseException;
 import org.springframework.http.ResponseEntity;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
-import org.springframework.web.bind.annotation.*;
+import org.springframework.web.bind.annotation.GetMapping;
+import org.springframework.web.bind.annotation.ModelAttribute;
+import org.springframework.web.bind.annotation.PathVariable;
+import org.springframework.web.bind.annotation.PostMapping;
+import org.springframework.web.bind.annotation.RequestMapping;
+import org.springframework.web.bind.annotation.RequestParam;
+import org.springframework.web.bind.annotation.ResponseBody;
 
-import javax.servlet.http.HttpSession;
-import java.util.List;
+import com.shop.myapp.dto.Cart;
+import com.shop.myapp.dto.FormList;
+import com.shop.myapp.dto.MemberSession;
+import com.shop.myapp.dto.Order;
+import com.shop.myapp.dto.OrderDetail;
+import com.shop.myapp.dto.Payment;
+import com.shop.myapp.interceptor.Auth;
+import com.shop.myapp.service.OrderService;
 
 @Controller
 @RequestMapping("/order")
@@ -34,7 +47,7 @@ public class OrderController {
     @PostMapping("/add")
     @ResponseBody
     public ResponseEntity<Object> addOrder(@ModelAttribute FormList formList, @ModelAttribute Order order) {
-        Member member = (Member) session.getAttribute("member");
+    	MemberSession member = (MemberSession) session.getAttribute("member");
         order.setMemberId(member.getMemberId());
         try {
         Order responseOrder = orderService.insertOrder(order, formList.getCartCodes());
@@ -71,7 +84,7 @@ public class OrderController {
 
     @GetMapping("/myOrder")
     public String myOrder(Model model) {
-        Member member = (Member) session.getAttribute("member");
+    	MemberSession member = (MemberSession) session.getAttribute("member");
         String memberId = member.getMemberId();
         List<Order> orders = orderService.myOrder(memberId);
         model.addAttribute("orders", orders);
@@ -82,7 +95,7 @@ public class OrderController {
 
     @GetMapping("/{orderCode}")
     public String findByOrderCode(@PathVariable String orderCode, Model model) {
-        Member member = (Member) session.getAttribute("member");
+    	MemberSession member = (MemberSession) session.getAttribute("member");
         String memberId = member.getMemberId();
         Order order = orderService.findByOrderCode(orderCode);
         if (order.getMemberId().equals(memberId)) {

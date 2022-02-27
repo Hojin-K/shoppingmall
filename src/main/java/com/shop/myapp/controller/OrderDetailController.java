@@ -1,15 +1,20 @@
 package com.shop.myapp.controller;
 
-import com.shop.myapp.dto.Member;
-import com.shop.myapp.dto.OrderDetail;
-import com.shop.myapp.service.OrderDetailService;
+import javax.servlet.http.HttpSession;
+
 import org.json.simple.parser.ParseException;
 import org.springframework.http.ResponseEntity;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
-import org.springframework.web.bind.annotation.*;
+import org.springframework.web.bind.annotation.GetMapping;
+import org.springframework.web.bind.annotation.PathVariable;
+import org.springframework.web.bind.annotation.PostMapping;
+import org.springframework.web.bind.annotation.RequestMapping;
+import org.springframework.web.bind.annotation.ResponseBody;
 
-import javax.servlet.http.HttpSession;
+import com.shop.myapp.dto.MemberSession;
+import com.shop.myapp.dto.OrderDetail;
+import com.shop.myapp.service.OrderDetailService;
 
 @Controller
 @RequestMapping("/orderDetail")
@@ -37,7 +42,7 @@ public class OrderDetailController {
     public ResponseEntity<Object> orderDetailCancel(@PathVariable String orderDetailCode, String reason) throws ParseException {
         try {
         OrderDetail orderDetail = orderDetailService.findByOrderDetailCode(orderDetailCode);
-        Member member = (Member) session.getAttribute("member");
+        MemberSession member = (MemberSession) session.getAttribute("member");
         if (orderDetail.getOrder().getMemberId().equals(member.getMemberId())){
             if (orderDetailService.orderCancelService(orderDetail)){
             return ResponseEntity.ok().build();

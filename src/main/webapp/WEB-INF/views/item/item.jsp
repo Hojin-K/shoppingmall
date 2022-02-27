@@ -29,7 +29,6 @@
     </style>
     <script>
         $(function () {
-            // test();
 
             $(document).on("click", "#backMain", function () {
                 location.href = "/item/";
@@ -43,18 +42,19 @@
                 $(this).tab('show')
             })
 
-            // function test (){
-            //     $.ajax({
-            //         url : "/test",
-            //         method : "GET",
-            //         success : function (data){
-            //             alert(data);
-            //             $("#review").html(data);
-            //         }
-            //     })
-            // }
-
+            $(document).on("click", "#qnaTab", function () {
+                callQna();
+            });
         });
+	function callQna (){
+	    $.ajax({
+	        url : "/qna/${item.itemCode}/list?",
+	        method : "GET",
+	        success : function (data){
+	            $("#qna").html(data);
+	        }
+	    })
+	}
     </script>
 
 </head>
@@ -114,7 +114,7 @@
                     <a class="nav-link" data-toggle="tab" href="#review">리뷰</a>
                 </li>
                 <li class="nav-item">
-                    <a class="nav-link" data-toggle="tab" href="#zxc">QNA</a>
+                    <a class="nav-link" data-toggle="tab" href="#qna" id="qnaTab">QNA</a>
                 </li>
             </ul>
             <div class="tab-content">
@@ -129,7 +129,7 @@
                 <div class="tab-pane fade text-center" id="review">
                     <p>review</p>
                 </div>
-                <div class="tab-pane fade text-center" id="zxc">
+                <div class="tab-pane fade text-center" id="qna">
                     <p>QNA</p>
                 </div>
             </div>

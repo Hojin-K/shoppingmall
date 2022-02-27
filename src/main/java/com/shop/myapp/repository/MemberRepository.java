@@ -1,7 +1,7 @@
 package com.shop.myapp.repository;
 
+import java.util.LinkedList;
 import java.util.List;
-import java.util.Map;
 import java.util.Optional;
 
 import org.apache.ibatis.annotations.Mapper;
@@ -16,6 +16,7 @@ public interface MemberRepository {
     int deleteMember(String memberId);
     List<Member> findAll(@Param(value = "chkInfo") String chkInfo, @Param(value = "condition") String condition);
     Optional<Member> findById(String memberId);
+    Optional<Member> findById(String memberId, LinkedList<String> requestorLevel);
     int updateSeller(Member member);
     int updateByAdmin(Member member);
 }

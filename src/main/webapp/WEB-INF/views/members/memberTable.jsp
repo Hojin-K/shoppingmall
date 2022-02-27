@@ -28,7 +28,7 @@
 
 </style>
 <div id="memTable">
-	<table class="table text-center m-auto">
+	<table class="table text-center m-auto" style="width: 1800px;">
 		<thead>
 			<tr>
 				<th style="width: auto;">ID</th>
@@ -54,7 +54,7 @@
 					<td>${member.memberLevel }</td>
 					<td>${member.memberName }</td>
 					<td>${member.memberEmail }</td>
-					<td>${member.memberAddress}</td>
+					<td>${member.memberAddress} ${member.memberDetailAddress }</td>
 					<td>${member.memberTel }</td>
 					<td>${member.memberBirth }</td>
 					<td>${member.businessRegistrationNo }</td>

@@ -1,6 +1,7 @@
 package com.shop.myapp.service;
 
 import java.util.ArrayList;
+import java.util.LinkedList;
 import java.util.List;
 import java.util.Optional;
 
@@ -25,18 +26,22 @@ public class MemberService {
     public MemberService(SqlSession sqlSession, ItemService itemService) {
         this.sqlSession = sqlSession;
         this.itemService = itemService;
-        this.memberRepository = sqlSession.getMapper(MemberRepository.class);
+        this.memberRepository = this.sqlSession.getMapper(MemberRepository.class);
     }
 
     public Member getMember(String memberId) {
-        //MemberRepository memberRepository = sqlSession.getMapper(MemberRepository.class);
+        return memberRepository.
+                findById(memberId).
+                orElseThrow(() -> new IllegalStateException(memberId + " 라는 id의 member 없음"));
+    }
+    
+    public Member getMember(String memberId, LinkedList<String> requesterLevel) {
         return memberRepository.
                 findById(memberId).
                 orElseThrow(() -> new IllegalStateException(memberId + " 라는 id의 member 없음"));
     }
 
     public List<Member> getMembers(String chkInfo, String condition) {
-        //MemberRepository memberRepository = sqlSession.getMapper(MemberRepository.class);
         List<Member> members = new ArrayList<Member>(); 
         try{
         	System.out.println(1);
@@ -45,7 +50,6 @@ public class MemberService {
         }catch (Exception e) {
 			e.printStackTrace();
 		}
-        //members.forEach(member -> System.out.print(member.getMemberName()));
         for (Member member : members) {
             System.out.println(member.getMemberBirth());
         }
@@ -54,9 +58,7 @@ public class MemberService {
 
     public int insertMember(Member member) {
     	log.info(this.getClass()+"--->>> [MEMBER INSERT]");
-    	System.out.println("1--> " +member.getMemberLevel());
-    	System.out.println("2--> " +member.getMemberLevelToString());
-    	//MemberRepository memberRepository = sqlSession.getMapper(MemberRepository.class);
+    	validateDuplicateMember(member);
         try {
             System.out.println("암호화 전 -->" + member.getMemberPwd());
             member.setMemberPwd(BCrypt.hashpw(member.getMemberPwd(), BCrypt.gensalt()));
@@ -70,7 +72,6 @@ public class MemberService {
     }
 
     public Member loginMember(Member member) {
-        //MemberRepository memberRepository = sqlSession.getMapper(MemberRepository.class);
         String userPwd = member.getMemberPwd();
         //로그인한 유저 id를 조회한다.
         Optional<Member> loginMemberOptional = memberRepository.findById(member.getMemberId());
@@ -83,13 +84,15 @@ public class MemberService {
         	throw new IllegalStateException("비밀번호 오류입니다.");
         }
     }
-
-    public boolean isManager(String memberLevel) {
-        return Integer.parseInt(memberLevel) == 5;
+    
+    public void validateDuplicateMember(Member member) {
+    	memberRepository.findById(member.getMemberId())
+    			.ifPresent(m -> {
+    				throw new IllegalStateException("이미 존재하는 회원입니다.");
+    			});
     }
 
     public int updateMember(Member member) {
-        //MemberRepository memberRepository = sqlSession.getMapper(MemberRepository.class);
         try {
         	if(member.getMemberPwd() != null && !member.getMemberPwd().equals("")) {
         		System.out.println("암호화 전 -->" + member.getMemberPwd());
@@ -112,12 +115,10 @@ public class MemberService {
     }
 
     public int updateSellerInfo(Member member){
-        //MemberRepository memberRepository = sqlSession.getMapper(MemberRepository.class);
         return memberRepository.updateSeller(member);
     }
     
     public int updateByAdmin(Member member) {
-    	 //MemberRepository memberRepository = sqlSession.getMapper(MemberRepository.class);
     	 try {
              System.out.println("암호화 전 -->" + member.getMemberPwd());
              member.setMemberPwd(BCrypt.hashpw(member.getMemberPwd(), BCrypt.gensalt()));
