@@ -246,6 +246,18 @@
                     <mainClass>org.test.int1.Main</mainClass>
                 </configuration>
             </plugin>
+            <!-- war 에러 처리용 -->
+             <plugin>
+	<groupId>org.apache.maven.plugins</groupId>
+	<artifactId>maven-war-plugin</artifactId>
+	<version>2.4</version>
+	<configuration>
+		<warSourceDirectory>src/main/webapp</warSourceDirectory>
+		<warName>sample</warName>
+
+		<failOnMissingWebXml>false</failOnMissingWebXml>
+	</configuration>
+</plugin>
         </plugins>
     </build>
 </project>
