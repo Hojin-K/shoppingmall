@@ -14,9 +14,6 @@ import org.springframework.web.bind.annotation.RequestMethod;
 import org.springframework.web.bind.annotation.ResponseBody;
 
 import com.shop.myapp.dto.Member;
-import com.shop.myapp.interceptor.Auth;
-import com.shop.myapp.service.AuthService;
-import com.shop.myapp.service.AuthServiceImpl;
 import com.shop.myapp.service.MemberService;
 
 import lombok.extern.slf4j.Slf4j;
@@ -28,11 +25,9 @@ import lombok.extern.slf4j.Slf4j;
 public class MemberController {
 
     private final MemberService memberService;
-    private final AuthService authService;
 
-    public MemberController(MemberService memberService, AuthServiceImpl authService) {
+    public MemberController(MemberService memberService) {
         this.memberService = memberService;
-        this.authService = authService;
     }
     @GetMapping("/join")
     public String joinForm() {
