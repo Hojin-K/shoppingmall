@@ -21,6 +21,7 @@ import com.shop.myapp.dto.Member;
 import com.shop.myapp.dto.Pagination;
 import com.shop.myapp.dto.Review;
 import com.shop.myapp.service.ReviewService;
+import org.springframework.web.servlet.mvc.support.RedirectAttributes;
 
 @Controller
 @RequestMapping("/review")
@@ -46,11 +47,12 @@ public class ReviewController {
 	}
 	
 	@PostMapping("/add") //reviewCode가 sql에서 자동 생성되기 때문에 {reviewCode}를 붙이지 않는다.
-	public ResponseEntity<Object> insertReview(@ModelAttribute Review review){
+	public String insertReview(@ModelAttribute Review review, RedirectAttributes redirectAttributes){
 		MemberSession member=(MemberSession) session.getAttribute("member");
 		review.setMemberId(member.getMemberId());
 		reviewService.insertReview(review);
-		return ResponseEntity.ok().build();
+		redirectAttributes.addAttribute("itemCode",review.getItemCode());
+		return "redirect:/item/{itemCode}";
 	}
 
 	@ResponseBody

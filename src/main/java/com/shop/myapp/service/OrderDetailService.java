@@ -53,11 +53,12 @@ public class OrderDetailService {
         ObjectMapper objectMapper = new ObjectMapper();
         System.out.println(orderDetail.getOrder().getImpUid());
         refundDetail.put("imp_uid", orderDetail.getOrder().getImpUid());
-        refundDetail.put("amount", (double) orderDetail.getAmount() * orderDetail.getItemOption().getItem().getItemPrice());
+        refundDetail.put("amount", ((double) orderDetail.getAmount() * orderDetail.getOrderPrice()) + (orderDetail.getAmount() * orderDetail.getPostPrice()));
         String refundDetailString = objectMapper.writeValueAsString(refundDetail);
         System.out.println(refundDetailString);
-        System.out.println("change = "+(orderDetail.getOrder().getChange()+ (long) orderDetail.getAmount() * orderDetail.getItemOption().getItem().getItemPrice()));
-        if (iamPortService.cancel(refundDetailString) == (orderDetail.getOrder().getChange()+ (long) orderDetail.getAmount() * orderDetail.getItemOption().getItem().getItemPrice())) {
+        long refund = ((long) orderDetail.getAmount() * orderDetail.getOrderPrice()) + ((long) orderDetail.getAmount() * orderDetail.getPostPrice());
+        System.out.println("refund =  "+refund);
+        if (iamPortService.cancel(refundDetailString) == (orderDetail.getOrder().getChange()+ refund)) {
             orderDetailRepository.updateWhenCancel(orderDetail.getOrderDetailCode());
             return true;
         }

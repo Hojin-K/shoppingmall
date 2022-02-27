@@ -39,7 +39,7 @@ public class OrderDetailController {
 
     @ResponseBody
     @PostMapping("/{orderDetailCode}/cancel")
-    public ResponseEntity<Object> orderDetailCancel(@PathVariable String orderDetailCode, String reason) throws ParseException {
+    public ResponseEntity<Object> orderDetailCancel(@PathVariable String orderDetailCode){
         try {
         OrderDetail orderDetail = orderDetailService.findByOrderDetailCode(orderDetailCode);
         MemberSession member = (MemberSession) session.getAttribute("member");
