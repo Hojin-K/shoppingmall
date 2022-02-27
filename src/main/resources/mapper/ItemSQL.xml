@@ -143,8 +143,6 @@
         ]]>
     </select>
     <select id="findAllByMemberId" resultMap="item">
-        SELECT *
-        FROM (
         SELECT ROW_NUMBER() over (order by item.item_code desc ) AS num,
         item.ITEM_CODE,
         MEMBER_ID,
