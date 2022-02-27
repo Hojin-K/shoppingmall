@@ -31,7 +31,7 @@
     
     <select id="getReviewListCnt" resultType="java.lang.Integer">
         select count(*) as listCnt
-        from SHOP_REVIEW_TB where IS_DELETE = '0'
+        from SHOP_REVIEW_TB
     </select>
 
 </mapper>

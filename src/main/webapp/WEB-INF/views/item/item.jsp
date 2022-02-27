@@ -29,7 +29,7 @@
     </style>
     <script>
         $(function () {
-            // test();
+            test();
 
             $(document).on("click", "#backMain", function () {
                 location.href = "/item/";
@@ -42,17 +42,31 @@
                 e.preventDefault()
                 $(this).tab('show')
             })
-
-            // function test (){
-            //     $.ajax({
-            //         url : "/test",
-            //         method : "GET",
-            //         success : function (data){
-            //             alert(data);
-            //             $("#review").html(data);
-            //         }
-            //     })
-            // }
+			
+            //리뷰
+            function test (){
+                $.ajax({
+                     url : "/review/list",
+                     method : "GET",
+                     success : function (data){
+                         alert(data);
+                         $("#review").html(data);
+                     }
+                 })
+             }
+            
+            
+            
+            $(document).on("click","[name='reviewDelete']",function() {
+                let optionDiv = $(this).closest("div");
+                optionDiv.remove();
+            });            
+            $(document).on("click","[id='reviewDelete']",function() {
+                let select = confirm("리뷰를 삭제하시겠습니까?");
+                if(select===true){
+                location.href = "/item/${review.itemCode}/delete"
+                }
+              });
 
         });
     </script>

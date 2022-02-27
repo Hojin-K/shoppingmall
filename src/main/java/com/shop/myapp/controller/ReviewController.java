@@ -12,6 +12,7 @@ import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.bind.annotation.RestController;
+import org.springframework.web.servlet.ModelAndView;
 
 import com.shop.myapp.dto.Member;
 import com.shop.myapp.dto.Pagination;
@@ -29,17 +30,33 @@ public class ReviewController {
 		this.session = session;
 	}
 
-	@GetMapping("")
+	/*@GetMapping("/list")
 	public ResponseEntity<Object> getReviews(@RequestParam(required = false, defaultValue = "1") int page) {
 		//@RequestParam 페이지 넘버를 선택하지 않은 페이지 첫접속과 같은 경우에 1페이지로 자동으로 돌려주는 부분
 		Pagination pagination = new Pagination();
 		int reviewListCnt = reviewService.getReviewListCnt();
 		pagination.pageInfo(page,reviewListCnt);
-		//List<Review> reviews = reviewService.getReviews(pagination);
+		List<Review> reviews = reviewService.getReviews(pagination);
 		ResponseEntity.status(300).build();
-		//return ResponseEntity.ok(reviews); // 성공 했을 때, 성공했다는 신호와 함께 요청 값을 같이 보내줌.
-		return null;
+		return ResponseEntity.ok(reviews); // 성공 했을 때, 성공했다는 신호와 함께 요청 값을 같이 보내줌.
+	}*/
+	
+	@GetMapping("/list")
+	public ModelAndView getReviews(@RequestParam(required = false, defaultValue = "1") int page) {
+		//@RequestParam 페이지 넘버를 선택하지 않은 페이지 첫접속과 같은 경우에 1페이지로 자동으로 돌려주는 부분
+		Pagination pagination = new Pagination();
+		int reviewListCnt = reviewService.getReviewListCnt();
+		pagination.pageInfo(page,reviewListCnt);
+		List<Review> reviews = reviewService.getReviews(pagination);
+		ModelAndView mv = new ModelAndView();
+		System.out.println("11111111111111111111111");
+		mv.setViewName("modal/review");
+		System.out.println("22222222222222222222222");
+		mv.addObject("reviews", reviews);
+		
+		return mv; // 성공 했을 때, 성공했다는 신호와 함께 요청 값을 같이 보내줌.
 	}
+	
 	@PostMapping("/insert") //reviewCode가 sql에서 자동 생성되기 때문에 {reviewCode}를 붙이지 않는다.
 	public ResponseEntity<Object> insertReview(@ModelAttribute Review review){
 		Member member=(Member)session.getAttribute("member");
@@ -48,12 +65,12 @@ public class ReviewController {
 		return ResponseEntity.ok().build();
 	}
 	
-	@GetMapping("/list")
+	/*@GetMapping("/list")
 	public ResponseEntity<Object> reviewList(){
 		List<Review> reviews = reviewService.reviewList();
 		return ResponseEntity.ok(reviews);
 	}
-	
+	*/
 	
 	@PostMapping("/{reviewCode}/update")
 	public ResponseEntity<Object> updateReview(@PathVariable String reviewCode, String reviewContent) {

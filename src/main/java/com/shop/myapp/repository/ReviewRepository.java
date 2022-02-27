@@ -5,11 +5,12 @@ import java.util.List;
 import org.apache.ibatis.annotations.Mapper;
 import org.apache.ibatis.annotations.Param;
 
+import com.shop.myapp.dto.Pagination;
 import com.shop.myapp.dto.Review;
 
 @Mapper
 public interface ReviewRepository {
-	/*List<Review> findAll(Pagination pagination);*/
+	List<Review> findAll(Pagination pagination);
 	List<Review> getReivewList(); 
 	Review findByReviewCode(String reviewCode);
 	int insertReview(Review review);

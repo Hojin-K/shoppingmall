@@ -36,15 +36,15 @@ public class ReviewService {
 	}
 	
 	
-	 /*public List<Review> getReviews(Pagination pagination) {
+	 public List<Review> getReviews(Pagination pagination) {
 	        return reviewRepository.findAll(pagination);
-	    }*/
+	    }
 	
-	public List<Review> reviewList(){
+	/*public List<Review> reviewList(){
 		List<Review> reviews = new ArrayList<>();
 		reviews = reviewRepository.getReivewList();
 		return reviews;
-	}
+	}*/
 
 	    public int insertReview(Review review) {
 	       return reviewRepository.insertReview(review);
