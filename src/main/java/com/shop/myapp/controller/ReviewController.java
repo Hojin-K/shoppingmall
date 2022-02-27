@@ -4,6 +4,7 @@ import java.util.List;
 
 import javax.servlet.http.HttpSession;
 
+import com.shop.myapp.dto.MemberSession;
 import org.springframework.http.ResponseEntity;
 import org.springframework.stereotype.Controller;
 import org.springframework.web.bind.annotation.GetMapping;
@@ -46,7 +47,7 @@ public class ReviewController {
 	
 	@PostMapping("/add") //reviewCode가 sql에서 자동 생성되기 때문에 {reviewCode}를 붙이지 않는다.
 	public ResponseEntity<Object> insertReview(@ModelAttribute Review review){
-		Member member=(Member)session.getAttribute("member");
+		MemberSession member=(MemberSession) session.getAttribute("member");
 		review.setMemberId(member.getMemberId());
 		reviewService.insertReview(review);
 		return ResponseEntity.ok().build();
@@ -56,7 +57,7 @@ public class ReviewController {
 	@PostMapping("/{reviewCode}/delete")
 	public ResponseEntity<Object> deleteReview(@PathVariable String reviewCode) {
 		//로그인 아이디 비교
-		Member member = (Member) session.getAttribute("member");
+		MemberSession member=(MemberSession) session.getAttribute("member");
 		String memberId = member.getMemberId();
 		Review review = reviewService.findByReviewId(memberId);
 		// ajax에서 statusCode로 체크

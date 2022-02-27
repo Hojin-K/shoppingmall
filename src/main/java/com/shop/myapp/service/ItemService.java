@@ -83,10 +83,6 @@ public class ItemService {
     public List<Item> getSellerItemByMemberId(String memberId, Pagination pagination,String search){
         return itemRepository.findAllByMemberId(memberId,pagination,search);
     }
-
-
-
-
     public List<Item> findNewItems(){
         return itemRepository.findNewItems();
     }
