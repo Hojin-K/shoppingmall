@@ -60,7 +60,7 @@
     </update>
     <update id="updateChangeWhenCancel" parameterType="com.shop.myapp.dto.OrderDetail">
         update HR.SHOP_ORDER_TB
-        set HR.SHOP_ORDER_TB.CHANGE = HR.SHOP_ORDER_TB.CHANGE + (#{amount} * #{itemOption.item.itemPrice})
+        set HR.SHOP_ORDER_TB.CHANGE = HR.SHOP_ORDER_TB.CHANGE + ((#{amount} * #{orderPrice}) +(#{amount} * #{postPrice}))
         where order_code = #{orderCode}
     </update>
     <delete id="deleteOrderByOrderCode">

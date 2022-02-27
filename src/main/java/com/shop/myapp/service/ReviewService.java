@@ -1,22 +1,15 @@
 package com.shop.myapp.service;
 
-import java.util.ArrayList;
 import java.util.List;
-import java.util.Optional;
 
 import org.apache.ibatis.session.SqlSession;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 
-import com.shop.myapp.dto.Cart;
-import com.shop.myapp.dto.Item;
 import com.shop.myapp.dto.Pagination;
 import com.shop.myapp.dto.Review;
-import com.shop.myapp.repository.ItemRepository;
 import com.shop.myapp.repository.ReviewRepository;
-
-import lombok.Builder;
 
 
 @Service
@@ -24,20 +17,21 @@ import lombok.Builder;
 public class ReviewService {
 	
 	private ReviewRepository reviewRepository;
+	private final OrderDetailService orderDetailService;
 	
-	public ReviewService(@Autowired SqlSession sqlSession) {
+	public ReviewService(@Autowired SqlSession sqlSession, OrderDetailService orderDetailService) {
 		this.reviewRepository = sqlSession.getMapper(ReviewRepository.class);
-				
+
+		this.orderDetailService = orderDetailService;
 	}
 	
 	public Review getReview(String reviewCode) {
-		Review review = reviewRepository.findByReviewCode(reviewCode);
-		return review;		
+		return reviewRepository.findByReviewCode(reviewCode);
 	}
 	
 	
-	 public List<Review> getReviews(Pagination pagination) {
-	        return reviewRepository.findAll(pagination);
+	 public List<Review> getReviews(String itemCode) {
+	        return reviewRepository.findAll(itemCode);
 	    }
 	
 	/*public List<Review> reviewList(){
@@ -47,6 +41,7 @@ public class ReviewService {
 	}*/
 
 	    public int insertReview(Review review) {
+			orderDetailService.updatePostedStatusByOrderDetailCodeAfterReview(review.getOrderDetailCode());
 	       return reviewRepository.insertReview(review);
 	    }
 
@@ -58,10 +53,7 @@ public class ReviewService {
 	     return reviewRepository.updateReview(reviewCode, reviewContent);
 	    }
 	
-	    public int getReviewListCnt() {
-	    	return reviewRepository.getReviewListCnt();
-	    }
-	    
+
 	    public Review findByReviewId(String memberId){
 	        return reviewRepository.findByReviewId(memberId);
 

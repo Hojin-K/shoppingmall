@@ -102,61 +102,14 @@
 	border-radius: 4px;
 }
 
-#insert {
-	background:
-		url("data:image/svg+xml,%3Csvg version='1.1' viewBox='0 0 32 32' height='24px' width='24px' xmlns='http://www.w3.org/2000/svg' xmlns:sketch='http://www.bohemiancoding.com/sketch/ns' xmlns:xlink='http://www.w3.org/1999/xlink'%3E%3Ctitle/%3E%3Cdesc/%3E%3Cdefs/%3E%3Cg fill='none' fill-rule='evenodd' id='Page-1' stroke='none' stroke-width='1'%3E%3Cg fill='%23157EFB' id='icon-135-pen-angled'%3E%3Cpath d='M23.1464466,12.0278086 L11.8535534,23.3207019 L11.8535534,23.3207019 L7.85355339,19.3207019 L19.1464466,8.02780864 L23.1464466,12.0278086 L23.1464466,12.0278086 Z M23.8535534,11.3207018 L25.5801067,9.59414849 C26.3642921,8.8099631 26.3661881,7.54044334 25.5897496,6.76400487 L24.4102504,5.58450561 C23.6313906,4.80564584 22.372781,4.80147421 21.5801067,5.59414851 L19.8535534,7.32070186 L23.8535534,11.3207018 L23.8535534,11.3207018 Z M11.1464466,24.0278086 L11,24.1742552 L6,25.1742552 L7,20.1742552 L7.14644661,20.0278086 L11.1464466,24.0278086 L11.1464466,24.0278086 Z' id='pen-angled'/%3E%3C/g%3E%3C/g%3E%3C/svg%3E")
-		no-repeat 4px 7px;
-}
-
-#update {
-	background:
-		url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' xmlns:xlink='http://www.w3.org/1999/xlink' enable-background='new 0 0 64 64' style='fill: %230d6efd;' height='24px' id='Layer_1' version='1.1' viewBox='0 0 64 64' width='24px' xml:space='preserve'%3E%3Cg%3E%3Cpath d='M55.736,13.636l-4.368-4.362c-0.451-0.451-1.044-0.677-1.636-0.677c-0.592,0-1.184,0.225-1.635,0.676l-3.494,3.484 l7.639,7.626l3.494-3.483C56.639,15.998,56.639,14.535,55.736,13.636z'/%3E%3Cpolygon points='21.922,35.396 29.562,43.023 50.607,22.017 42.967,14.39 '/%3E%3Cpolygon points='20.273,37.028 18.642,46.28 27.913,44.654 '/%3E%3Cpath d='M41.393,50.403H12.587V21.597h20.329l5.01-5H10.82c-1.779,0-3.234,1.455-3.234,3.234v32.339 c0,1.779,1.455,3.234,3.234,3.234h32.339c1.779,0,3.234-1.455,3.234-3.234V29.049l-5,4.991V50.403z'/%3E%3C/g%3E%3C/svg%3E")
-		no-repeat 4px 7px;
-}
-
-#delete {
+.delete {
 	background:
 		url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' height='24' viewBox='0 0 48 48' width='24' fill='%230d6efd'%3E%3Cpath d='M0 0h48v48H0V0z' fill='none'/%3E%3Cpath d='M12 38c0 2.2 1.8 4 4 4h16c2.2 0 4-1.8 4-4V14H12v24zm4.93-14.24l2.83-2.83L24 25.17l4.24-4.24 2.83 2.83L26.83 28l4.24 4.24-2.83 2.83L24 30.83l-4.24 4.24-2.83-2.83L21.17 28l-4.24-4.24zM31 8l-2-2H19l-2 2h-7v4h28V8z'/%3E%3Cpath d='M0 0h48v48H0z' fill='none'/%3E%3C/svg%3E")
 		no-repeat 4px 7px;
 }
 </style>
 <script>
-	/* 
-	  $(document).ready(function(){    
-		  reviewList();
-	    });      
-	  
-	  function init(){
-		    var reviewcode = ${review.reviewCode}
-		    sendData={"reviewlist":reviewlist}
-		    $.ajax({
-		        data : sendData,
-		        method :'GET',
-		        url: 'reviewList',
-		        success :output
-		    })
-			}
-	  
-	  $(function(){
-		    init();
-		    $('#reviewUpdate').on('click',reviewUpdate);
-		})
-		
-		function init(){
-	    var reviewcode = ${review.reviewCode}
-	    sendData={"reviewupdate":reviewupdate}
-	    $.ajax({
-	        data : sendData,
-	        method :'POST',
-	        url: 'reviewList',
-	        success :output
-	    })
-	
-	$(function(){
-	    init();
-	    $('#reviewDelete').on('click',reviewDelete);
-	})
- */
+
     //삭제	
 	/* $(function () {
         // test();
@@ -176,79 +129,41 @@
             $(this).tab('show')
         }) */
 
-        
-        //별점 마킹 모듈 프로토타입으로 생성(별점 부분)
-        function Rating(){};
-        Rating.prototype.rate = 0;
-        Rating.prototype.setRate = function(newrate){
-            //별점 마킹 - 클릭한 별 이하 모든 별 체크 처리
-            this.rate = newrate;
-            let items = document.querySelectorAll('.star-sel');
-            items.forEach(function(item, idx){
-                if(idx < newrate){
-                    item.checked = true;
-                }else{
-                    item.checked = false;
-                }
-            });
-        }
-        let rating = new Rating();//별점 인스턴스 생성
-        //별점선택 이벤트 리스너
-        document.querySelector('.star-box').addEventListener('click',function(e){
-            let elem = e.target;
-            if(elem.classList.contains('star-sel')){
-                rating.setRate(parseInt(elem.value));
-            }
-        });
+
 
 	</script>
 
 
 <body>
-
-	<ul class="reviewlist">
+	<ul class="reviewlist" style="list-style:none;">
 	<c:forEach items="${reviews }" var="review">
-		<li>
+		<li style="border: 1px solid #cccccc; text-align: left;">
 			<dl>
 				<dt>
-					<strong class="re-id">${review.memberId}</strong>
-					<div class="re-model">
-						<img src="sample01.jpg" alt=""> <span>${review.itemCode}</span>
+					<div style="margin-top: 15px">
+					<span style="font-weight: normal">ID : </span><strong class="re-id">${review.memberId}</strong>
 					</div>
-				<div class="star-box">
-	                <input type="checkbox" name="star" id="star1" value="1" class="star-sel" title="1점">
-	                <label for="star1"></label>
-	                <input type="checkbox" name="star" id="star2" value="2" class="star-sel" title="2점">
-	                <label for="star2"></label>
-	                <input type="checkbox" name="star" id="star3" value="3" class="star-sel" title="3점" >
-	                <label for="star3"></label>
-	                <input type="checkbox" name="star" id="star4" value="4" class="star-sel" title="4점">
-	                <label for="star4"></label>
-	                <input type="checkbox" name="star" id="star5" value="5" class="star-sel" title="5점">
-	                <label for="star5"></label>
+
+				<div class="star-box" style="margin-top: 5px">
+					<c:forEach begin="1" end="5" var="cnt">
+						<c:choose>
+						<c:when test="${review.reviewStar >= cnt}">
+	                <input type="checkbox" name="star" id="star${cnt}" class="star-sel" title="${cnt}점" checked disabled>
+	                <label for="star${cnt}"></label>
+						</c:when>
+							<c:otherwise>
+	                <input type="checkbox" name="star" id="star${cnt}" class="star-sel" title="${cnt}점" disabled>
+	                <label for="star${cnt}"></label>
+							</c:otherwise>
+						</c:choose>
+					</c:forEach>
 	            </div>
 	        </dt>
 				<dd>
-					<c:if test="${sessionScope.member.memberId == review.memberId}">
-					<div class="review-textarea">
-					<label for="reviewContent">리뷰작성하기</label>
-						<input class="form-control" type="text" name="reviewContent" 
-						id="reviewContent" value="${review.reviewContent}" >
-					</div>
-					</c:if>
-				
-					<%-- <c:if test="${sessionScope.member.memberId == review.memberId}">
-					<div class="review-textarea">
-						<textarea name="" id="" cols="30" rows="10"></textarea>
-					</div>
-					</c:if> --%>
-					
 					<div class="reviewcontent">${review.reviewContent}</div>
 					<div class="btn-box">
-					<c:if test="${sessionScope.member.memberId == review.memberId}">
-						<button type="button" id="reviewinsert">리뷰쓰기</button>
-						<button type="button" id="reviewupdate">수정</button>
-						<button type="button" id="reviewdelete">삭제</button>
+					<c:if test="${sessionScope.member.memberId == review.memberId || sessionScope.member.memberLevel.getLast() == 'SELLER'}">
+						<button type="button" id="reviewDelete_${review.reviewCode}" class="delete">삭제</button>
 					</c:if>
 					</div>
 				</dd>

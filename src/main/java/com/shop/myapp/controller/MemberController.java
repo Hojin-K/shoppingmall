@@ -64,7 +64,6 @@ public class MemberController {
     	return "/members/update";
     }
     
-    @PostMapping("/update")
     @Auth(role = Auth.Role.USER)
     @GetMapping("/{memberId}/info")
     public String infoForm(@PathVariable String memberId, HttpServletRequest request,Model model) {
