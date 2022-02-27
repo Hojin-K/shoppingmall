@@ -7,6 +7,7 @@ import com.shop.myapp.interceptor.Auth;
 import org.apache.ibatis.session.SqlSession;
 import org.springframework.http.ResponseEntity;
 import org.springframework.stereotype.Controller;
+import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.ModelAttribute;
 import org.springframework.web.bind.annotation.PathVariable;
@@ -66,10 +67,10 @@ public class MemberController {
     @PostMapping("/update")
     @Auth(role = Auth.Role.USER)
     @GetMapping("/{memberId}/info")
-    public String infoForm(@PathVariable String memberId, HttpServletRequest request) {
+    public String infoForm(@PathVariable String memberId, HttpServletRequest request,Model model) {
     	log.info("memberUpdateForm");
-    	Member member = memberService.getMember(memberId); 
-    	request.getSession().setAttribute("member", member);
+    	Member member = memberService.getMember(memberId);
+        model.addAttribute("member",member);
     	return "/members/info";
     }
     
