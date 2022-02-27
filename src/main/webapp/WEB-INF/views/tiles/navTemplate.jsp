@@ -90,11 +90,7 @@
 
                 </li>
                     <c:if test="${sessionScope.member.memberLevel.getLast() == 'USER'}">
-<<<<<<< HEAD
                         <a class="nav-link" href="/members/${sessionScope.member.memberId }/info">개인정보</a>
-=======
-                        <a class="nav-link" href="/members/${sessionScope.member.memberId}/info">개인정보</a>
->>>>>>> eaec26fc7af5da4d0b52bcd2468a6e24f8f30423
                         <a class="nav-link" href="/cart/myCart">장바구니</a>
                         <a class="nav-link" href="/order/myOrder">주문조회</a>
                     </c:if>
@@ -103,11 +99,7 @@
                         <a class="nav-link" href="/seller/${sessionScope.member.memberId}">상점관리</a>
                     </c:if>
                     <c:if test="${sessionScope.member.memberLevel.getLast() == 'ADMIN'}">
-<<<<<<< HEAD
                         <a class="nav-link" href="/admin/list">관리자모드</a>
-=======
-                        <a class="nav-link" href="/admin">관리자모드</a>
->>>>>>> eaec26fc7af5da4d0b52bcd2468a6e24f8f30423
                     </c:if>
                     <a class="nav-link" href="/members/logout">로그아웃</a>
                 </c:when>

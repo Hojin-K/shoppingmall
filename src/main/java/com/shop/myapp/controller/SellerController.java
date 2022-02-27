@@ -34,8 +34,8 @@ public class SellerController {
     private final MemberService memberService;
     private final ItemService itemService;
     private final OrderDetailService orderDetailService;
+    private final HttpSession session;
 
-    public SellerController(MemberService memberService, ItemService itemService) {
     public SellerController(HttpSession session, MemberService memberService, ItemService itemService, OrderDetailService orderDetailService) {
         this.session = session;
         this.memberService = memberService;

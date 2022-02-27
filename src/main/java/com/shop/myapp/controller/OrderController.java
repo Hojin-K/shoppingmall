@@ -46,7 +46,7 @@ public class OrderController {
 
     @PostMapping("/add")
     @ResponseBody
-    public ResponseEntity<Object> addOrder(@ModelAttribute FormList formList, @ModelAttribute Order order) {
+    public ResponseEntity<Object> addOrder(@ModelAttribute FormList formList, @ModelAttribute Order order) throws Exception {
     	MemberSession member = (MemberSession) session.getAttribute("member");
         order.setMemberId(member.getMemberId());
         Order responseOrder = orderService.insertOrder(order, formList.getCartCodes());

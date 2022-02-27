@@ -147,10 +147,10 @@
     <h2>회원가입</h2>
     <form name="frm" method="POST" action="/members/join">
         <div id="inputDiv">
-            <input type="radio" name="chk_info" value="일반회원" checked /> 
-            <label for="일반회원">일반회원</label> 
-            <input type="radio" name="chk_info" value="판매자" /> 
-            <label for="판매자">판매자</label> <br />
+            <input type="radio" id="userBtn" name="chk_info" value="일반회원" checked />
+            <label for="userBtn">일반회원</label>
+            <input type="radio" id="sellerBtn" name="chk_info" value="판매자" />
+            <label for="sellerBtn">판매자</label> <br />
             <div class="mb-3">
                 ID <br />
                 <input class="form-control" type="text" name="memberId" id="mId"/>

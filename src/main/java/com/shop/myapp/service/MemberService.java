@@ -19,14 +19,12 @@ import lombok.extern.slf4j.Slf4j;
 @Slf4j
 @Service
 public class MemberService {
-    private final SqlSession sqlSession;
     private final ItemService itemService;
     private final MemberRepository memberRepository;
 
     public MemberService(SqlSession sqlSession, ItemService itemService) {
-        this.sqlSession = sqlSession;
         this.itemService = itemService;
-        this.memberRepository = this.sqlSession.getMapper(MemberRepository.class);
+        this.memberRepository = sqlSession.getMapper(MemberRepository.class);
     }
 
     public Member getMember(String memberId) {

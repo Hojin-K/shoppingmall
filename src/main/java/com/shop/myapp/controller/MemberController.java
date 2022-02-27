@@ -67,10 +67,6 @@ public class MemberController {
     	log.info("memberUpdateForm");
     	Member member = memberService.getMember(memberId); 
     	model.addAttribute("member", member);
-    public String infoForm(@PathVariable String memberId, HttpServletRequest request,Model model) {
-    	log.info("memberUpdateForm");
-    	Member member = memberService.getMember(memberId);
-        model.addAttribute("member",member);
     	return "/members/info";
     }
     
