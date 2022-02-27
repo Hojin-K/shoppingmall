@@ -90,11 +90,12 @@
 
                 </li>
                     <c:if test="${sessionScope.member.memberLevel.getLast() == 'USER'}">
-                        <a class="nav-link" href="/members">개인정보</a>
+                        <a class="nav-link" href="/members/${sessionScope.member.memberId}/info">개인정보</a>
                         <a class="nav-link" href="/cart/myCart">장바구니</a>
                         <a class="nav-link" href="/order/myOrder">주문조회</a>
                     </c:if>
                     <c:if test="${sessionScope.member.memberLevel.getLast() == 'SELLER'}">
+                        <a class="nav-link" href="/members/${sessionScope.member.memberId}/info">개인정보</a>
                         <a class="nav-link" href="/seller/${sessionScope.member.memberId}">상점관리</a>
                     </c:if>
                     <c:if test="${sessionScope.member.memberLevel.getLast() == 'ADMIN'}">

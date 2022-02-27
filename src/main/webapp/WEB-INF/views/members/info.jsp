@@ -28,16 +28,14 @@
     }
 
     function levelChk() {
-    	let memberLevelToString = "${member.memberLevelToString}"; 
-    	let levels = memberLevelToString.split(","); 
-    	
-		if(levels.length > 0 && levels[1] == 'SELLER'){
+
+		if(${member.memberLevel.getLast() == 'SELLER'}){
 			 let text = "<div class='mb-3' id='seller'>" 
 			 	 text += "사업자명 <br />"
 			 	 text += "<input class='form-control' type='text' name='businessName' value='${member.businessName}'/>"
                  text += " 사업자번호 <br />"
                  text += "<input class='form-control' type='text' name='businessRegistrationNo' value='${member.businessRegistrationNo}'/>"
-                 text += "<input type='hidden' name='memberLevel' value='${memberLevel }' /></div>"
+                 text += "<input type='hidden' name='memberLevel' value='${memberLevel}' /></div>"
                  $("#inputDiv").append(text);
 		}
 	}
