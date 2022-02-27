@@ -15,8 +15,22 @@
             $(document).on("click", "[id^='status']", function () {
                 let attr = $(this).attr("id");
                 let selectedCode = attr.split("_")[1];
+                let val = $("#selectStatus_"+selectedCode).val();
                 $.ajax({
-                    url : "/"
+                    url : "/orderDetail/"+selectedCode+"/update",
+                    method : "POST",
+                    data : {
+                        "postedStatus" : val
+                    },
+                    statusCode : {
+                        200 : function (){
+                          alert("주문상태 변경에 성공하였습니다.")
+                            location.reload();
+                        },
+                        400 : function (){
+                            alert("주문상태 변경에 실패하였습니다.\n주문자가 환불했는지 확인해주세요.")
+                        }
+                    }
                 })
             });
 
@@ -120,7 +134,7 @@
                                 </table>
                             </div>
                         </div>
-                <c:if test="${orderDetail.postedStatus != 'refund'}">
+                <c:if test="${orderDetail.postedStatus != 'Refund'}">
                             <select id="selectStatus_${orderDetail.orderDetailCode}">
                             <option value='Refund'>환불</option>
                             <option value='Ready'>배송준비중</option>
