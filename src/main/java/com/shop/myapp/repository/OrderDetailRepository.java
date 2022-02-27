@@ -1,7 +1,9 @@
 package com.shop.myapp.repository;
 
+import com.shop.myapp.dto.Order;
 import com.shop.myapp.dto.OrderDetail;
 import org.apache.ibatis.annotations.Mapper;
+import org.apache.ibatis.annotations.Param;
 
 import java.util.List;
 
@@ -12,5 +14,6 @@ public interface OrderDetailRepository {
     int deleteOrderDetail(String orderCode);
     int updatePostedStatusByOrderCode(String orderCode);
     int updateWhenCancel(String orderDetailCode);
-    List<OrderDetail> findByMemberIdForSeller();
+    List<OrderDetail> findByMemberIdForSeller(String memberId);
+    int updatePostedStatusByOrderDetailCode(@Param("orderDetailCode") String orderDetailCode,@Param("postedStatus") String postedStatus);
 }

@@ -20,6 +20,9 @@
         $(document).on("click", "[id='add']", function () {
             location.href = "/item/add";
         });
+        $(document).on("click", "[id='order']", function () {
+            location.href = "/seller/${seller.memberId}/order";
+        });
 
     })
         function fnModuleInfo() {
@@ -113,6 +116,7 @@
                 <br>
                 <button id="update" type="button" data-bs-toggle="modal" data-bs-target="#sellerModal" class="btn btn-sm btn-light shadow col-2">상점 관리</button>
                 <button id="add" type="button" class="btn btn-sm btn-light shadow col-2">상품 등록</button>
+                <button id="order" type="button" class="btn btn-sm btn-light shadow col-2">주문 관리</button>
             </c:if>
         </div>
         <div class="col-6">

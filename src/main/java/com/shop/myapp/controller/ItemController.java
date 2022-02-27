@@ -51,7 +51,6 @@ public class ItemController {
     @Auth(role = Auth.Role.SELLER)
     @GetMapping("/add")
     public String createItemForm() {
-
         return "/item/addItemForm";
     }
     @Auth(role = Auth.Role.SELLER)
@@ -62,7 +61,6 @@ public class ItemController {
         item.setMemberId(member.getMemberId());
         item.setBusinessName(member.getBusinessName());
         Map<String, String> fileInfo = fileService.boardFileUpload(file, absolutePath);
-        List<ItemOption> itemOptions = item.getItemOptions();
         item.setItemImage(fileInfo.get("path"));
         int itemResult = itemService.createItem(item);
         if (itemResult != 0) {
@@ -95,7 +93,9 @@ public class ItemController {
             itemOption.setItemCode(itemCode);
         }
         Map<String, String> fileInfo = fileService.boardFileUpload(file, absolutePath);
+        if (!(fileInfo == null)){
             item.setItemImage(fileInfo.get("path"));
+        }
             itemService.updateItem(item);
             redirectAttributes.addAttribute("itemCode", itemCode);
             return "redirect:/item/{itemCode}";

@@ -53,10 +53,11 @@
             let value = box.value;
             let price = $('#price_' + value).text();
             let amount = $('#amount_' + value).text();
+            let post = $('#post_' + value).text();
             if (box.checked === true) {
-                total += price * amount;
+                total += (price * amount) + (post * amount);
             } else {
-                total -= price * amount;
+                total -= (price * amount) + (post * amount);
             }
             $("#total").text(total);
         });
@@ -129,7 +130,7 @@
                                     <img style="width: 100%;" src="${cart.itemOption.item.itemImage}" alt="">
                                 </div>
                                 <div style="width:80%; height:100%; float:left;">
-                                    <b style="font-size: medium">${cart.itemOption.item.itemName}</b>
+                                    <b style="font-size: medium">${cart.itemOption.item.itemName} <span style="color: #0f74a8;font-size: medium">(${cart.itemOption.item.country.countryName})</span></b>
                                     <p>${cart.itemOption.optionName}size</p>
                                 </div>
                             </a>
@@ -145,12 +146,17 @@
                             </button>
                         </td>
                     </tr>
+                    <tr>
+                        <td style="border: none">
+                        <p>배송비 : <b id="post_${cart.cartId}">${cart.itemOption.item.country.countryPostPrice}</b>원</p>
+                        </td>
+                    </tr>
                     <c:set var="i" value="${i+1}" scope="page"/>
                 </c:forEach>
                 </tbody>
             </table>
             <div>
-                <span>총 결제 금액 : </span><span id="total" style="font-size: xx-large">0</span>원
+                <span>총 결제 금액 : </span><span></span><span id="total" style="font-size: xx-large">0</span>원
                 <input class="btn btn-secondary pull-right" type="submit" value="결제하기">
             </div>
         </form>

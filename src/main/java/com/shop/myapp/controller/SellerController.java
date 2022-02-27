@@ -2,10 +2,12 @@ package com.shop.myapp.controller;
 
 import com.shop.myapp.dto.Item;
 import com.shop.myapp.dto.Member;
+import com.shop.myapp.dto.OrderDetail;
 import com.shop.myapp.dto.Pagination;
 import com.shop.myapp.interceptor.Auth;
 import com.shop.myapp.service.ItemService;
 import com.shop.myapp.service.MemberService;
+import com.shop.myapp.service.OrderDetailService;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.*;
@@ -16,17 +18,18 @@ import java.util.List;
 
 @Controller
 @RequestMapping("/seller")
-@Auth(role = Auth.Role.SELLER)
 public class SellerController {
 
     private final HttpSession session;
     private final MemberService memberService;
     private final ItemService itemService;
+    private final OrderDetailService orderDetailService;
 
-    public SellerController(HttpSession session, MemberService memberService, ItemService itemService) {
+    public SellerController(HttpSession session, MemberService memberService, ItemService itemService, OrderDetailService orderDetailService) {
         this.session = session;
         this.memberService = memberService;
         this.itemService = itemService;
+        this.orderDetailService = orderDetailService;
     }
 
     @GetMapping("/{memberId}")
@@ -42,14 +45,14 @@ public class SellerController {
         model.addAttribute("pagination",pagination);
         return "/seller/sellerView";
     }
-
+    @Auth(role = Auth.Role.SELLER)
     @GetMapping("/{memberId}/update")
     public String updateSellerInfoForm(@PathVariable String memberId,Model model){
         Member seller = memberService.getMember(memberId);
         model.addAttribute("seller",seller);
         return "/modal/sellerModal";
     }
-
+    @Auth(role = Auth.Role.SELLER)
     @PostMapping("/{memberId}/update")
     public String updateSellerInfo(@PathVariable String memberId, Member member, RedirectAttributes redirectAttributes){
         member.setMemberId(memberId);
@@ -57,4 +60,17 @@ public class SellerController {
         redirectAttributes.addAttribute("memberId",memberId);
         return "redirect:/seller/{memberId}";
     }
+
+    @GetMapping("/{memberId}/order")
+    public String orders(@PathVariable String memberId,Model model){
+        Member member = (Member) session.getAttribute("member");
+        if (!memberId.equals(member.getMemberId())){
+            throw new IllegalStateException("권한 없음");
+        }
+            List<OrderDetail> orderDetails = orderDetailService.getOrderDetailByItemWriter(memberId);
+        model.addAttribute("orderDetails",orderDetails);
+                return "/seller/sellerItemOrder";
+    }
+
+
 }
