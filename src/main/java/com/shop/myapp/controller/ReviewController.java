@@ -5,12 +5,14 @@ import java.util.List;
 import javax.servlet.http.HttpSession;
 
 import org.springframework.http.ResponseEntity;
+import org.springframework.stereotype.Controller;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.ModelAttribute;
 import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestParam;
+import org.springframework.web.bind.annotation.ResponseBody;
 import org.springframework.web.bind.annotation.RestController;
 import org.springframework.web.servlet.ModelAndView;
 
@@ -19,7 +21,7 @@ import com.shop.myapp.dto.Pagination;
 import com.shop.myapp.dto.Review;
 import com.shop.myapp.service.ReviewService;
 
-@RestController
+@Controller
 @RequestMapping("/review")
 public class ReviewController {
 	private final ReviewService reviewService;
@@ -41,6 +43,7 @@ public class ReviewController {
 		return ResponseEntity.ok(reviews); // 성공 했을 때, 성공했다는 신호와 함께 요청 값을 같이 보내줌.
 	}*/
 	
+	@ResponseBody
 	@GetMapping("/list")
 	public ModelAndView getReviews(@RequestParam(required = false, defaultValue = "1") int page) {
 		//@RequestParam 페이지 넘버를 선택하지 않은 페이지 첫접속과 같은 경우에 1페이지로 자동으로 돌려주는 부분
@@ -49,15 +52,13 @@ public class ReviewController {
 		pagination.pageInfo(page,reviewListCnt);
 		List<Review> reviews = reviewService.getReviews(pagination);
 		ModelAndView mv = new ModelAndView();
-		System.out.println("11111111111111111111111");
 		mv.setViewName("modal/review");
-		System.out.println("22222222222222222222222");
 		mv.addObject("reviews", reviews);
 		
 		return mv; // 성공 했을 때, 성공했다는 신호와 함께 요청 값을 같이 보내줌.
 	}
 	
-	@PostMapping("/insert") //reviewCode가 sql에서 자동 생성되기 때문에 {reviewCode}를 붙이지 않는다.
+	@PostMapping("/add") //reviewCode가 sql에서 자동 생성되기 때문에 {reviewCode}를 붙이지 않는다.
 	public ResponseEntity<Object> insertReview(@ModelAttribute Review review){
 		Member member=(Member)session.getAttribute("member");
 		review.setMemberId(member.getMemberId());
@@ -71,16 +72,7 @@ public class ReviewController {
 		return ResponseEntity.ok(reviews);
 	}
 	*/
-	
-	@PostMapping("/{reviewCode}/update")
-	public ResponseEntity<Object> updateReview(@PathVariable String reviewCode, String reviewContent) {
-		
-		reviewService.updateReview(reviewCode, reviewContent);
-		ResponseEntity.status(300).build();
-		return ResponseEntity.ok().build(); //  성공 했을때, 값을 안보내고 성공헀다는 신호만 보냄.
-		//ResponseEntity.ok().build(); 
-	}
-	
+	@ResponseBody
 	@PostMapping("/{reviewCode}/delete")
 	public ResponseEntity<Object> deleteReview(@PathVariable String reviewCode) {
 		//로그인 아이디 비교

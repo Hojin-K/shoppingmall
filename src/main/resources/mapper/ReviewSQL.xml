@@ -6,7 +6,7 @@
 
 	<insert id="insertReview">
 	 		INSERT INTO SHOP_REVIEW_TB VALUES(CODE_REVIEW_SQ.NEXTVAL, #{itemCode}, #{memberId},
-	 		#{reviewContent})
+	 		#{reviewContent},#{reviewStar})
 	</insert>
 	<update id="updateReview">
 			UPDATE SHOP_REVIEW_TB SET REVIEW_CONTENT=#{reviewContent} WHERE REVIEW_CODE=#{reviewCode}

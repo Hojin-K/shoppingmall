@@ -31,7 +31,6 @@
             MEMBER_DETAIL_ADDRESS=#{memberDetailAddress},
             MEMBER_TEL=#{memberTel},
             MEMBER_BIRTH=#{memberBirth}
-            <if test="memberLevel != null and memberLevel.size > 0">
             <if test="memberLevel != null and memberLevel.size > 1">
             	,BUSINESS_NAME   = #{businessName},
         		BUSINESS_REGISTRATION_NO = #{businessRegistrationNo}

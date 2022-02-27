@@ -10,6 +10,7 @@ public class Review {
 	private int itemCode;
 	private String memberId;
 	private String reviewContent;
+	private int reviewStar;
 
 }
 	    
