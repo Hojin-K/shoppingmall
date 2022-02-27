@@ -1,35 +1,45 @@
 package com.shop.myapp.controller;
 
-import com.shop.myapp.dto.Item;
-import com.shop.myapp.dto.ItemOption;
-import com.shop.myapp.dto.Member;
-import com.shop.myapp.dto.Pagination;
-import com.shop.myapp.interceptor.Auth;
-import com.shop.myapp.service.FileService;
-import com.shop.myapp.service.ItemService;
-import org.springframework.stereotype.Controller;
-import org.springframework.ui.Model;
-import org.springframework.web.bind.annotation.*;
-import org.springframework.web.multipart.MultipartFile;
-import org.springframework.web.servlet.mvc.support.RedirectAttributes;
-
-import javax.servlet.http.HttpServletRequest;
-import javax.servlet.http.HttpSession;
 import java.io.IOException;
 import java.util.List;
 import java.util.Map;
 
+import javax.servlet.http.HttpServletRequest;
+import javax.servlet.http.HttpSession;
+
+import org.springframework.stereotype.Controller;
+import org.springframework.ui.Model;
+import org.springframework.web.bind.annotation.GetMapping;
+import org.springframework.web.bind.annotation.PathVariable;
+import org.springframework.web.bind.annotation.PostMapping;
+import org.springframework.web.bind.annotation.RequestMapping;
+import org.springframework.web.bind.annotation.RequestParam;
+import org.springframework.web.multipart.MultipartFile;
+import org.springframework.web.servlet.mvc.support.RedirectAttributes;
+
+import com.shop.myapp.dto.Item;
+import com.shop.myapp.dto.ItemOption;
+import com.shop.myapp.dto.MemberSession;
+import com.shop.myapp.dto.Pagination;
+import com.shop.myapp.interceptor.Auth;
+import com.shop.myapp.service.FileService;
+import com.shop.myapp.service.ItemService;
+import com.shop.myapp.service.MemberService;
+
 @Controller
 @RequestMapping("/item")
+@Auth(role = Auth.Role.USER)
 public class ItemController {
     private final ItemService itemService;
     private final FileService fileService;
+    private final MemberService memberService;
     private final HttpSession session;
 
-    public ItemController(ItemService itemService, FileService fileService, HttpSession session) {
+    public ItemController(ItemService itemService, FileService fileService, HttpSession session,MemberService memberService) {
         this.itemService = itemService;
         this.fileService = fileService;
         this.session = session;
+        this.memberService = memberService;
     }
 
     @GetMapping("")
@@ -57,9 +67,9 @@ public class ItemController {
     @PostMapping("/add")
     public String createItem(Item item, MultipartFile file, RedirectAttributes redirectAttributes, HttpServletRequest request) throws IOException {
         String absolutePath = request.getServletContext().getRealPath("/resources/");
-        Member member = (Member) request.getSession().getAttribute("member");
+        MemberSession member = (MemberSession) request.getSession().getAttribute("member");
         item.setMemberId(member.getMemberId());
-        item.setBusinessName(member.getBusinessName());
+        item.setBusinessName(memberService.getMember(member.getMemberId()).getBusinessName());
         Map<String, String> fileInfo = fileService.boardFileUpload(file, absolutePath);
         item.setItemImage(fileInfo.get("path"));
         int itemResult = itemService.createItem(item);
@@ -73,7 +83,7 @@ public class ItemController {
     @Auth(role = Auth.Role.SELLER)
     @GetMapping("/{itemCode}/update")
     public String updateItemForm(@PathVariable String itemCode, Model model) {
-        Member member = (Member) session.getAttribute("member");
+    	MemberSession member = (MemberSession) session.getAttribute("member");
         if (itemService.validateAccessToItem(itemCode, member)) {
             Item item = itemService.getItem(itemCode);
             model.addAttribute("item", item);
@@ -82,11 +92,12 @@ public class ItemController {
 
         return "redirect:/item";
     }
+
     @Auth(role = Auth.Role.SELLER)
     @PostMapping("/{itemCode}/update")
     public String updateItem(@PathVariable String itemCode, Item item,MultipartFile file,HttpServletRequest request, RedirectAttributes redirectAttributes) throws IOException {
         String absolutePath = request.getServletContext().getRealPath("/resources/");
-        Member member = (Member) session.getAttribute("member");
+        MemberSession member = (MemberSession) session.getAttribute("member");
         if (itemService.validateAccessToItem(itemCode, member)) {
             item.setItemCode(itemCode);
         for (ItemOption itemOption : item.getItemOptions()){
@@ -105,7 +116,7 @@ public class ItemController {
     @Auth(role = Auth.Role.SELLER)
     @GetMapping("/{itemCode}/delete")
     public String deleteItem(@PathVariable String itemCode) {
-        Member member = (Member) session.getAttribute("member");
+    	MemberSession member = (MemberSession) session.getAttribute("member");
         if (itemService.validateAccessToItem(itemCode, member)) {
             itemService.deleteItem(itemCode);
             return "redirect:/item";

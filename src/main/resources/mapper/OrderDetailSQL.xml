@@ -69,6 +69,11 @@
         set HR.SHOP_ORDER_DETAIL_TB.POSTED_STATUS = #{postedStatus}
         where order_detail_code = #{orderDetailCode}
     </update>
+    <update id="updatePostedStatusByOrderDetailCodeAfterReview">
+        update HR.SHOP_ORDER_DETAIL_TB
+        set HR.SHOP_ORDER_DETAIL_TB.POSTED_STATUS = 'Review'
+        where HR.SHOP_ORDER_DETAIL_TB.ORDER_DETAIL_CODE = #{orderDetailCode}
+    </update>
     <delete id="deleteOrderDetail">
         delete HR.SHOP_ORDER_DETAIL_TB
         where HR.SHOP_ORDER_DETAIL_TB.ORDER_CODE = #{orderCode}

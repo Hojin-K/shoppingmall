@@ -1,18 +1,17 @@
 package com.shop.myapp.service;
 
-import com.shop.myapp.dto.Item;
-import com.shop.myapp.dto.ItemOption;
-import com.shop.myapp.dto.Member;
-import com.shop.myapp.dto.Pagination;
-import com.shop.myapp.repository.ItemOptionRepository;
-import com.shop.myapp.repository.ItemRepository;
+import java.util.List;
+import java.util.Optional;
+
 import org.apache.ibatis.session.SqlSession;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 
-import java.util.List;
-import java.util.Optional;
+import com.shop.myapp.dto.Item;
+import com.shop.myapp.dto.MemberSession;
+import com.shop.myapp.dto.Pagination;
+import com.shop.myapp.repository.ItemRepository;
 
 @Service
 @Transactional(rollbackFor = {Exception.class})
@@ -20,9 +19,11 @@ public class ItemService {
     private final ItemRepository itemRepository;
     private final ItemOptionService itemOptionService;
 
+
     public ItemService(@Autowired SqlSession sqlSession, ItemOptionService itemOptionService) {
         this.itemRepository = sqlSession.getMapper(ItemRepository.class);
         this.itemOptionService = itemOptionService;
+
     }
 
     public Item getItem(String itemCode) {
@@ -72,7 +73,7 @@ public class ItemService {
         return pagination;
     }
 
-    public boolean validateAccessToItem(String itemCode, Member member) {
+    public boolean validateAccessToItem(String itemCode, MemberSession member) {
         Optional<Item> itemOptional = itemRepository.findByItemCode(itemCode);
         Item item = itemOptional.orElseThrow(() -> new IllegalStateException("아이템 검색 실패"));
         // 관리자거나 상품 작성자와 로그인 정보가 일치하면 true , 틀리면 false

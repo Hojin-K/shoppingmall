@@ -85,4 +85,7 @@ public class OrderDetailService {
         return orderDetailRepository.updatePostedStatusByOrderDetailCode(orderDetailCode, postedStatus);
     }
 
+    public int updatePostedStatusByOrderDetailCodeAfterReview(String orderDetailCode){
+        return orderDetailRepository.updatePostedStatusByOrderDetailCodeAfterReview(orderDetailCode);
+    }
 }

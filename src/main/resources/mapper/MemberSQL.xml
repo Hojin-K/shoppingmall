@@ -68,7 +68,9 @@ set HR.SHOP_MEMBER_TB.BUSINESS_NAME = #{businessName}, business_info = #{busines
         SELECT *
         FROM SHOP_MEMBER_TB
         WHERE MEMBER_ID = #{memberId}
+        <if test="requestorLevel == null">
         AND IS_DELETE = 0
+        </if>
     </select>
 
 

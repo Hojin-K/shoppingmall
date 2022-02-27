@@ -1,5 +1,16 @@
 package com.shop.myapp.controller;
 
+import java.util.List;
+
+import org.springframework.stereotype.Controller;
+import org.springframework.ui.Model;
+import org.springframework.web.bind.annotation.GetMapping;
+import org.springframework.web.bind.annotation.PathVariable;
+import org.springframework.web.bind.annotation.PostMapping;
+import org.springframework.web.bind.annotation.RequestMapping;
+import org.springframework.web.bind.annotation.RequestParam;
+import org.springframework.web.servlet.mvc.support.RedirectAttributes;
+
 import com.shop.myapp.dto.Item;
 import com.shop.myapp.dto.Member;
 import com.shop.myapp.dto.OrderDetail;
@@ -20,10 +31,10 @@ import java.util.List;
 @RequestMapping("/seller")
 public class SellerController {
 
-    private final HttpSession session;
     private final MemberService memberService;
     private final ItemService itemService;
     private final OrderDetailService orderDetailService;
+    private final HttpSession session;
 
     public SellerController(HttpSession session, MemberService memberService, ItemService itemService, OrderDetailService orderDetailService) {
         this.session = session;

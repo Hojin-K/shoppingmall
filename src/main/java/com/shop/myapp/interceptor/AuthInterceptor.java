@@ -8,7 +8,7 @@ import org.springframework.stereotype.Component;
 import org.springframework.web.method.HandlerMethod;
 import org.springframework.web.servlet.HandlerInterceptor;
 
-import com.shop.myapp.dto.Member;
+import com.shop.myapp.dto.MemberSession;
 
 import lombok.extern.slf4j.Slf4j;
 
@@ -61,7 +61,7 @@ public class AuthInterceptor implements HandlerInterceptor{
 				}
 				
 				// 6. 세션이 존재하면 유효한 유저인지 확인
-				Member authUser = (Member)session.getAttribute("member");
+				MemberSession authUser = (MemberSession)session.getAttribute("member");
 				if ( authUser == null ) {
 					response.sendRedirect(request.getContextPath() + "/members/login");
 					return false;

@@ -13,6 +13,7 @@ public interface OrderDetailRepository {
     OrderDetail findByOrderDetailCode(String orderDetailCode);
     int deleteOrderDetail(String orderCode);
     int updatePostedStatusByOrderCode(String orderCode);
+    int updatePostedStatusByOrderDetailCodeAfterReview(String orderDetailCode);
     int updateWhenCancel(String orderDetailCode);
     List<OrderDetail> findByMemberIdForSeller(String memberId);
     int updatePostedStatusByOrderDetailCode(@Param("orderDetailCode") String orderDetailCode,@Param("postedStatus") String postedStatus);

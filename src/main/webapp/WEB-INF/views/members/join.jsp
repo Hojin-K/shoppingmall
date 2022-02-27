@@ -11,8 +11,10 @@
         $("[name='chk_info']").change(
             function() {
             	if (this.value === "판매자") {
-                    let text = "<div class='mb-3' id='seller'> 사업자명 <br /> <input class='form-control' type='text' name='businessName' />"
-                    text += " 사업자번호 <br /> <input class='form-control' type='text' name='businessRegistrationNo' />"
+                    let text = "<div class='mb-3' id='seller'> 사업자명 <br />"
+                    text += "<input id='bName' class='form-control' type='text' name='businessName' />"
+                    text += " 사업자번호 <br />"
+                    text += "<input id='bRegNo' class='form-control' type='text' name='businessRegistrationNo' />"
                     text += "<input type='hidden' value='USER,SELLER' name='memberLevel'/></div>"
                     $("#inputDiv").append(text);
                 } else {
@@ -23,6 +25,7 @@
         	alert("겟스크립트~");
             console.log('regExp.js loading!!');
         }); */
+      
     })
     window.onload = function() {
     document.getElementById("address_kakao").addEventListener("click",function() {
@@ -35,13 +38,108 @@
                     });
     }
     
-    var headTag = document.getElementsByTagName("head")[0];         
-    var newScript = document.createElement('script');
-    newScript.type = 'text/javascript';
-    newScript.onload = function() { console.log('자바스크립트 로드 완료') };
-    newScript.src = 'regExp.js';
-    headTag.appendChild(newScript);
+    function joinCheck() {
+    	let uid = document.getElementById('mId');
+    	let name = document.getElementById('mName');
+    	let email = document.getElementById('mEmail');
+    	let pwd = document.getElementById('mPwd');
+    	let rePwd = document.getElementById('rePwd');
+    	let addr = document.getElementById('address_kakao');
+    	let detailAddr = document.getElementById('detailAddress');
+    	let tel = document.getElementById('mTel');
+    	let birth = document.getElementById('mBirth');
+    	let bName = document.getElementById('bName');
+    	let bRegNo = document.getElementById('bRegNo');
 
+    	if (uid.value == "") { // 해당 입력값이 없을 경우 같은말: if(!uid.value)
+    		// 비밀번호 영문자+숫자+특수조합(8~25자리 입력) 정규식
+    		alert("아이디를 입력하세요.");
+    		uid.focus(); // focus(): 커서가 깜빡이는 현상, blur(): 커서가 사라지는 현상
+    		return false; // return: 반환하다 return false: 아무것도 반환하지 말아라 아래 코드부터 아무것도
+    						// 진행하지 말것
+    	}else{
+    		var idCheck = /^(?=.*[a-zA-Z])(?=.*[0-9]).{6,20}$/;
+
+        	if (!idCheck.test(uid.value)) {
+        		alert("아이디는 영문자+숫자 조합으로 6~20자리 사용해야 합니다.");
+        		uid.focus();
+        		return false;
+        	};
+    	};
+
+    	if (name.value == "") {
+    		alert("이름을 입력하세요.");
+    		name.focus();
+    		return false;
+    	};
+
+    	if (email.value == "") {
+    		alert("이메일 주소를 입력하세요.");
+    		email.focus();
+    		return false;
+    	};
+    	
+    	if (pwd.value == "") {
+    		alert("비밀번호를 입력하세요.");
+    		pwd.focus();
+    		return false;
+    	};
+
+    	// 비밀번호 영문자+숫자+특수조합(8~25자리 입력) 정규식
+    	var pwdCheck = /^(?=.*[a-zA-Z])(?=.*[!@#$%^*+=-])(?=.*[0-9]).{8,25}$/;
+
+    	if (!pwdCheck.test(pwd.value)) {
+    		alert("비밀번호는 영문자+숫자+특수문자 조합으로 8~25자리 사용해야 합니다.");
+    		pwd.focus();
+    		return false;
+    	};
+
+    	if (rePwd.value !== pwd.value) {
+    		alert("비밀번호가 일치하지 않습니다..");
+    		rePwd.focus();
+    		return false;
+    	};
+
+    	var reg = /^[0-9]+/g; // 숫자만 입력하는 정규식
+
+    	if (!reg.test(tel.value)) {
+    		alert("전화번호는 숫자만 입력할 수 있습니다.");
+    		tel.focus();
+    		return false;
+    	};
+
+    	if (addr.value == "") {
+    		alert("주소를 입력하세요.");
+    		addr.focus();
+    		return false;
+    	};
+    	
+    	if (detailAddr.value == "") {
+    		alert("상세주소를 입력하세요.");
+    		detailAddr.focus();
+    		return false;
+    	};
+    	
+    	if (birth.value == "") {
+    		alert("생년월일을 입력하세요.");
+    		birth.focus();
+    		return false;
+    	};
+    	
+    	if (bName != null && bName.value == ""){
+    		alert("사업자명을 입력하세요.");
+    		bName.focus();
+    		return false;
+    	};
+    	
+    	if (bRegNo != null && bRegNo.value == ""){
+    		alert("사업자번호를 입력하세요.");
+    		bRegNo.focus();
+    		return false;
+    	};
+    	// 입력 값 전송
+    	document.frm.submit(); // 유효성 검사의 포인트
+    }
 </script>
 </head>
 <body class="pt-5">
@@ -49,10 +147,10 @@
     <h2>회원가입</h2>
     <form name="frm" method="POST" action="/members/join">
         <div id="inputDiv">
-            <input type="radio" name="chk_info" value="일반회원" checked /> 
-            <label for="일반회원">일반회원</label> 
-            <input type="radio" name="chk_info" value="판매자" /> 
-            <label for="판매자">판매자</label> <br />
+            <input type="radio" id="userBtn" name="chk_info" value="일반회원" checked />
+            <label for="userBtn">일반회원</label>
+            <input type="radio" id="sellerBtn" name="chk_info" value="판매자" />
+            <label for="sellerBtn">판매자</label> <br />
             <div class="mb-3">
                 ID <br />
                 <input class="form-control" type="text" name="memberId" id="mId"/>

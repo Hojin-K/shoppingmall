@@ -29,7 +29,7 @@
     </style>
     <script>
         $(function () {
-            test();
+            getReview();
 
             $(document).on("click", "#backMain", function () {
                 location.href = "/item/";
@@ -42,33 +42,32 @@
                 e.preventDefault()
                 $(this).tab('show')
             })
-			
+
+            $(document).on("click", "#qnaTab", function () {
+                callQna();
+            });
+
             //리뷰
-            function test (){
+            function getReview (){
                 $.ajax({
                      url : "/review/list",
                      method : "GET",
+                    data : {"itemCode" : "${item.itemCode}"},
                      success : function (data){
-                         alert(data);
                          $("#review").html(data);
                      }
                  })
              }
-            
-            
-            
-            $(document).on("click","[name='reviewDelete']",function() {
-                let optionDiv = $(this).closest("div");
-                optionDiv.remove();
-            });            
-            $(document).on("click","[id='reviewDelete']",function() {
-                let select = confirm("리뷰를 삭제하시겠습니까?");
-                if(select===true){
-                location.href = "/item/${review.itemCode}/delete"
-                }
-              });
-
         });
+	function callQna (){
+	    $.ajax({
+	        url : "/qna/${item.itemCode}/list?",
+	        method : "GET",
+	        success : function (data){
+	            $("#qna").html(data);
+	        }
+	    })
+	}
     </script>
 
 </head>
@@ -128,7 +127,7 @@
                     <a class="nav-link" data-toggle="tab" href="#review">리뷰</a>
                 </li>
                 <li class="nav-item">
-                    <a class="nav-link" data-toggle="tab" href="#zxc">QNA</a>
+                    <a class="nav-link" data-toggle="tab" href="#qna" id="qnaTab">QNA</a>
                 </li>
             </ul>
             <div class="tab-content">
@@ -143,13 +142,10 @@
                 <div class="tab-pane fade text-center" id="review">
                     <p>review</p>
                 </div>
-                <div class="tab-pane fade text-center" id="zxc">
+                <div class="tab-pane fade text-center" id="qna">
                     <p>QNA</p>
                 </div>
             </div>
-        </div>
-        <div id="qna">
-        
         </div>
     </div>
 </div>
