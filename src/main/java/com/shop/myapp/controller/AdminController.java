@@ -16,9 +16,6 @@ import org.springframework.web.servlet.ModelAndView;
 
 import com.shop.myapp.dto.Member;
 import com.shop.myapp.interceptor.Auth;
-import com.shop.myapp.interceptor.Auth.Role;
-import com.shop.myapp.service.AuthService;
-import com.shop.myapp.service.AuthServiceImpl;
 import com.shop.myapp.service.MemberService;
 
 import lombok.extern.slf4j.Slf4j;
