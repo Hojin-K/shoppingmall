@@ -8,9 +8,6 @@
 		function fnModuleInfo(memberId) {
 			let url = "/admin/" + memberId + "/detail";
 			$('.modal-content').load(url);
-			//alert("lkklklklkl");
-			//$('#MoaModal').modal('show');
-			
 		}
 
 </script>

@@ -13,11 +13,9 @@
         <id property="itemInfo" column="item_info"/>
         <id property="itemBrand" column="item_brand"/>
         <id property="businessName" column="business_name"/>
-        <id property="isDelete" column="is_delete"/>
         <association property="country" javaType="com.shop.myapp.dto.Country">
             <result property="countryCode" column="country_code"/>
             <result property="countryName" column="country_name"/>
-            <result property="countryPostPrice" column="country_post_price"/>
         </association>
         <collection property="itemOptions" ofType="com.shop.myapp.dto.ItemOption" javaType="java.util.List">
             <result property="optionCode" column="option_code"/>
@@ -53,7 +51,6 @@
         #{itemBrand},
         #{businessName})
     </insert>
-
     <update id="updateItem" parameterType="com.shop.myapp.dto.Item">
         update HR.SHOP_ITEM_TB
         set ITEM_PRICE = #{itemPrice},
@@ -146,10 +143,12 @@
         ]]>
     </select>
     <select id="findAllByMemberId" resultMap="item">
-        select ROW_NUMBER() over (order by item.item_code desc ) AS num,
+        SELECT *
+        FROM (
+        SELECT ROW_NUMBER() over (order by item.item_code desc ) AS num,
         item.ITEM_CODE,
         MEMBER_ID,
-        item.COUNTRY_CODE                                 as country_code,
+        item.COUNTRY_CODE as country_code,
         ITEM_NAME,
         ITEM_PRICE,
         ITEM_IMAGE,
