@@ -1,15 +1,16 @@
-import com.shop.myapp.dto.Member;
-import com.shop.myapp.service.MemberService;
+import static org.junit.Assert.assertEquals;
+
+import java.time.LocalDate;
+
 import org.junit.Test;
 import org.junit.runner.RunWith;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.test.context.ContextConfiguration;
 import org.springframework.test.context.junit4.SpringJUnit4ClassRunner;
 import org.springframework.test.context.web.WebAppConfiguration;
-import java.time.LocalDate;
-import java.util.ArrayList;
-import java.util.LinkedList;
-import static org.junit.Assert.assertEquals;
+
+import com.shop.myapp.dto.Member;
+import com.shop.myapp.service.MemberService;
 
 @WebAppConfiguration
 @RunWith(SpringJUnit4ClassRunner.class)
@@ -23,7 +24,7 @@ public class MemberTest {
         int count = 0;
         for (int i=0; i<5; i++){
             Member member = new Member();
-            member.setMemberId("test"+i);
+            member.setMemberId("tt"+i);
             member.setMemberPwd("test"+i);
             member.setMemberName("test"+i);
             member.setMemberAddress("test"+i);
@@ -38,10 +39,10 @@ public class MemberTest {
     @Test
     public void updateMeber() {
     	 Member member = new Member();
-         member.setMemberId("test");
-         member.setMemberPwd("test");
-         member.setMemberName("test");
-         member.setMemberAddress("test");
+         member.setMemberId("t1");
+         member.setMemberPwd("test8");
+         member.setMemberName("test8");
+         member.setMemberAddress("test8");
          member.setMemberTel("010-1111-1111");
          member.setMemberBirth(LocalDate.now());
          int result = memberService.updateMember(member);

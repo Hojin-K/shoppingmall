@@ -20,6 +20,15 @@
 	<title>Home</title>
 </head>
 <body>
+<h1>
+	Hello world!  
+</h1>
+
+<P>  The time on the server is ${serverTime}. </P>
+<!-- <a href="itemlistView">itemlistView</a> -->
+<a href="members/join">가입</a>
+<a href="members/login">로그인</a>
+
 <div id="carouselExampleIndicators" class="carousel slide" data-bs-ride="carousel">
 	<div class="carousel-indicators">
 		<button type="button" data-bs-target="#carouselExampleIndicators" data-bs-slide-to="0" class="active" aria-current="true" aria-label="Slide 1"></button>
@@ -46,5 +55,6 @@
 		<span class="visually-hidden">Next</span>
 	</button>
 </div>
+
 </body>
 </html>

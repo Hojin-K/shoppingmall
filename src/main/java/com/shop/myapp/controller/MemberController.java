@@ -29,6 +29,7 @@ public class MemberController {
     public MemberController(MemberService memberService) {
         this.memberService = memberService;
     }
+
     @GetMapping("/join")
     public String joinForm() {
     	//authService.checkMemberId("");
@@ -52,6 +53,13 @@ public class MemberController {
     	
     	return "redirect:/";
     }
+
+    @GetMapping("/update")
+    @Auth(role = Auth.Role.USER)
+    public String updateForm() {
+    	log.info("memberUpdateForm");
+    	return "/members/update";
+    }
     
     @Auth(role = Auth.Role.USER)
     @GetMapping("/{memberId}/info")
@@ -59,6 +67,10 @@ public class MemberController {
     	log.info("memberUpdateForm");
     	Member member = memberService.getMember(memberId); 
     	model.addAttribute("member", member);
+    public String infoForm(@PathVariable String memberId, HttpServletRequest request,Model model) {
+    	log.info("memberUpdateForm");
+    	Member member = memberService.getMember(memberId);
+        model.addAttribute("member",member);
     	return "/members/info";
     }
     
@@ -110,6 +122,7 @@ public class MemberController {
 
     @GetMapping("/{memberId}")
     @ResponseBody
+    @Auth(role = Auth.Role.ADMIN)
     public ResponseEntity<Object> getMemberInfo(@PathVariable String memberId){
         Member member = memberService.getMember(memberId);
         return ResponseEntity.ok(member);

@@ -35,7 +35,7 @@ public class HomeController {
 
 		model.addAttribute("items",items);
 		
-		return "item/home";
+		return "/item/items";
 	}
 	
 }

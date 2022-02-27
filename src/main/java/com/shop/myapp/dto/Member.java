@@ -44,4 +44,5 @@ public class Member {
     	System.out.println("ToString -> "+memberLevelToString);
     	this.memberLevel = levels;
     }
+
 }

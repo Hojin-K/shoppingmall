@@ -2,8 +2,6 @@ package com.shop.myapp.controller;
 
 import java.util.List;
 
-import javax.servlet.http.HttpServletRequest;
-
 import org.springframework.stereotype.Controller;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.ModelAttribute;
@@ -22,7 +20,7 @@ import lombok.extern.slf4j.Slf4j;
 
 @Slf4j
 @Controller
-@Auth(role = Auth.Role.ADMIN)
+//@Auth(role = Auth.Role.ADMIN)
 @RequestMapping("/admin")
 public class AdminController {
 	private final MemberService memberService;

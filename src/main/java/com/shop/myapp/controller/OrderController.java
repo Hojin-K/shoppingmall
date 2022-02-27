@@ -49,18 +49,9 @@ public class OrderController {
     public ResponseEntity<Object> addOrder(@ModelAttribute FormList formList, @ModelAttribute Order order) {
     	MemberSession member = (MemberSession) session.getAttribute("member");
         order.setMemberId(member.getMemberId());
-        try {
         Order responseOrder = orderService.insertOrder(order, formList.getCartCodes());
-
-        System.out.println(order.getOrderCode());
-        for (OrderDetail orderDetail : responseOrder.getOrderDetails()) {
-            orderDetail.setOrder(null);
-        }
-        System.out.println(order.getTotalPay());
+        order.setOrderDetails(null);
         return ResponseEntity.ok(responseOrder);
-        } catch (Exception e){
-            e.printStackTrace(); return ResponseEntity.status(402).build();
-        }
     }
 
     @PostMapping("/{orderCode}/validate")

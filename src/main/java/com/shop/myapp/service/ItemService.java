@@ -84,7 +84,11 @@ public class ItemService {
         return itemRepository.findAllByMemberId(memberId,pagination,search);
     }
 
+
+
+
     public List<Item> findNewItems(){
         return itemRepository.findNewItems();
     }
 }
+

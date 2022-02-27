@@ -67,28 +67,31 @@
     </update>
 
     <select id="findAll" resultMap="item"><![CDATA[
-        SELECT *
-        FROM (
-                 SELECT ROW_NUMBER() over (order by item.item_code desc ) AS num,
-                        item.ITEM_CODE,
-                        MEMBER_ID,
-                        item.COUNTRY_CODE as country_code,
-                        ITEM_NAME,
-                        ITEM_PRICE,
-                        ITEM_IMAGE,
-                        ITEM_INFO,
-                        COUNTRY_NAME,
-                        sum(item_option.OPTION_STOCK) as ITEM_STOCK
-                 from HR.SHOP_ITEM_TB item,
-                      HR.SHOP_ITEM_OPTIONS_TB item_option,
-                      HR.SHOP_COUNTRY_TB country
-                 WHERE item.IS_DELETE = '0'
-                   and rownum <= #{endList}
-                   and item.ITEM_CODE = item_option.ITEM_CODE
-                   and item.country_code = country.country_code
-                 group by item.ITEM_CODE, MEMBER_ID, item.COUNTRY_CODE, ITEM_NAME, ITEM_PRICE, ITEM_IMAGE, ITEM_INFO,
-                          'ITEM_STOCK', country_name)
-        WHERE #{startList} < num
+        select ROW_NUMBER() over (order by item.item_code desc ) AS num,
+               item.ITEM_CODE,
+               MEMBER_ID,
+               item.COUNTRY_CODE                                 as country_code,
+               ITEM_NAME,
+               ITEM_PRICE,
+               ITEM_IMAGE,
+               ITEM_INFO,
+               COUNTRY_NAME,
+               sum(item_option.OPTION_STOCK)                     as item_stock,
+               item.is_delete
+        from (select *
+              from (select *
+                    from (
+                             select /*+ INDEX(item search_item) */item.*
+                             from SHOP_ITEM_TB item
+                             where is_delete = '0')
+                    where ROWNUM <= #{endList})
+              where rownum > #{startList}) item,
+             HR.SHOP_ITEM_OPTIONS_TB item_option,
+             HR.SHOP_COUNTRY_TB country
+        where item.ITEM_CODE = item_option.ITEM_CODE
+          and item.country_code = country.country_code
+        group by item.ITEM_CODE, MEMBER_ID, item.COUNTRY_CODE, ITEM_NAME, ITEM_PRICE, ITEM_IMAGE, ITEM_INFO,
+                 'item_stock', country_name, item.is_delete
         ]]></select>
 
     <select id="findByItemCode" resultMap="item">
@@ -104,44 +107,42 @@
     </select>
     <select id="getItemListCnt" resultType="java.lang.Integer">
         select count(*) as listCnt
-        from SHOP_ITEM_TB i where i.IS_DELETE = '0'
+        from SHOP_ITEM_TB i
+        where i.IS_DELETE = '0'
     </select>
     <select id="findAllBySearch" resultMap="item">
         <![CDATA[
-        SELECT *
-        FROM (
-                 select *
-                 from (
-                          SELECT ROW_NUMBER() over (order by item.item_code desc ) AS num,
-                                 item.ITEM_CODE,
-                                 MEMBER_ID,
-                                 item.COUNTRY_CODE                                 as country_code,
-                                 ITEM_NAME,
-                                 ITEM_PRICE,
-                                 ITEM_IMAGE,
-                                 ITEM_INFO,
-                                 COUNTRY_NAME,
-                                 ITEM_BRAND,
-                                 sum(item_option.OPTION_STOCK)                     as ITEM_STOCK
-                          from HR.SHOP_ITEM_TB item,
-                               HR.SHOP_ITEM_OPTIONS_TB item_option,
-                               HR.SHOP_COUNTRY_TB country
-                          WHERE item.IS_DELETE = '0'
-                            and (ITEM_NAME like '%' || #{search} || '%'
-                              or item_brand like '%' || #{search} || '%')
-                            and item.ITEM_CODE = item_option.ITEM_CODE
-                            and item.country_code = country.country_code
-                          group by item.ITEM_CODE, MEMBER_ID, item.COUNTRY_CODE, ITEM_NAME, ITEM_PRICE, ITEM_IMAGE,
-                                   ITEM_INFO,
-                                   'ITEM_STOCK', country_name, item_brand
-                      )
-                 where rownum <= #{pagination.endList})
-        WHERE #{pagination.startList} < num
+        select ROW_NUMBER() over (order by item.item_code desc ) AS num,
+               item.ITEM_CODE,
+               MEMBER_ID,
+               item.COUNTRY_CODE                                 as country_code,
+               ITEM_NAME,
+               ITEM_PRICE,
+               ITEM_IMAGE,
+               ITEM_INFO,
+               COUNTRY_NAME,
+               COUNTRY_POST_PRICE,
+               sum(item_option.OPTION_STOCK)                     as item_stock,
+               item.is_delete
+        from (select *
+              from (select *
+                    from (
+                             select /*+ INDEX(item search_item) */ item.*
+                             from SHOP_ITEM_TB item
+                             where is_delete = '0'
+                               and (ITEM_NAME like '%' || #{search} || '%'
+                                 or item_brand like '%' || #{search} || '%'))
+                    where ROWNUM <= #{pagination.endList})
+              where rownum > #{pagination.startList}) item,
+             HR.SHOP_ITEM_OPTIONS_TB item_option,
+             HR.SHOP_COUNTRY_TB country
+        where item.ITEM_CODE = item_option.ITEM_CODE
+          and item.country_code = country.country_code
+        group by item.ITEM_CODE, MEMBER_ID, item.COUNTRY_CODE, ITEM_NAME, ITEM_PRICE, ITEM_IMAGE, ITEM_INFO,
+                 'item_stock', country_name, item.is_delete, COUNTRY_POST_PRICE
         ]]>
     </select>
     <select id="findAllByMemberId" resultMap="item">
-        SELECT *
-        FROM (
         SELECT ROW_NUMBER() over (order by item.item_code desc ) AS num,
         item.ITEM_CODE,
         MEMBER_ID,
@@ -151,49 +152,54 @@
         ITEM_IMAGE,
         ITEM_INFO,
         COUNTRY_NAME,
-        sum(item_option.OPTION_STOCK) as ITEM_STOCK
-        from HR.SHOP_ITEM_TB item,
+        COUNTRY_POST_PRICE,
+        sum(item_option.OPTION_STOCK)                     as item_stock,
+        item.is_delete
+        from (select *
+        from (select *
+        from (
+        select /*+ INDEX(item PK_SHOP_ITEM_TB) */ item.*
+        from SHOP_ITEM_TB item
+        where item.MEMBER_ID = #{memberId} and is_delete = '0' <if test="search != null">and (ITEM_NAME like '%' || #{search} || '%'
+        or item_brand like '%' || #{search} || '%')</if>
+        )
+            where ROWNUM <![CDATA[ <= ]]>#{pagination.endList})
+      where rownum <![CDATA[ > ]]>#{pagination.startList}) item,
         HR.SHOP_ITEM_OPTIONS_TB item_option,
         HR.SHOP_COUNTRY_TB country
-        WHERE item.IS_DELETE = '0'
-        <if test="search != null">
-            and (ITEM_NAME like '%' || #{search} || '%'
-            or item_brand like '%' || #{search} || '%')
-        </if>
-        and item.MEMBER_ID = #{memberId}
-        <![CDATA[
-                   and rownum <= #{pagination.endList}
-                   and item.ITEM_CODE = item_option.ITEM_CODE
-                   and item.country_code = country.country_code
-                 group by item.ITEM_CODE, MEMBER_ID, item.COUNTRY_CODE, ITEM_NAME, ITEM_PRICE, ITEM_IMAGE, ITEM_INFO,
-                          'ITEM_STOCK', country_name)
-        WHERE #{pagination.startList} < num
-        ]]>
+        where item.ITEM_CODE = item_option.ITEM_CODE
+        and item.country_code = country.country_code
+        group by item.ITEM_CODE, MEMBER_ID, item.COUNTRY_CODE, ITEM_NAME, ITEM_PRICE, ITEM_IMAGE, ITEM_INFO,
+        'item_stock', country_name, item.is_delete, COUNTRY_POST_PRICE
     </select>
     <select id="findNewItems" resultType="com.shop.myapp.dto.Item">
         <![CDATA[
-        SELECT *
-        FROM (
-                 SELECT ROW_NUMBER() over (order by item.item_code desc ) AS num,
-                        item.ITEM_CODE,
-                        MEMBER_ID,
-                        item.COUNTRY_CODE                                 as country_code,
-                        ITEM_NAME,
-                        ITEM_PRICE,
-                        ITEM_IMAGE,
-                        ITEM_INFO,
-                        COUNTRY_NAME,
-                        sum(item_option.OPTION_STOCK)                     as ITEM_STOCK
-                 from HR.SHOP_ITEM_TB item,
-                      HR.SHOP_ITEM_OPTIONS_TB item_option,
-                      HR.SHOP_COUNTRY_TB country
-                 WHERE item.IS_DELETE = '0'
-                   and rownum <= 5
-                   and item.ITEM_CODE = item_option.ITEM_CODE
-                   and item.country_code = country.country_code
-                 group by item.ITEM_CODE, MEMBER_ID, item.COUNTRY_CODE, ITEM_NAME, ITEM_PRICE, ITEM_IMAGE, ITEM_INFO,
-                          'ITEM_STOCK', country_name)
-        WHERE 0 < num
+        select ROW_NUMBER() over (order by item.item_code desc ) AS num,
+               item.ITEM_CODE,
+               MEMBER_ID,
+               item.COUNTRY_CODE                                 as country_code,
+               ITEM_NAME,
+               ITEM_PRICE,
+               ITEM_IMAGE,
+               ITEM_INFO,
+               COUNTRY_NAME,
+               COUNTRY_POST_PRICE,
+               sum(item_option.OPTION_STOCK)                     as item_stock,
+               item.is_delete
+        from (select *
+              from (select *
+                    from (
+                             select /*+ INDEX(item search_item) */item.*
+                             from SHOP_ITEM_TB item
+                             where is_delete = '0')
+                    where ROWNUM <= 5)
+              where rownum > 0) item,
+             HR.SHOP_ITEM_OPTIONS_TB item_option,
+             HR.SHOP_COUNTRY_TB country
+        where item.ITEM_CODE = item_option.ITEM_CODE
+          and item.country_code = country.country_code
+        group by item.ITEM_CODE, MEMBER_ID, item.COUNTRY_CODE, ITEM_NAME, ITEM_PRICE, ITEM_IMAGE, ITEM_INFO,
+                 'item_stock', country_name, item.is_delete, COUNTRY_POST_PRICE
         ]]>
     </select>
 

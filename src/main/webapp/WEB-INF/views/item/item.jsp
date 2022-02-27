@@ -29,6 +29,10 @@
     </style>
     <script>
         $(function () {
+<<<<<<< HEAD
+=======
+            test();
+>>>>>>> eaec26fc7af5da4d0b52bcd2468a6e24f8f30423
 
             $(document).on("click", "#backMain", function () {
                 location.href = "/item/";
@@ -41,10 +45,25 @@
                 e.preventDefault()
                 $(this).tab('show')
             })
+<<<<<<< HEAD
 
             $(document).on("click", "#qnaTab", function () {
                 callQna();
             });
+=======
+			
+            //리뷰
+            function test (){
+                $.ajax({
+                     url : "/review/list",
+                     method : "GET",
+                    data : {"itemCode" : "${item.itemCode}"},
+                     success : function (data){
+                         $("#review").html(data);
+                     }
+                 })
+             }
+>>>>>>> eaec26fc7af5da4d0b52bcd2468a6e24f8f30423
         });
 	function callQna (){
 	    $.ajax({
@@ -133,6 +152,9 @@
                     <p>QNA</p>
                 </div>
             </div>
+        </div>
+        <div id="qna">
+        
         </div>
     </div>
 </div>

@@ -77,5 +77,15 @@ public class OrderDetailService {
         return orderDetailRepository.updateWhenCancel(orderDetailCode);
     }
 
+    public List<OrderDetail> getOrderDetailByItemWriter(String memberId){
+        return orderDetailRepository.findByMemberIdForSeller(memberId);
+    }
 
+    public int updatePostedStatusByOrderDetailCode(String orderDetailCode, String postedStatus){
+        return orderDetailRepository.updatePostedStatusByOrderDetailCode(orderDetailCode, postedStatus);
+    }
+
+    public int updatePostedStatusByOrderDetailCodeAfterReview(String orderDetailCode){
+        return orderDetailRepository.updatePostedStatusByOrderDetailCodeAfterReview(orderDetailCode);
+    }
 }

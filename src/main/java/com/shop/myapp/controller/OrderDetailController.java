@@ -56,4 +56,14 @@ public class OrderDetailController {
         }
         return ResponseEntity.status(405).build();
     }
+
+    @ResponseBody
+    @PostMapping("/{orderDetailCode}/update")
+    public ResponseEntity<Object> setOrderDetailPostedStatus(@PathVariable String orderDetailCode,String postedStatus){
+        int result = orderDetailService.updatePostedStatusByOrderDetailCode(orderDetailCode, postedStatus);
+        if (result == 0){
+            return ResponseEntity.status(400).build();
+        }
+        return ResponseEntity.ok().build();
+    }
 }
