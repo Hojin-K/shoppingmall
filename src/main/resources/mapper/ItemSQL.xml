@@ -65,6 +65,9 @@
         set IS_DELETE = '1'
         where HR.SHOP_ITEM_TB.ITEM_CODE = #{itemCode}
     </update>
+    <update id="itemHitUpWhenInItemDetail">
+        update HR.SHOP_ITEM_TB set ITEM_HIT = item_hit + 1;
+    </update>
 
     <select id="findAll" resultMap="item"><![CDATA[
         select ROW_NUMBER() over (order by item.item_code desc ) AS num,

@@ -82,7 +82,11 @@ public class OrderDetailService {
         return orderDetailRepository.findByMemberIdForSeller(memberId);
     }
 
-    public int updatePostedStatusByOrderDetailCode(String orderDetailCode, String postedStatus){
+    public int updatePostedStatusByOrderDetailCode(String orderDetailCode, String postedStatus) throws ParseException, JsonProcessingException {
+        if (postedStatus.equals("Refund")){
+            OrderDetail orderDetail = findByOrderDetailCode(orderDetailCode);
+            orderCancelService(orderDetail);
+        }
         return orderDetailRepository.updatePostedStatusByOrderDetailCode(orderDetailCode, postedStatus);
     }
 

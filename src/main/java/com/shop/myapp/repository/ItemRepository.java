@@ -19,4 +19,5 @@ public interface ItemRepository {
     int deleteItem(String itemCode);
     int updateItem(Item item);
     int getItemListCnt();
+    int itemHitUpWhenInItemDetail(String itemCode);
 }
