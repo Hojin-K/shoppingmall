@@ -1,7 +1,20 @@
 <%@ page language="java" contentType="text/html; charset=UTF-8"
     pageEncoding="UTF-8"%>
 <%@ taglib prefix="c" uri="http://java.sun.com/jsp/jstl/core" %>
-
+<script>
+	function qnaWrite() {
+		$.ajax({
+	        url: '/qna/write',
+	        method: 'POST'
+	        },
+				success : function(data) {
+				
+				data = data.trim();
+				$('#memberList').html(data);
+	        }
+	    })
+	}
+</script>
 <div class="accordion" id="accordionExample">
   <div class="accordion-item">
     <h2 class="accordion-header" id="headingOne">
@@ -91,7 +104,7 @@
 			</div>
       </div>
       <div class="modal-footer">
-        <button type="button" class="btn btn-primary">쓰기</button>
+        <button type="button" class="btn btn-primary" onclick="">쓰기</button>
         <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">취소</button>
       </div>
     </div>

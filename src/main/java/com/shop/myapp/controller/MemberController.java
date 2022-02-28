@@ -63,10 +63,6 @@ public class MemberController {
     
     @Auth(role = Auth.Role.USER)
     @GetMapping("/{memberId}/info")
-    public String infoForm(@PathVariable String memberId, Model model) {
-    	log.info("memberUpdateForm");
-    	Member member = memberService.getMember(memberId); 
-    	model.addAttribute("member", member);
     public String infoForm(@PathVariable String memberId, HttpServletRequest request,Model model) {
     	log.info("memberUpdateForm");
     	Member member = memberService.getMember(memberId);

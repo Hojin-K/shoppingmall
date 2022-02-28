@@ -40,8 +40,8 @@ public class QnaController {
 		return mv;
 	}
 	
-	@PostMapping("/write")
-	public String write(@ModelAttribute QnaBoard qna, HttpServletRequest request) {
+	@PostMapping("/{itemCode}/qnaWrite")
+	public String write(HttpServletRequest request) {
 		MemberSession mSession = (MemberSession)request.getSession().getAttribute("member");
 		
 		return "redirect:/qna/"+"/list";
