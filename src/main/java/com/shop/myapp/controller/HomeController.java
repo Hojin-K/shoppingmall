@@ -20,22 +20,19 @@ import com.shop.myapp.service.ItemService;
 public class HomeController {
 	private final ItemService itemService;
 	
-	private static final Logger logger = LoggerFactory.getLogger(HomeController.class);
-
 	public HomeController(ItemService itemService) {
 		this.itemService = itemService;
 	}
 
-	/**
-	 * Simply selects the home view to render by returning its name.
-	 */
 	@RequestMapping(value = "/", method = RequestMethod.GET)
-	public String home(Locale locale, Model model) {
-		List<Item> items = itemService.findNewItems();
-
-		model.addAttribute("items",items);
-		
-		return "/item/items";
+	public String home(Model model) {
+		List<Item> newItems = itemService.findNewItems();
+		List<Item> hitItems = itemService.findHitItems();
+		List<Item> sellItems = itemService.findSellItems();
+		model.addAttribute("newItems",newItems);
+		model.addAttribute("hitItems",hitItems);
+		model.addAttribute("sellItems",sellItems);
+		return "/item/home";
 	}
 	
 }

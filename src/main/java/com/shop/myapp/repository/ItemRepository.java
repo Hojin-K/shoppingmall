@@ -14,6 +14,8 @@ public interface ItemRepository {
     List<Item> findAllBySearch(@Param("search") String search,@Param("pagination") Pagination pagination);
     List<Item> findAllByMemberId(@Param("memberId") String memberId, @Param("pagination") Pagination pagination,@Param("search") String search);
     List<Item> findNewItems();
+    List<Item> findHitItems();
+    List<Item> findBuyItems();
     Optional<Item> findByItemCode(String itemCode);
     int insertItem(Item item);
     int deleteItem(String itemCode);

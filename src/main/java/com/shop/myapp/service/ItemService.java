@@ -87,6 +87,13 @@ public class ItemService {
     public List<Item> findNewItems(){
         return itemRepository.findNewItems();
     }
+    public List<Item> findHitItems(){
+        return itemRepository.findHitItems();
+    }
+
+    public List<Item> findSellItems(){
+        return itemRepository.findBuyItems();
+    }
 
 }
 

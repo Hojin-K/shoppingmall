@@ -46,6 +46,9 @@ public class ItemController {
         Pagination pagination = itemService.getPaginationByPage(page);
         List<Item> items = itemService.getItems(pagination);
         model.addAttribute("items", items);
+        for (Item item: items){
+            System.out.println(item.getBusinessName());
+        }
         model.addAttribute("pagination", pagination);
         return "item/items";
 

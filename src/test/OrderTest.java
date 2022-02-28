@@ -36,7 +36,7 @@ public class OrderTest {
     }
 
     @Test
-    public void insertOrderAndOrderDetails() {
+    public void insertOrderAndOrderDetails() throws Exception {
         Order order = Order
                 .builder()
                 .orderCode(getOrderCode)
