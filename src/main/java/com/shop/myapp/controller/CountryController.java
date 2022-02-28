@@ -34,6 +34,7 @@ public class CountryController {
         log.info("들어간 값(234) : {}",result);
         return "";
     }
+
     @ResponseBody
     @GetMapping("")
     @Auth(role = Auth.Role.USER)

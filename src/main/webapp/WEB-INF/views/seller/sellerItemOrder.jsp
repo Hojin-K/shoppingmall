@@ -134,7 +134,7 @@
                                 </table>
                             </div>
                         </div>
-                <c:if test="${orderDetail.postedStatus != 'Refund'}">
+                <c:if test="${orderDetail.postedStatus != 'Refund' && orderDetail.postedStatus != 'Review'}">
                             <select id="selectStatus_${orderDetail.orderDetailCode}">
                             <option value='Refund'>환불</option>
                             <option value='Ready'>배송준비중</option>

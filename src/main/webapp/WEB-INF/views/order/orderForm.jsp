@@ -14,11 +14,12 @@
                         success: function (data) {
                             let buyerName = data.memberName;
                             let buyerAddr = data.memberAddress;
+                            let buyerDetailAddr = data.memberDetailAddress;
                             let buyerTel = data.memberTel;
                             let buyerEmail = data.memberEmail;
 
                             $("#buyerName").val(buyerName);
-                            $("#buyerAddr").val(buyerAddr);
+                            $("#buyerAddr").val(buyerAddr +" "+ buyerDetailAddr);
                             $("#buyerTel").val(buyerTel);
                             $("#buyerEmail").val(buyerEmail);
                         },
@@ -137,8 +138,7 @@
         <div class="mb-3">
             <%--  api 사용 필요    --%>
             <label for="buyerAddr">주소</label>
-            <input class="form-control" type="text" name="buyerAddr" id="buyerAddr" placeholder="주소를 입력해주세요."
-                   value="${sessionScope.member.memberAddress}" required>
+            <input class="form-control" type="text" name="buyerAddr" id="buyerAddr" placeholder="주소를 입력해주세요." required>
         </div>
 
         <table class="table text-center">

@@ -92,6 +92,7 @@ public class ItemController {
 
         return "redirect:/item";
     }
+
     @Auth(role = Auth.Role.SELLER)
     @PostMapping("/{itemCode}/update")
     public String updateItem(@PathVariable String itemCode, Item item,MultipartFile file,HttpServletRequest request, RedirectAttributes redirectAttributes) throws IOException {

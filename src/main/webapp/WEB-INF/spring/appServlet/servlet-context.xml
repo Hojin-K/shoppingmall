@@ -16,17 +16,8 @@
     <resources mapping="/resources/**" location="/resources/"/>
 
     <!-- Resolves views selected for rendering by @Controllers to .jsp resources in the /WEB-INF/views directory -->
-    <beans:bean class="org.springframework.web.servlet.view.InternalResourceViewResolver">
-        <beans:property name="prefix" value="/WEB-INF/views/"/>
-        <beans:property name="suffix" value=".jsp"/>
-    </beans:bean>
 
     <!--    tiles-->
-    <beans:bean id="tilesViewResolver" class="org.springframework.web.servlet.view.UrlBasedViewResolver">
-        <beans:property name="viewClass" value="org.springframework.web.servlet.view.tiles3.TilesView"/>
-        <beans:property name="order" value="1"/>
-    </beans:bean>
-
     <beans:bean id="tilesConfigurer" class="org.springframework.web.servlet.view.tiles3.TilesConfigurer">
         <beans:property name="definitions">
             <beans:list>
@@ -34,13 +25,24 @@
             </beans:list>
         </beans:property>
     </beans:bean>
+    <beans:bean id="tilesViewResolver" class="org.springframework.web.servlet.view.UrlBasedViewResolver">
+        <beans:property name="viewClass" value="org.springframework.web.servlet.view.tiles3.TilesView"/>
+        <beans:property name="order" value="1"/>
+    </beans:bean>
+
+    <beans:bean class="org.springframework.web.servlet.view.InternalResourceViewResolver">
+        <beans:property name="prefix" value="/WEB-INF/views/"/>
+        <beans:property name="suffix" value=".jsp"/>
+        <beans:property name="order" value="2"/>
+    </beans:bean>
+
 
 
     <context:component-scan base-package="com.shop.myapp"/>
     <!-- mybatis setting -->
     <beans:bean name="dataSource" class="org.springframework.jdbc.datasource.DriverManagerDataSource">
         <beans:property name="driverClassName" value="oracle.jdbc.driver.OracleDriver"/>
-        <beans:property name="url" value="jdbc:oracle:thin:@192.168.1.115:1521:xe"/>
+        <beans:property name="url" value="jdbc:oracle:thin:@192.168.35.238:1521:xe"/>
         <beans:property name="username" value="hr"/>
         <beans:property name="password" value="1234"/>
     </beans:bean>

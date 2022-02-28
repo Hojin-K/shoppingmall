@@ -19,13 +19,19 @@
             });
 
             function fnModuleInfo(orderDetailCode) {
-                $("#refundModal .modal-content").load(
-                    "/orderDetail/" + orderDetailCode + "/cancel");
+                    $.ajax({
+                        url : "/orderDetail/"+orderDetailCode+"/cancel",
+                        method : "POST",
+                        success : function (){
+                            alert("환불이 정상처리 되었습니다.")
+                            location.href = "/order/myOrder"
+                        }
+                    });
             }
+
 
             function Rating() {
             }
-            ;
             Rating.prototype.rate = 0;
             Rating.prototype.setRate = function (newrate) {
                 //별점 마킹 - 클릭한 별 이하 모든 별 체크 처리
@@ -47,9 +53,9 @@
                     if (elem.classList.contains('star-sel')) {
                         rating.setRate(parseInt(elem.value));
                         $("#reviewStar").val(parseInt(elem.value))
-
                     }
                 });
+
         })
     </script>
 </head>
@@ -234,9 +240,7 @@
                                 </div>
                             </div>
                         </c:if>
-                        <button id="${orderDetail.orderDetailCode}"
-                                data-bs-toggle="modal" data-bs-target="#refundModal"
-                                name="refund" class="btn btn-sm btn-secondary" type="button">환불하기
+                        <button id="${orderDetail.orderDetailCode}" name="refund" class="btn btn-sm btn-secondary" type="button">환불하기
                         </button>
                         </c:if>
                     </div>
@@ -286,12 +290,6 @@
                 </tr>
                 </tbody>
             </table>
-        </div>
-    </div>
-    <div class="modal fade" id="refundModal" tabindex="-1" role="dialog"
-         aria-labelledby="historyModalLabel" aria-hidden="true">
-        <div class="modal-dialog modal-xl">
-            <div class="modal-content"></div>
         </div>
     </div>
 </div>

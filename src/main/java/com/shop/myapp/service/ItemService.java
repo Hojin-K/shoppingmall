@@ -28,6 +28,7 @@ public class ItemService {
 
     public Item getItem(String itemCode) {
         // itemCode 로 상품 조회
+        itemRepository.itemHitUpWhenInItemDetail(itemCode);
         Optional<Item> item = itemRepository.findByItemCode(itemCode);
         // 상품 null 체크
         // 상품의 옵션 조회
@@ -83,12 +84,9 @@ public class ItemService {
     public List<Item> getSellerItemByMemberId(String memberId, Pagination pagination,String search){
         return itemRepository.findAllByMemberId(memberId,pagination,search);
     }
-
-
-
-
     public List<Item> findNewItems(){
         return itemRepository.findNewItems();
     }
+
 }
 

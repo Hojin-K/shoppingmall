@@ -19,6 +19,8 @@ import com.shop.myapp.service.MemberService;
 
 import lombok.extern.slf4j.Slf4j;
 
+import javax.servlet.http.HttpServletRequest;
+
 @Slf4j
 @Controller
 //@Auth(role = Auth.Role.ADMIN)

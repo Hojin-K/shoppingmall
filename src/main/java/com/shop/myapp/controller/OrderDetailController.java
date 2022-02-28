@@ -2,6 +2,7 @@ package com.shop.myapp.controller;
 
 import javax.servlet.http.HttpSession;
 
+import com.fasterxml.jackson.core.JsonProcessingException;
 import org.json.simple.parser.ParseException;
 import org.springframework.http.ResponseEntity;
 import org.springframework.stereotype.Controller;
@@ -39,8 +40,7 @@ public class OrderDetailController {
 
     @ResponseBody
     @PostMapping("/{orderDetailCode}/cancel")
-    public ResponseEntity<Object> orderDetailCancel(@PathVariable String orderDetailCode, String reason) throws ParseException {
-        try {
+    public ResponseEntity<Object> orderDetailCancel(@PathVariable String orderDetailCode) throws ParseException, JsonProcessingException {
         OrderDetail orderDetail = orderDetailService.findByOrderDetailCode(orderDetailCode);
         MemberSession member = (MemberSession) session.getAttribute("member");
         if (orderDetail.getOrder().getMemberId().equals(member.getMemberId())){
@@ -49,21 +49,24 @@ public class OrderDetailController {
             }else {
                 throw  new IllegalStateException("환불 실패");
             }
-        }
+        } else {
         throw  new IllegalStateException("권한 없음");
-        } catch (Exception e){
-            e.printStackTrace();
         }
-        return ResponseEntity.status(405).build();
     }
+    // 조회수
+    // 리뷰수
+    // 판매수
+
+    // 전체 판매 금액
+    // 셀러당 판매 금액
 
     @ResponseBody
     @PostMapping("/{orderDetailCode}/update")
-    public ResponseEntity<Object> setOrderDetailPostedStatus(@PathVariable String orderDetailCode,String postedStatus){
+    public ResponseEntity<Object> setOrderDetailPostedStatus(@PathVariable String orderDetailCode,String postedStatus) throws ParseException, JsonProcessingException {
         int result = orderDetailService.updatePostedStatusByOrderDetailCode(orderDetailCode, postedStatus);
         if (result == 0){
             return ResponseEntity.status(400).build();
         }
-        return ResponseEntity.ok().build();
+            return ResponseEntity.ok().build();
     }
 }
