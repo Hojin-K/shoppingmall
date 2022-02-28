@@ -33,13 +33,8 @@
 			 	 text += "사업자명 <br />"
 			 	 text += "<input id='bName' class='form-control' type='text' name='businessName' value='${member.businessName}'/>"
                  text += " 사업자번호 <br />"
-<<<<<<< HEAD
                  text += "<input id='bRegNo' class='form-control' type='text' name='businessRegistrationNo' value='${member.businessRegistrationNo}'/>"
                  text += "<input type='hidden' name='memberLevel' value='${memberLevel }' /></div>"
-=======
-                 text += "<input class='form-control' type='text' name='businessRegistrationNo' value='${member.businessRegistrationNo}'/>"
-                 text += "<input type='hidden' name='memberLevel' value='${memberLevel}' /></div>"
->>>>>>> eaec26fc7af5da4d0b52bcd2468a6e24f8f30423
                  $("#inputDiv").append(text);
 		}
 	}
@@ -131,19 +126,11 @@
             </div>
             <div class="mb-3">
                 이름 <br />
-<<<<<<< HEAD
                 <input id="mName" class="form-control" type="text" name="memberName" value="${member.memberName }"/>
             </div>
             <div class="mb-3">
                 이메일 <br />
-                <input id="mEmail" class="form-control" type="text" name="memberEmail" value="${member.memberEmail }"/> 
-=======
-                <input class="form-control" type="text" name="memberName" value="${member.memberName}"/>
-            </div>
-            <div class="mb-3">
-                이메일 <br />
-                <input class="form-control" type="text" name="memberEmail" value="${member.memberEmail}"/>
->>>>>>> eaec26fc7af5da4d0b52bcd2468a6e24f8f30423
+                <input id="mEmail" class="form-control" type="text" name="memberEmail" value="${member.memberEmail }"/>
             </div>
             <div class="mb-3">
                 비밀번호 <br />

@@ -118,7 +118,7 @@ public class MemberController {
 
     @GetMapping("/{memberId}")
     @ResponseBody
-    @Auth(role = Auth.Role.ADMIN)
+    @Auth(role = Auth.Role.USER)
     public ResponseEntity<Object> getMemberInfo(@PathVariable String memberId){
         Member member = memberService.getMember(memberId);
         return ResponseEntity.ok(member);

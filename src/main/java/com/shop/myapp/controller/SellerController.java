@@ -2,6 +2,7 @@ package com.shop.myapp.controller;
 
 import java.util.List;
 
+import com.shop.myapp.dto.*;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.GetMapping;
@@ -11,10 +12,6 @@ import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.servlet.mvc.support.RedirectAttributes;
 
-import com.shop.myapp.dto.Item;
-import com.shop.myapp.dto.Member;
-import com.shop.myapp.dto.OrderDetail;
-import com.shop.myapp.dto.Pagination;
 import com.shop.myapp.interceptor.Auth;
 import com.shop.myapp.service.ItemService;
 import com.shop.myapp.service.MemberService;
@@ -74,7 +71,7 @@ public class SellerController {
 
     @GetMapping("/{memberId}/order")
     public String orders(@PathVariable String memberId,Model model){
-        Member member = (Member) session.getAttribute("member");
+        MemberSession member = (MemberSession) session.getAttribute("member");
         if (!memberId.equals(member.getMemberId())){
             throw new IllegalStateException("권한 없음");
         }

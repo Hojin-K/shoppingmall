@@ -25,7 +25,6 @@
 
             function Rating() {
             }
-            ;
             Rating.prototype.rate = 0;
             Rating.prototype.setRate = function (newrate) {
                 //별점 마킹 - 클릭한 별 이하 모든 별 체크 처리
@@ -47,9 +46,9 @@
                     if (elem.classList.contains('star-sel')) {
                         rating.setRate(parseInt(elem.value));
                         $("#reviewStar").val(parseInt(elem.value))
-
                     }
                 });
+
         })
     </script>
 </head>

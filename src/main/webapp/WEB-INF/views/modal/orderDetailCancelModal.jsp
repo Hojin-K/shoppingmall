@@ -10,7 +10,6 @@
                     alert("환불이 정상처리 되었습니다.")
                     location.href = "/order/myOrder"
                 }
-
             })
         });
     });
