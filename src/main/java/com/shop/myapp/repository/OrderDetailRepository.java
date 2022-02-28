@@ -15,6 +15,6 @@ public interface OrderDetailRepository {
     int updatePostedStatusByOrderCode(String orderCode);
     int updatePostedStatusByOrderDetailCodeAfterReview(String orderDetailCode);
     int updateWhenCancel(String orderDetailCode);
-    List<OrderDetail> findByMemberIdForSeller(String memberId);
+    List<OrderDetail> findByMemberIdForSeller(@Param("memberId") String memberId,@Param("search") String search, @Param("type") String type);
     int updatePostedStatusByOrderDetailCode(@Param("orderDetailCode") String orderDetailCode,@Param("postedStatus") String postedStatus);
 }

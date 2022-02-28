@@ -28,7 +28,6 @@ import com.shop.myapp.service.MemberService;
 
 @Controller
 @RequestMapping("/item")
-@Auth(role = Auth.Role.USER)
 public class ItemController {
     private final ItemService itemService;
     private final FileService fileService;
@@ -47,6 +46,9 @@ public class ItemController {
         Pagination pagination = itemService.getPaginationByPage(page);
         List<Item> items = itemService.getItems(pagination);
         model.addAttribute("items", items);
+        for (Item item: items){
+            System.out.println(item.getBusinessName());
+        }
         model.addAttribute("pagination", pagination);
         return "item/items";
 

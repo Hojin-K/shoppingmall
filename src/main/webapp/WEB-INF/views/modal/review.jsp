@@ -135,6 +135,8 @@
 
 
 <body>
+<c:if test="${not empty reviews}">
+
 	<ul class="reviewlist" style="list-style:none;">
 	<c:forEach items="${reviews }" var="review">
 		<li style="border: 1px solid #cccccc; text-align: left;">
@@ -171,5 +173,9 @@
 		</li>
 		</c:forEach>
 	</ul>
+</c:if>
+<c:if test="${empty reviews}">
+	<h4>작성된 리뷰가 없습니다.</h4>
+</c:if>
 </body>
 </html>
