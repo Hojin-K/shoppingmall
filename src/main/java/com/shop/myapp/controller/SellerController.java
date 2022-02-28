@@ -16,13 +16,8 @@ import com.shop.myapp.interceptor.Auth;
 import com.shop.myapp.service.ItemService;
 import com.shop.myapp.service.MemberService;
 import com.shop.myapp.service.OrderDetailService;
-import org.springframework.stereotype.Controller;
-import org.springframework.ui.Model;
-import org.springframework.web.bind.annotation.*;
-import org.springframework.web.servlet.mvc.support.RedirectAttributes;
 
 import javax.servlet.http.HttpSession;
-import java.util.List;
 
 @Controller
 @RequestMapping("/seller")
