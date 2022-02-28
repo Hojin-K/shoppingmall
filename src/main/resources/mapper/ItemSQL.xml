@@ -66,7 +66,7 @@
         where HR.SHOP_ITEM_TB.ITEM_CODE = #{itemCode}
     </update>
     <update id="itemHitUpWhenInItemDetail">
-        update HR.SHOP_ITEM_TB set ITEM_HIT = item_hit + 1;
+        update HR.SHOP_ITEM_TB set ITEM_HIT = item_hit + 1
     </update>
 
     <select id="findAll" resultMap="item"><![CDATA[

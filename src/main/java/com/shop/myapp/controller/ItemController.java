@@ -28,7 +28,6 @@ import com.shop.myapp.service.MemberService;
 
 @Controller
 @RequestMapping("/item")
-@Auth(role = Auth.Role.USER)
 public class ItemController {
     private final ItemService itemService;
     private final FileService fileService;

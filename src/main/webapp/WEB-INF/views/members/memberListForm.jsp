@@ -52,9 +52,11 @@ function selectList() {
 		<div>
 			<h2>회원관리</h2>
 			<input type="radio" name="chk_info" value="member_id" checked /> 
-			<label for="아이디">아이디</label> 
+			<label for="idRadio">아이디</label> 
 			<input type="radio" name="chk_info" value="member_name" /> 
-			<label for="이름">이름</label>
+			<label for="nameRadio">이름</label>
+			<input type="radio" name="chk_info" value="member_level" /> 
+			<label for="levelRadio">권한</label>
 			<span style="margin-left: 30px;"><input id="condition" type="text" /></span>
 			<span style="margin-left: 15px;"><input id="btnSearch" type="button" value="검색"/></span>
 		</div>

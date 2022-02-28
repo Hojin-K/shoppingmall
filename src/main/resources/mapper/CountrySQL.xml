@@ -6,7 +6,7 @@
 
     <update id="insertCountries" parameterType="java.util.List">
         <foreach collection="list" item="country" separator=" " open="insert all" close="select * from dual">
-            into HR.SHOP_COUNTRY_TB values (#{country.countryCode},#{country.countryName})
+            into HR.SHOP_COUNTRY_TB(COUNTRY_CODE, COUNTRY_NAME) values (#{country.countryCode},#{country.countryName})
         </foreach>
     </update>
     <select id="findByCountryCode" resultType="com.shop.myapp.dto.Country">
