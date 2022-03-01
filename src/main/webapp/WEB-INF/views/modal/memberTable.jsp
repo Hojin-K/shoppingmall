@@ -37,7 +37,7 @@
 				<th style="width: auto;">E-Mail</th>
 				<th style="width: auto;">주소</th>
 				<th style="width: auto;">TEL</th>
-				<th style="width: auto;">생일</th>
+				<th style="width: auto;">생년월일</th>
 				<th style="width: auto;">사업자번호</th>
 				<th style="width: auto;">사업자명</th>
 				<th style="width: auto;">사업자설명</th>

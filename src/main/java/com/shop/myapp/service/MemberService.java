@@ -5,6 +5,7 @@ import java.util.LinkedList;
 import java.util.List;
 import java.util.Optional;
 
+import com.shop.myapp.dto.Chart;
 import com.shop.myapp.dto.Item;
 import com.shop.myapp.dto.Pagination;
 import org.apache.ibatis.session.SqlSession;
@@ -41,17 +42,23 @@ public class MemberService {
     }
 
     public List<Member> getMembers(String chkInfo, String condition) {
-        List<Member> members = new ArrayList<Member>(); 
+        List<Member> members = new ArrayList<Member>();
+        List<Member> memberLevel = new ArrayList<Member>();
         try{
-        	System.out.println(1);
         	members = memberRepository.findAll(chkInfo, condition);
-        	System.out.println(2);
+        	if(chkInfo.equals("member_level")) {
+        		String upperCondition = condition.toUpperCase();
+        		for (Member member : members) {
+        			String lastLevel = member.getMemberLevel().getLast();
+					if(lastLevel.contains(upperCondition)) {
+						memberLevel.add(member);
+					}
+				}
+        		return memberLevel;
+        	}
         }catch (Exception e) {
 			e.printStackTrace();
 		}
-        for (Member member : members) {
-            System.out.println(member.getMemberBirth());
-        }
         return members;
     }
 
@@ -128,4 +135,9 @@ public class MemberService {
          
     	return memberRepository.updateByAdmin(member);
     }
+
+	public List<Chart> getTotalPayChart() {
+		List<Chart> tOrderChart = memberRepository.getTotalPayChart();
+		return tOrderChart;
+	}
 }
