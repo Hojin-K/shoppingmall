@@ -38,6 +38,16 @@
                     });
     }
     
+    function checkCapsLock(event) {
+		if (event.getModifierState("CapsLock")) {
+			document.getElementById("msg").innerText 
+			= "Caps Lock이 켜져 있습니다."
+		} else {
+			document.getElementById("msg").innerText 
+			= ""
+		}
+	}
+    
     function joinCheck() {
     	let uid = document.getElementById('mId');
     	let name = document.getElementById('mName');
@@ -165,8 +175,9 @@
             </div>
             <div class="mb-3">
                 비밀번호 <br />
-                <input class="form-control" type="password" name="memberPwd" id="mPwd"/> 
+                <input class="form-control" type="password" name="memberPwd" id="mPwd" onkeyup="checkCapsLock(event);"/> 
             </div>
+            <div id="msg" style="color: red"></div> 
             <div class="mb-3">
                 비밀번호 재확인 <br />
                 <input class="form-control" type="password" name="rePwd" id="rePwd"/> 
@@ -188,7 +199,7 @@
                 <input class="form-control" type="date" name="memberBirth" id="mBirth"/>
             </div>
         </div>
-        <input class="form-control" type="submit" value="가입하기" >
+        <input class="form-control" type="button" value="가입하기" onclick="joinCheck();">
     </form>
 </div>
 </body>
