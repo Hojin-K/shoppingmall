@@ -27,8 +27,12 @@ $(function () {
       });
    });
 </script>
-
 	<div class="accordion" id="accordionList">
+	<c:choose>
+	<c:when test="${qnaList == null}">
+		<h5>QNA가 없습니다.</h5>
+	</c:when>
+	<c:when test="${qnaList != null }">
 <c:forEach items="${qnaList }" var="qna">
 	  <div class="accordion-item">
 		    <h2 class="accordion-header" id="headingOne">
@@ -60,6 +64,7 @@ $(function () {
 	      <hr /> 
 		      <div class="accordion-body">
 		      <div align="left">
+		      <h5><판매자></h5>
 		        	${qna.boardReply }
 		      </div>
 		      </div>
@@ -67,6 +72,8 @@ $(function () {
 	  </div>
 	</div>
 	      </c:forEach>
+	      </c:when>
+	     </c:choose>
 	    </div>
 <!--밑으로 질문 달기 버튼 모달로  -->
 <!-- Button trigger modal -->
