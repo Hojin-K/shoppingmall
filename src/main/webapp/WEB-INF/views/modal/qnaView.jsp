@@ -54,12 +54,12 @@ $(function () {
 	});
    });
 </script>
-	<div class="accordion" id="accordionList">
 	<c:choose>
-	<c:when test="${qnaList == null}">
-		<h5>QNA가 없습니다.</h5>
+	<c:when test="${qnaList.size() == 0}">
+		<h4>QNA가 없습니다.</h4>
 	</c:when>
-	<c:when test="${qnaList != null }">
+	<c:when test="${qnaList.size() != 0}">
+	<div class="accordion" id="accordionList">
 <c:forEach items="${qnaList }" var="qna">
 	  <div class="accordion-item">
 		    <h2 class="accordion-header" id="headingOne">
@@ -80,10 +80,9 @@ $(function () {
 				</div>
 		      </div>
 				<c:if test="${qna.boardReply != null}">
-	      <hr /> 
-		      <div class="accordion-body">
+		      <div class="accordion-body" style="background-color: #F8F8F8;">
 		      <div align="left">
-		      <h5><판매자></h5>
+		      <p class="text-primary">판매자</p>
 		        	${qna.boardReply }
 		      </div>
 		      </div>
@@ -91,12 +90,12 @@ $(function () {
 	  </div>
 	</div>
 	      </c:forEach>
+	    </div>
+<hr />
 	      </c:when>
 	     </c:choose>
-	    </div>
 <!--밑으로 질문 달기 버튼 모달로  -->
 <!-- Button trigger modal -->
-<hr />
 <c:if test="${sessionScope.member.memberLevel.getLast().equals('USER') }">
 	<div align="right">
 		<button type="button" class="btn btn-primary" data-bs-toggle="modal" data-bs-target="#userWriteModal">

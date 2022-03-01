@@ -199,12 +199,7 @@
                 <input class="form-control" type="date" name="memberBirth" id="mBirth"/>
             </div>
         </div>
-<<<<<<< HEAD
-        <input class="form-control" type="submit" value="가입하기">
-<%--        <input class="form-control" type="button" value="가입하기" onclick="joinCheck()">--%>
-=======
         <input class="form-control" type="button" value="가입하기" onclick="joinCheck();">
->>>>>>> Hojin
     </form>
 </div>
 </body>
