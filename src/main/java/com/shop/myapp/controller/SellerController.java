@@ -16,13 +16,8 @@ import com.shop.myapp.interceptor.Auth;
 import com.shop.myapp.service.ItemService;
 import com.shop.myapp.service.MemberService;
 import com.shop.myapp.service.OrderDetailService;
-import org.springframework.stereotype.Controller;
-import org.springframework.ui.Model;
-import org.springframework.web.bind.annotation.*;
-import org.springframework.web.servlet.mvc.support.RedirectAttributes;
 
 import javax.servlet.http.HttpSession;
-import java.util.List;
 
 @Controller
 @RequestMapping("/seller")
@@ -70,12 +65,16 @@ public class SellerController {
     }
 
     @GetMapping("/{memberId}/order")
-    public String orders(@PathVariable String memberId,Model model){
+    public String orders(@PathVariable String memberId,
+                         @RequestParam(value = "q",required = false) String search,
+                         String type,
+                         Model model){
+        System.out.println(type);
         MemberSession member = (MemberSession) session.getAttribute("member");
         if (!memberId.equals(member.getMemberId())){
             throw new IllegalStateException("권한 없음");
         }
-            List<OrderDetail> orderDetails = orderDetailService.getOrderDetailByItemWriter(memberId);
+            List<OrderDetail> orderDetails = orderDetailService.getOrderDetailByItemWriter(memberId,search,type);
         model.addAttribute("orderDetails",orderDetails);
                 return "/seller/sellerItemOrder";
     }

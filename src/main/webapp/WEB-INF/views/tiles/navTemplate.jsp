@@ -56,18 +56,22 @@
             }
         });
         $("#back-to-top").click(function () {
-            $('html, body').animate({scrollTop: 0}, 1200);
+            $('html, body').animate({scrollTop: 0}, 800);
             return false;
         });
     });
 </script>
 <nav class="navbar navbar-expand-lg navbar-light fixed-top" style="border-bottom: 1px solid #cccccc; background-color: white">
     <div class="container-fluid">
-        <a class="navbar-brand text-primary" style="font-weight: bolder;" href="/item">AraseoSajo</a>
+        <a class="navbar-brand text-primary" style="font-weight: bolder;" href="/">AraseoSajo</a>
+            <ul class="navbar-nav me-auto mb-2 mb-lg-0">
+                <li class="nav-item">
+                    <a class="nav-link active" aria-current="page" href="/item">전 세계 상품 쇼핑하기</a>
+                </li>
+            </ul>
         <button class="navbar-toggler" type="button" data-bs-toggle="collapse" data-bs-target="#navbarSupportedContent" aria-controls="navbarSupportedContent" aria-expanded="false" aria-label="Toggle navigation">
             <span class="navbar-toggler-icon"></span>
         </button>
-
         <div class="collapse navbar-collapse flex-grow-0" id="navbarSupportedContent">
             <ul class="navbar-nav mb-2 mb-lg-0 text-right">
             <form action="/item/search" method="GET">

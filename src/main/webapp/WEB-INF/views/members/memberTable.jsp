@@ -51,7 +51,7 @@
 					<td><a href="" data-bs-toggle="modal" data-bs-target="#MoaModal" role="button" data-backdrop="static"
 					 onclick="fnModuleInfo('${member.memberId }')">
 					${member.memberId }</a></td>
-					<td>${member.memberLevel }</td>
+					<td>${member.memberLevel.getLast() }</td>
 					<td>${member.memberName }</td>
 					<td>${member.memberEmail }</td>
 					<td>${member.memberAddress} ${member.memberDetailAddress }</td>
@@ -60,7 +60,15 @@
 					<td>${member.businessRegistrationNo }</td>
 					<td>${member.businessName }</td>
 					<td>${member.businessInfo }</td>
-					<td>${member.isDelete }</td>
+					<c:choose>
+
+					<c:when test="${member.isDelete ==0 }">
+					<td>X</td>
+					</c:when>
+						<c:otherwise>
+							<td>O</td>
+						</c:otherwise>
+					</c:choose>
 				</tr>
 				<c:set var="i" value="${i+1}" scope="page" />
 			</c:forEach>

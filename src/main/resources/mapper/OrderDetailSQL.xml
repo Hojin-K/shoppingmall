@@ -99,6 +99,14 @@
           and O.ORDER_CODE = D.ORDER_CODE
           and IO.option_code = D.option_code
           and I.item_code = IO.item_code
+<choose>
+  <when test="type != null and type == 'name'">
+      and I.item_name like '%' ||  #{search} || '%'
+  </when>
+    <when test="type != null and type == 'postedStatus'">
+        and D.posted_status = #{search}
+    </when>
+</choose>
     </select>
 
 </mapper>

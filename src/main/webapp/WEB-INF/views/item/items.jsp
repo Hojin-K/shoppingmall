@@ -71,11 +71,11 @@
                                  style="border-bottom: 1px solid #eee; height: 200px;" alt="">
                         </div>
                         <div class="card-body">
+                            <span style="color: #0d6efd; font-size: small">${item.country.countryName}</span>
                             <h5 class="card-title txt_line" ><c:out value="${item.itemName}"/></h5>
-                            <h5 class="card-subtitle"><c:out value="${item.memberId}"/></h5>
+                            <span class="card-text"><c:out value="${item.itemPrice}원"/></span>
                             <br>
-                            <span class="card-text mt-5"><c:out value="${item.itemPrice}원"/></span>
-                            <button style="display: inline; margin-left: 5px; margin-bottom: 10px"  class="btn btn-sm btn-primary disabled">${item.country.countryName}</button>
+                            <span class="card-text" style="color: #5b5b5b; font-size: x-small" ><c:out value="${item.businessName} 마켓"/></span>
                         </div>
                     </div>
                 </a>
@@ -101,8 +101,10 @@
                             <li class="page-item active selectedPage"><a href="/item?page=${number}" class="page-link"
                                                                          style="border: none">${number}</a></li>
                         </c:if>
+                        <c:if test="${number != pagination.page}">
                         <li class="page-item"><a href="/item?page=${number}" class="page-link"
                                                  style="border: none">${number}</a></li>
+                        </c:if>
                     </c:forEach>
                 </c:when>
                 <c:otherwise>

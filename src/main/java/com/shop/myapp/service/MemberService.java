@@ -9,6 +9,7 @@ import com.shop.myapp.dto.Item;
 import com.shop.myapp.dto.Pagination;
 import org.apache.ibatis.session.SqlSession;
 import org.mindrot.jbcrypt.BCrypt;
+import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
 import com.shop.myapp.dto.Member;
@@ -22,7 +23,7 @@ public class MemberService {
     private final ItemService itemService;
     private final MemberRepository memberRepository;
 
-    public MemberService(SqlSession sqlSession, ItemService itemService) {
+    public MemberService(@Autowired SqlSession sqlSession, ItemService itemService) {
         this.itemService = itemService;
         this.memberRepository = sqlSession.getMapper(MemberRepository.class);
     }

@@ -11,5 +11,5 @@ public class QnaBoard {
 	private String memberId;
 	private String boardTitle;
 	private String boardContent;
-	private String recommendId;
+	private String boardReply;
 }

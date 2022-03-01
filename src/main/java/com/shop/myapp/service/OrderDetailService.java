@@ -78,8 +78,8 @@ public class OrderDetailService {
         return orderDetailRepository.updateWhenCancel(orderDetailCode);
     }
 
-    public List<OrderDetail> getOrderDetailByItemWriter(String memberId){
-        return orderDetailRepository.findByMemberIdForSeller(memberId);
+    public List<OrderDetail> getOrderDetailByItemWriter(String memberId,String search,String type){
+        return orderDetailRepository.findByMemberIdForSeller(memberId,search,type);
     }
 
     public int updatePostedStatusByOrderDetailCode(String orderDetailCode, String postedStatus) throws ParseException, JsonProcessingException {
