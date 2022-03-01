@@ -43,7 +43,7 @@ public class AdminController {
 	public ModelAndView getMemberList(@RequestParam String chkInfo, @RequestParam String condition) {
 		List<Member> members = memberService.getMembers(chkInfo, condition);
 		ModelAndView mv = new ModelAndView();
-		mv.setViewName("members/memberTable");
+		mv.setViewName("modal/memberTable");
 		mv.addObject("members", members);
 
 		return mv;

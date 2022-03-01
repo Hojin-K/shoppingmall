@@ -17,4 +17,5 @@ public interface CartRepository {
     Optional<Cart> findByCartId(String cartId);
     List<Cart> findSelectCartByCartCodes(List<String> cartCodes);
     int amountSetByCartId(@Param("cartId") String cartId, @Param("mathSign") String mathSign);
+    Optional<Cart> findMyCartByOptionCode(@Param("memberId") String memberId, @Param("optionCode") String optionCode);
 }

@@ -15,19 +15,19 @@
             $(document).on("click", "[id^='status']", function () {
                 let attr = $(this).attr("id");
                 let selectedCode = attr.split("_")[1];
-                let val = $("#selectStatus_"+selectedCode).val();
+                let val = $("#selectStatus_" + selectedCode).val();
                 $.ajax({
-                    url : "/orderDetail/"+selectedCode+"/update",
-                    method : "POST",
-                    data : {
-                        "postedStatus" : val
+                    url: "/orderDetail/" + selectedCode + "/update",
+                    method: "POST",
+                    data: {
+                        "postedStatus": val
                     },
-                    statusCode : {
-                        200 : function (){
-                          alert("주문상태 변경에 성공하였습니다.")
+                    statusCode: {
+                        200: function () {
+                            alert("주문상태 변경에 성공하였습니다.")
                             location.reload();
                         },
-                        400 : function (){
+                        400: function () {
                             alert("주문상태 변경에 실패하였습니다.\n주문자가 환불했는지 확인해주세요.")
                         }
                     }
@@ -62,12 +62,33 @@
 </style>
 <body class="pt-5">
 <div class="container">
+    <form action="/seller/${sessionScope.member.memberId}/order" method="GET">
+        <div class="row">
+            <div class="col-2 text-center"><h4>검색하기</h4></div>
+            <div class="col-2">
+                <select class="form-select input-sm" name="type" id="type" required>
+                    <option value="name">이름</option>
+                    <option value="postedStatus">상태</option>
+                </select>
+            </div>
+            <div id="custom-search-input" class="col-5">
+                <div class="input-group col-md-4">
+                    <input type="text" name="q" class="search-query form-control rounded-pill"
+                           placeholder="Search"/>
+                    <span class="input-group-btn">
+                    <button class="btn btn-danger" type="submit"><i class="fas fa-search"></i></button>
+                </span>
+                </div>
+            </div>
+        </div>
+    </form>
+    <br>
     <div class="accordion" id="accordionExample">
         <c:set var="i" value="${0}"/>
         <c:forEach items="${orderDetails}" var="orderDetail">
             <div class="accordion-item">
                 <h2 class="accordion-header" id="heading${i}">
-                    <button class="accordion-button" type="button" data-bs-toggle="collapse"
+                    <button class="accordion-button collapsed" type="button" data-bs-toggle="collapse"
                             data-bs-target="#collapse${i}" aria-expanded="true" aria-controls="collapse${i}">
                         <div style="width: 8.33%">${orderDetail.order.orderCode}</div>
                         <div class="tableContent text-start" style="width: 30%; margin-left: 50px">
@@ -134,18 +155,18 @@
                                 </table>
                             </div>
                         </div>
-                <c:if test="${orderDetail.postedStatus != 'Refund' && orderDetail.postedStatus != 'Review'}">
+                        <c:if test="${orderDetail.postedStatus != 'Refund' && orderDetail.postedStatus != 'Review'}">
                             <select id="selectStatus_${orderDetail.orderDetailCode}">
-                            <option value='Refund'>환불</option>
-                            <option value='Ready'>배송준비중</option>
-                            <option value='Posted'>배송중</option>
-                            <option value='Done'>배송완료</option>
+                                <option value='Refund'>환불</option>
+                                <option value='Ready'>배송준비중</option>
+                                <option value='Posted'>배송중</option>
+                                <option value='Done'>배송완료</option>
                             </select>
-                    <button id="status_${orderDetail.orderDetailCode}"
-                            class="btn btn-sm btn-secondary"
-                            type="button">주문상태 변경
-                    </button>
-                </c:if>
+                            <button id="status_${orderDetail.orderDetailCode}"
+                                    class="btn btn-sm btn-secondary"
+                                    type="button">주문상태 변경
+                            </button>
+                        </c:if>
                     </div>
                 </div>
             </div>

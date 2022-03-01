@@ -124,6 +124,9 @@
         and options.item_code = item.item_code
         and item.country_code = country.country_code
     </select>
+    <select id="findMyCartByOptionCode" resultType="com.shop.myapp.dto.Cart">
+        select * from HR.SHOP_CART_TB where MEMBER_ID = #{memberId} and option_code = #{optionCode}
+    </select>
 
 
 </mapper>

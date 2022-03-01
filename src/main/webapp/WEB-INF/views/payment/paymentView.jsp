@@ -32,7 +32,7 @@
             buyer_postcode: "01181"
         }, function (rsp) {
 // callback
-            let msg;
+            let msg = '결제가 완료되었습니다.';
             if (rsp.success) {
                 jQuery.ajax({
                     url: "/pay/getPay_sendRequest",
@@ -44,25 +44,25 @@
                         "paid_amount": rsp.paid_amount,
                         "apply_num": rsp.apply_num,
                     },
-                    statusCode: {
-                        200: function (data) {
-                            msg = '결제가 완료되었습니다.';
-                            msg += '고유ID : ' + data.imp_uid;
-                            msg += '상점 거래ID : ' + data.merchant_uid;
-                            msg += '결제 금액 : ' + data.paid_amount;
-                            msg += '카드 승인번호 : ' + data.apply_num;
-                        }
+                    success :function (data) {
+                        msg = '결제가 완료되었습니다.';
+                        msg += '고유ID : ' + data.imp_uid;
+                        msg += '상점 거래ID : ' + data.merchant_uid;
+                        msg += '결제 금액 : ' + data.paid_amount;
+                        msg += '카드 승인번호 : ' + data.apply_num;
                     },
-                    400: function () {
-                        msg = '위조된 결제입니다.';
+                    statusCode: {
+                        400: function () {
+                            msg = '위조된 결제입니다.';
+                        }
                     }
 
                 })
+                alert(msg);
             } else {
                 msg = '결제에 실패하였습니다. \n';
                 msg += '에러내용 : ' + rsp.error_msg;
             }
-            alert(msg);
         });
     }
 </script>

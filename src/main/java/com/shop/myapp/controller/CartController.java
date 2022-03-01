@@ -36,13 +36,14 @@ public class CartController {
 
     @PostMapping("/add")
     public String insertCart(@ModelAttribute Cart cartItem) {
-    	MemberSession member = (MemberSession) session.getAttribute("member");
-        System.out.println(cartItem.getOptionCode());
-        cartItem.setMemberId(member.getMemberId());
-        cartItem.setAmount(1);
-        int result = cartService.insertCart(cartItem);
-        if (result == 0) {
-            throw new IllegalStateException("카트 저장 실패");
+        MemberSession member = (MemberSession) session.getAttribute("member");
+        Optional<Cart> myCart = cartService.findMyCartByOptionCode(member.getMemberId(), cartItem.getOptionCode());
+        if (myCart.isPresent()) {
+            cartService.amountSetByCartId(myCart.get().getCartId(),"+");
+        } else {
+            cartItem.setMemberId(member.getMemberId());
+            cartItem.setAmount(1);
+            cartService.insertCart(cartItem);
         }
 
         return "redirect:/cart/myCart";
@@ -50,7 +51,7 @@ public class CartController {
 
     @GetMapping("/myCart")
     public String myCart(Model model) {
-    	MemberSession member = (MemberSession) session.getAttribute("member");
+        MemberSession member = (MemberSession) session.getAttribute("member");
         List<Cart> carts = cartService.findCartDetailByMemberId(member.getMemberId());
         model.addAttribute("carts", carts);
         return "/cart/myCart";
@@ -59,7 +60,7 @@ public class CartController {
     @PostMapping("/{cartCode}/delete")
     @ResponseBody
     public ResponseEntity<Object> deleteCart(@PathVariable String cartCode) {
-    	MemberSession member = (MemberSession) session.getAttribute("member");
+        MemberSession member = (MemberSession) session.getAttribute("member");
         Optional<Cart> cartOptional = cartService.findByCartId(cartCode);
         Cart cart = cartOptional.orElseThrow(() -> new IllegalStateException("cart 정보 없음"));
         if (cart.getMemberId().equals(member.getMemberId())) {
@@ -76,7 +77,7 @@ public class CartController {
     @PostMapping("/{cartCode}/setAmount")
     @ResponseBody
     public ResponseEntity<Object> setCartAmount(@PathVariable String cartCode, @RequestParam String mathSign) {
-    	MemberSession member = (MemberSession) session.getAttribute("member");
+        MemberSession member = (MemberSession) session.getAttribute("member");
         Optional<Cart> cartOptional = cartService.findByCartId(cartCode);
         Cart cart = cartOptional.orElseThrow(() -> new IllegalStateException("cart 정보 없음"));
         // 갯수가 0일경우, 처리 로직 추가 필요.

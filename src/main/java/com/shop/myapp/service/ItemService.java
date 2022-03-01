@@ -55,8 +55,12 @@ public class ItemService {
         return itemRepository.updateItem(item);
     }
 
-    public int getItemListCnt() {
-        return itemRepository.getItemListCnt();
+    public int getItemListCnt(String search) {
+        return itemRepository.getItemListCnt(search);
+    }
+
+    public int getItemListCntByMemberId(String memberId){
+        return itemRepository.getItemListCntByMemberId(memberId);
     }
 
     public List<Item> search(String search,Pagination pagination) {
@@ -67,9 +71,15 @@ public class ItemService {
         }
     }
 
-    public Pagination getPaginationByPage(int page) {
+    public Pagination getPaginationByPage(int page,String search) {
         Pagination pagination = new Pagination();
-        int itemListCnt = getItemListCnt();
+        int itemListCnt = getItemListCnt(search);
+        pagination.pageInfo(page, itemListCnt);
+        return pagination;
+    }
+    public Pagination getPaginationByMemberId(int page,String memberId) {
+        Pagination pagination = new Pagination();
+        int itemListCnt = getItemListCntByMemberId(memberId);
         pagination.pageInfo(page, itemListCnt);
         return pagination;
     }
@@ -86,6 +96,13 @@ public class ItemService {
     }
     public List<Item> findNewItems(){
         return itemRepository.findNewItems();
+    }
+    public List<Item> findHitItems(){
+        return itemRepository.findHitItems();
+    }
+
+    public List<Item> findSellItems(){
+        return itemRepository.findBuyItems();
     }
 
 }

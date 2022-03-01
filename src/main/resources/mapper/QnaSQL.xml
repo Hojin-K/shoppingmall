@@ -5,7 +5,7 @@
 <mapper namespace="com.shop.myapp.repository.QnaRepository">
 
 	<select id="findAll" resultType="com.shop.myapp.dto.QnaBoard">
-        SELECT * FROM SHOP_QNABOARD_TB ORDER BY ITEM_CODE DESC
+        SELECT * FROM SHOP_QNABOARD_TB where ITEM_CODE = #{itemCode} ORDER BY ITEM_CODE DESC
     </select>
     <update id="reply">
     	UPDATE SHOP_QNABOARD_TB SET BOARD_REPLY = #{boardReply} WHERE BOARD_ID = #{boardId}

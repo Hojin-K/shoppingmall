@@ -49,15 +49,20 @@ public class OrderDetailService {
     }
 
     public boolean orderDetailRefund(OrderDetail orderDetail) throws ParseException, JsonProcessingException {
+        // 환불에 사용할 imp_uid 와 amount 를 저장할 HashMap 선언.
         Map<String, Object> refundDetail = new HashMap<>();
+        // json 형태의 String 으로 전달하기 위해서 ObjectMapper 선언.
         ObjectMapper objectMapper = new ObjectMapper();
-        System.out.println(orderDetail.getOrder().getImpUid());
-        refundDetail.put("imp_uid", orderDetail.getOrder().getImpUid());
-        refundDetail.put("amount", ((double) orderDetail.getAmount() * orderDetail.getOrderPrice()) + (orderDetail.getAmount() * orderDetail.getPostPrice()));
-        String refundDetailString = objectMapper.writeValueAsString(refundDetail);
-        System.out.println(refundDetailString);
+        // 갯수,가격,배송비를 계산한 환불액.
         long refund = ((long) orderDetail.getAmount() * orderDetail.getOrderPrice()) + ((long) orderDetail.getAmount() * orderDetail.getPostPrice());
-        System.out.println("refund =  "+refund);
+        // 결제 코드인 imp_uid map 에 저장.
+        refundDetail.put("imp_uid", orderDetail.getOrder().getImpUid());
+        // 환불액을 map 에 저장.
+        refundDetail.put("amount", ((double) orderDetail.getAmount() * orderDetail.getOrderPrice()) + (orderDetail.getAmount() * orderDetail.getPostPrice()));
+        // String 형태로 보내야하기 때문에, ObjectMapper 를 통해 map 을 String 형태로 다시 저장.
+        String refundDetailString = objectMapper.writeValueAsString(refundDetail);
+        // 현재까지 환불된 금액과 iamPort 에서 응답받은 금액이 같은지 확인하고 같으면 true, 틀리면 false
+        // 를 리턴. (동시 환불 요청 or 환불 금액 불일치)
         if (iamPortService.cancel(refundDetailString) == (orderDetail.getOrder().getChange()+ refund)) {
             orderDetailRepository.updateWhenCancel(orderDetail.getOrderDetailCode());
             return true;
@@ -65,10 +70,15 @@ public class OrderDetailService {
         return false;
     }
     public boolean orderCancelService(OrderDetail orderDetail) throws ParseException, JsonProcessingException {
+        // 환불이 일치했을때,
         if (orderDetailRefund(orderDetail)){
+            // 배송 상태 환불로 변경.
             updateWhenCancel(orderDetail.getOrderDetailCode());
+            // 주문의 환불액 갱신.
             orderService.updateChangeWhenCancel(orderDetail);
+            // 환불시, 아이템 갯수 증가.
             itemOptionService.modifyItemOptionAfterRefund(orderDetail);
+            // 트렌젝션 처리로 인해 오류 발생시, 롤백.
             return true;
         }
         return false;
@@ -78,8 +88,8 @@ public class OrderDetailService {
         return orderDetailRepository.updateWhenCancel(orderDetailCode);
     }
 
-    public List<OrderDetail> getOrderDetailByItemWriter(String memberId){
-        return orderDetailRepository.findByMemberIdForSeller(memberId);
+    public List<OrderDetail> getOrderDetailByItemWriter(String memberId,String search,String type){
+        return orderDetailRepository.findByMemberIdForSeller(memberId,search,type);
     }
 
     public int updatePostedStatusByOrderDetailCode(String orderDetailCode, String postedStatus) throws ParseException, JsonProcessingException {
