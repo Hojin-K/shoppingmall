@@ -23,6 +23,8 @@
             <result property="optionCode" column="option_code"/>
             <result property="amount" column="amount"/>
             <result property="postedStatus" column="posted_status"/>
+            <result property="orderPrice" column="order_price"/>
+            <result property="postPrice" column="post_price"/>
             <association property="itemOption" resultMap="itemOption"/>
         </collection>
     </resultMap>

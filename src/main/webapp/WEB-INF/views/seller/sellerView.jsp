@@ -100,8 +100,9 @@
             <h3>
                 ${seller.businessName}
             </h3>
+            <br>
             <form action="/seller/${seller.memberId}" method="GET">
-                <div id="custom-search-input" class="col-8">
+                <div id="custom-search-input" class="col-7">
                     <div class="input-group col-md-12">
                         <input type="text" name="q" class="search-query form-control rounded-pill"
                                placeholder="Search"/>
@@ -150,33 +151,30 @@
         </div>
     </div>
     <div style="clear: both"></div>
-
     <div id="paginationBox">
         <ul class="pagination justify-content-center" style="font-size: medium">
-            <li class="page-item"><a class="page-link" style="border: none;" href="/seller/${seller.memberId}?page=1">
-                << </a>
+            <li class="page-item"><a class="page-link" style="border: none;" href="/seller/${seller.memberId}?page=1"> << </a>
             </li>
             <c:choose>
                 <c:when test="${pagination.startPage != pagination.endPage}">
                     <c:forEach var="number" begin="${pagination.startPage}" end="${pagination.endPage}">
                         <c:if test="${number == pagination.page}">
-                            <li class="page-item active selectedPage"><a
-                                    href="/seller/${seller.memberId}?page=${number}" class="page-link"
-                                    style="border: none">${number}</a></li>
+                            <li class="page-item active selectedPage"><a href="/seller/${seller.memberId}?page=${number}" class="page-link"
+                                                                         style="border: none">${number}</a></li>
                         </c:if>
-                        <li class="page-item"><a href="/seller/${seller.memberId}?page=${number}" class="page-link"
-                                                 style="border: none">${number}</a></li>
+                        <c:if test="${number != pagination.page}">
+                            <li class="page-item"><a href="/seller/${seller.memberId}?page=${number}" class="page-link"
+                                                     style="border: none">${number}</a></li>
+                        </c:if>
                     </c:forEach>
                 </c:when>
                 <c:otherwise>
-                    <li class="page-item active selectedPage"><a
-                            href="/seller/${seller.memberId}?page=${pagination.startPage}"
-                            class="page-link"
-                            style="border: none">${pagination.startPage}</a></li>
+                    <li class="page-item active selectedPage"><a href="/seller/${seller.memberId}?page=${pagination.startPage}"
+                                                                 class="page-link"
+                                                                 style="border: none">${pagination.startPage}</a></li>
                 </c:otherwise>
             </c:choose>
-            <li class="page-item"><a class="page-link" style="border: none"
-                                     href="/seller/${seller.memberId}?page=${pagination.pageCnt}">
+            <li class="page-item"><a class="page-link" style="border: none" href="/seller/${seller.memberId}?page=${pagination.pageCnt}">
                 >> </a></li>
         </ul>
     </div>

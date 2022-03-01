@@ -24,10 +24,20 @@ public class IamPortService {
     public JSONObject parsingRestAttribute(ResponseEntity<String> restResponse) throws ParseException {
         JSONParser parser = new JSONParser();
         JSONObject responseBody = (JSONObject) parser.parse(restResponse.getBody());
-        System.out.println(responseBody.toJSONString());
+        validRefundCode(restResponse);
         // ResponseEntity 에 저장되어 있는 body(json 형태로 된 String)을 JSONObject 로 파싱
         // body 안에 json 형태의 String 으로 저장되어 있는 response(실제 저장 값들)를 JSONObject 로 다시 파싱
         return (JSONObject) responseBody.get("response");
+    }
+
+    public void validRefundCode(ResponseEntity<String> restResponse) throws ParseException {
+        JSONParser parser = new JSONParser();
+        JSONObject responseBody = (JSONObject) parser.parse(restResponse.getBody());
+        long code = (long) responseBody.get("code");
+        String message = (String) responseBody.get("message");
+        if (code == -1){
+            throw new IllegalStateException(message);
+        }
     }
 
     public String getAccessToken() throws ParseException {
@@ -93,15 +103,26 @@ public class IamPortService {
 
     public long cancel(String refundDetail) throws ParseException {
         HttpHeaders headers = new HttpHeaders();
+        // json 타입으로 보내기 위해서 contentType 선언.
         headers.setContentType(MediaType.APPLICATION_JSON);
+        // 응답으로 json 타입으로 받기 위해 accept 선언.
         headers.setAccept(Collections.singletonList(MediaType.APPLICATION_JSON));
-        HttpEntity<String> entity = new HttpEntity<>(refundDetail, headers);
+        // 헤더에 응답으로 받아놓은 accessToken 을 삽입.
         headers.add("Authorization", getAccessToken());
+        // 환불 금액을 요청에 담음.
+        HttpEntity<String> entity = new HttpEntity<>(refundDetail, headers);
+        // 요청을 보낼 url 지정.
         String url = "https://api.iamport.kr/payments/cancel";
+        // 요청을 보내기위해 RestTemplate 사용.
         RestTemplate template = new RestTemplate();
         ResponseEntity<String> response = template.exchange(url, HttpMethod.POST, entity, String.class);
+
         JSONObject responseAttributes = parsingRestAttribute(response);
-        System.out.println((long) responseAttributes.get("cancel_amount"));
+//        if (statusCode.is4xxClientError()){
+//            throw new IllegalStateException("");
+//        }
+        // ResponseEntity 에 담겨있는 Http Body 를 JsonObject 에 저장.
+        // jsonObject 에 저장되어 있는 환불 금액 리턴.
         return (long) responseAttributes.get("cancel_amount");
     }
 }

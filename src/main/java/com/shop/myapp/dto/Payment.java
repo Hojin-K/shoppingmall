@@ -25,10 +25,6 @@ public class Payment {
     @DateTimeFormat(pattern = "yyyy-MM-dd HH:mm:ss")
     private LocalDateTime paidAt;
     private String status;
-    /*
-        개인통관고유번호
-        13자리 + 맨 앞 'p'
-     */
     private String buyerPCC;
 
     @Builder

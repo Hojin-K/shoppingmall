@@ -51,7 +51,7 @@
     	let bName = document.getElementById('bName');
     	let bRegNo = document.getElementById('bRegNo');
 
-    	if (uid.value == "") { // 해당 입력값이 없을 경우 같은말: if(!uid.value)
+    	if (uid.value === "") { // 해당 입력값이 없을 경우 같은말: if(!uid.value)
     		// 비밀번호 영문자+숫자+특수조합(8~25자리 입력) 정규식
     		alert("아이디를 입력하세요.");
     		uid.focus(); // focus(): 커서가 깜빡이는 현상, blur(): 커서가 사라지는 현상
@@ -188,7 +188,8 @@
                 <input class="form-control" type="date" name="memberBirth" id="mBirth"/>
             </div>
         </div>
-        <input class="form-control" type="submit" value="가입하기" >
+        <input class="form-control" type="submit" value="가입하기">
+<%--        <input class="form-control" type="button" value="가입하기" onclick="joinCheck()">--%>
     </form>
 </div>
 </body>

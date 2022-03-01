@@ -19,8 +19,6 @@ import com.shop.myapp.service.MemberService;
 
 import lombok.extern.slf4j.Slf4j;
 
-import javax.servlet.http.HttpServletRequest;
-
 @Slf4j
 @Controller
 //@Auth(role = Auth.Role.ADMIN)
@@ -41,7 +39,7 @@ public class AdminController {
 	public ModelAndView getMemberList(@RequestParam String chkInfo, @RequestParam String condition) {
 		List<Member> members = memberService.getMembers(chkInfo, condition);
 		ModelAndView mv = new ModelAndView();
-		mv.setViewName("members/memberTable");
+		mv.setViewName("modal/memberTable");
 		mv.addObject("members", members);
 
 		return mv;

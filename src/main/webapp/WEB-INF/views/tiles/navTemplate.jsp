@@ -44,6 +44,12 @@
     .search-query:focus + button {
         z-index: 3;
     }
+    #footerLink{
+        text-decoration: none;
+    }
+    #footerLink:hover{
+        text-decoration: none;
+    }
 </style>
 <script>
     $(function () {
@@ -70,7 +76,7 @@
                 </li>
             </ul>
         <button class="navbar-toggler" type="button" data-bs-toggle="collapse" data-bs-target="#navbarSupportedContent" aria-controls="navbarSupportedContent" aria-expanded="false" aria-label="Toggle navigation">
-            <span class="navbar-toggler-icon"></span>
+            <span class="navbar-toggler-icon btn-sm"></span>
         </button>
         <div class="collapse navbar-collapse flex-grow-0" id="navbarSupportedContent">
             <ul class="navbar-nav mb-2 mb-lg-0 text-right">

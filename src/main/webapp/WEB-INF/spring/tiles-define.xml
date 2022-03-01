@@ -7,15 +7,11 @@
     <definition name="modal-layout" template="/WEB-INF/views/tiles/modal-layout.jsp">
         <put-attribute name="modal" value="" />
     </definition>
+
 <definition name="modal/*" extends="modal-layout">
     <put-attribute name="modal" value="/WEB-INF/views/modal/{1}.jsp"/>
 </definition>
-    <definition name="*.part" extends="modal-layout">
-        <put-attribute name="modal" value="/WEB-INF/views/modal/{1}.jsp"/>
-    </definition>
-    <definition name="*/*.part" extends="modal-layout">
-        <put-attribute name="modal" value="/WEB-INF/views/modal/{1}.jsp"/>
-    </definition>
+
     <!-- main layout -->
     <definition name="layout-tiles" template="/WEB-INF/views/tiles/tiles-layout.jsp">
         <put-attribute name="header" value="/WEB-INF/views/tiles/headerTemplate.jsp" />

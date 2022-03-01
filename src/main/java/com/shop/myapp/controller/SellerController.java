@@ -41,7 +41,7 @@ public class SellerController {
                                 @RequestParam(value = "q",required = false) String search,
                                 Model model){
         Member seller = memberService.getMember(memberId);
-        Pagination pagination = itemService.getPaginationByPage(page);
+        Pagination pagination = itemService.getPaginationByMemberId(page, memberId);
         List<Item> items = memberService.getSellerItems(memberId,pagination,search);
         model.addAttribute("seller",seller);
         model.addAttribute("items",items);

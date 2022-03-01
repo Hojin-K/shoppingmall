@@ -53,7 +53,7 @@
                     buyer_postcode: order.buyerPostCode
                 }, function (rsp) {
 // callback
-                    let msg;
+                    let msg="";
                     if (rsp.success) {
                         jQuery.ajax({
                             url: "/order/" + order.orderCode + "/validate",
@@ -64,11 +64,12 @@
                                 "orderCode": order.orderCode
                             },
                             statusCode: {
-                                200: function (data) {
+                                200: function () {
+                                    alert('결제에 성공하였습니다.')
                                     location.href = "/order/myOrder";
                                 },
                                 402: function () {
-                                    msg = '위조된 결제입니다.';
+                                    alert('위조된 결제로 인해 실패하였습니다.')
                                 }
                             }
 
@@ -83,8 +84,8 @@
                         });
                         msg += '결제에 실패하였습니다. \n';
                         msg += '에러내용 : ' + rsp.error_msg;
+                        alert(msg)
                     }
-                    alert(msg);
                 });
             });
 

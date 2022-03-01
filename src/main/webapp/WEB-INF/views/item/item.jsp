@@ -30,6 +30,8 @@
     <script>
         $(function () {
             getReview();
+            callQna();
+            let flag = ${flag}
 
             $(document).on("click", "#backMain", function () {
                 location.href = "/item/";
@@ -43,9 +45,6 @@
                 $(this).tab('show')
             })
 
-            $(document).on("click", "#qnaTab", function () {
-                callQna();
-            });
 
             //리뷰
             function getReview (){
@@ -61,7 +60,7 @@
         });
 	function callQna (){
 	    $.ajax({
-	        url : "/qna/${item.itemCode}/list?",
+	        url : "/qna/list?itemCode=${item.itemCode}",
 	        method : "GET",
 	        success : function (data){
 	            $("#qna").html(data);
@@ -107,14 +106,19 @@
                         </select>
                     </div>
                     <br>
+                    <c:choose>
+                        <c:when test="${sessionScope.member.memberId == item.memberId}">
                     <div class="row text-center">
-                        <input type="submit" class="btn btn-lg btn-dark col-8 m-auto" value="장바구니에 담기">
-                        <button id="backMain" type="button" class="btn btn-lg btn-secondary col-3 m-auto">뒤로</button>
+                            <button id="update" type="button" class="btn btn-lg btn-primary col-12 m-auto">수정하기</button>
                     </div>
-                        <c:if test="${sessionScope.member.memberId == item.memberId}">
-                            <br>
-                        <button id="update" type="button" class="btn btn-primary col-12 m-auto">수정하기</button>
-                        </c:if>
+                        </c:when>
+                        <c:otherwise>
+                            <div class="row text-center">
+                                <input type="submit" class="btn btn-lg btn-dark col-8 m-auto" value="장바구니에 담기">
+                                <button id="backMain" type="button" class="btn btn-lg btn-secondary col-3 m-auto">뒤로</button>
+                            </div>
+                        </c:otherwise>
+                    </c:choose>
                 </div>
             </form>
         </div>
@@ -142,7 +146,6 @@
                 <div class="tab-pane fade text-center" id="review">
                 </div>
                 <div class="tab-pane fade text-center" id="qna">
-                    <p>QNA</p>
                 </div>
             </div>
         </div>

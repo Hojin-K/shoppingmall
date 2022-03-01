@@ -45,12 +45,11 @@ public class CartService {
 
     }
     public int amountSetByCartId(String cartId,String mathSign){
-        try{
         return cartRepository.amountSetByCartId(cartId,mathSign);
-        } catch (Exception e){
-            e.printStackTrace();
-        }
-        return 0;
+    }
+
+    public Optional<Cart> findMyCartByOptionCode(String memberId, String optionCode){
+        return cartRepository.findMyCartByOptionCode(memberId,optionCode);
     }
 
 }

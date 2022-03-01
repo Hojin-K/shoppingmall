@@ -180,6 +180,7 @@
     }
 </style>
 <body class="pt-5">
+<br>
 <div class="container">
     <div class="accordion" id="accordionExample">
         <c:set var="i" value="${0}"/>
@@ -203,7 +204,8 @@
                                 </a>
                             </div>
                         </div>
-                        <div style="width: 16.66%">${orderDetail.itemOption.item.itemPrice}원</div>
+                        <div style="width: 16.66%">가격 : ${orderDetail.orderPrice}원</div>
+                        <div style="width: 16.66%">배송비 : ${orderDetail.postPrice}원</div>
                         <div style="width: 8.33%">
                             <span>${orderDetail.amount}개</span>
                         </div>
