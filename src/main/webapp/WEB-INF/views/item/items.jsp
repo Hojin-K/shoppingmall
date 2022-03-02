@@ -72,8 +72,11 @@
                         </div>
                         <div class="card-body">
                             <span style="color: #0d6efd; font-size: small">${item.country.countryName}</span>
+
                             <h5 class="card-title txt_line" ><c:out value="${item.itemName}"/></h5>
-                            <span class="card-text"><c:out value="${item.itemPrice}원"/></span>
+                            <span class="card-text"><c:out value="${item.itemPrice}원"/></span> <c:if test="${item.itemStock==0}">
+                            &nbsp; &nbsp;<span style="color: red; font-size: small">품절</span>
+                        </c:if>
                             <br>
                             <span class="card-text" style="color: #5b5b5b; font-size: x-small" ><c:out value="${item.businessName} 마켓"/></span>
                         </div>

@@ -43,7 +43,7 @@ public class ItemController {
 
     @GetMapping("")
     public String getItems(@RequestParam(required = false, defaultValue = "1") int page, Model model) {
-        Pagination pagination = itemService.getPaginationByPage(page);
+        Pagination pagination = itemService.getPaginationByPage(page,null);
         List<Item> items = itemService.getItems(pagination);
         model.addAttribute("items", items);
         for (Item item: items){
@@ -54,8 +54,11 @@ public class ItemController {
 
     }
     @GetMapping("/{itemCode}")
-    public String getItemDetail(@PathVariable String itemCode, Model model) {
+    public String getItemDetail(@PathVariable String itemCode, Model model,@RequestParam(required = false) String flag) {
         Item item = itemService.getItem(itemCode);
+        if (flag != null){
+            model.addAttribute("flag",flag);
+        }
         model.addAttribute("item", item);
         return "item/item";
     }
@@ -128,7 +131,7 @@ public class ItemController {
 
     @GetMapping("/search")
     public String search(@RequestParam(required = false, defaultValue = "1") int page, @RequestParam("q") String search, Model model) {
-        Pagination pagination = itemService.getPaginationByPage(page);
+        Pagination pagination = itemService.getPaginationByPage(page,search);
         List<Item> items = itemService.search(search, pagination);
         model.addAttribute("pagination", pagination);
         model.addAttribute("items", items);

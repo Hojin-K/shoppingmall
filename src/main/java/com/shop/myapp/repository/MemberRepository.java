@@ -7,6 +7,7 @@ import java.util.Optional;
 import org.apache.ibatis.annotations.Mapper;
 import org.apache.ibatis.annotations.Param;
 
+import com.shop.myapp.dto.Chart;
 import com.shop.myapp.dto.Member;
 
 @Mapper
@@ -19,4 +20,5 @@ public interface MemberRepository {
     Optional<Member> findById(String memberId, LinkedList<String> requestorLevel);
     int updateSeller(Member member);
     int updateByAdmin(Member member);
+	List<Chart> getTotalPayChart();
 }

@@ -65,7 +65,6 @@ function selectList() {
 		<div id="memberList">
 		
 		</div>
-		<div id="countryCode"></div>
 	</div>
 </body>
 </html>

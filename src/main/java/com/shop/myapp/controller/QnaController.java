@@ -4,11 +4,9 @@ import java.util.List;
 
 import javax.servlet.http.HttpServletRequest;
 
+import org.springframework.http.ResponseEntity;
 import org.springframework.stereotype.Controller;
-import org.springframework.web.bind.annotation.GetMapping;
-import org.springframework.web.bind.annotation.PathVariable;
-import org.springframework.web.bind.annotation.PostMapping;
-import org.springframework.web.bind.annotation.RequestMapping;
+import org.springframework.web.bind.annotation.*;
 import org.springframework.web.servlet.ModelAndView;
 import org.springframework.web.servlet.mvc.support.RedirectAttributes;
 
@@ -29,8 +27,8 @@ public class QnaController {
 		this.qnaService = qnaService;
 	}
 	
-	@GetMapping("/{itemCode}/list")
-	public ModelAndView getList(@PathVariable String itemCode){
+	@GetMapping("/list")
+	public ModelAndView getList(@RequestParam String itemCode){
 		/*, @RequestParam(required = false, defaultValue = "1") int page*/
 		List<QnaBoard> qnaList = qnaService.getList(itemCode);
 		ModelAndView mv = new ModelAndView();
@@ -40,28 +38,29 @@ public class QnaController {
 		
 		return mv;
 	}
-	
+	@ResponseBody
 	@PostMapping("/write")
-	public String write(QnaBoard qna, HttpServletRequest request,RedirectAttributes redirectAttributes) {
+	public ResponseEntity<Object> write(QnaBoard qna, HttpServletRequest request, RedirectAttributes redirectAttributes) {
 		log.info("qna write start");
+		System.out.println(qna.getItemCode());
+		System.out.println(qna.getBoardContent());
 		MemberSession mSession = (MemberSession)request.getSession().getAttribute("member");
 		qna.setMemberId(mSession.getMemberId());
 		int result = qnaService.insertWrite(qna);
 		log.info("insert success : ("+result+")");
-		redirectAttributes.addAttribute("itemCode", qna.getItemCode());
-		return "redirect:/item/{itemCode}";
+		return ResponseEntity.ok().build();
 	}
-	
+
+	@ResponseBody
 	@PostMapping("/reply")
-	public String reply(QnaBoard qna, RedirectAttributes redirectAttributes) {
+	public ResponseEntity<Object> reply(QnaBoard qna, RedirectAttributes redirectAttributes) {
 		log.info("reply process start");
 		System.out.println("보드아이디 체크 -->"+qna.getBoardId());
 		System.out.println("리플 체크 -->"+qna.getBoardReply());
 		System.out.println("아이템 체크 -->"+qna.getItemCode());
 		int result = qnaService.reply(qna);
 		log.info("insert success : ("+result+")");
-		redirectAttributes.addAttribute("itemCode", qna.getItemCode());
-		return "redirect:/item/{itemCode}";
+		return ResponseEntity.ok().build();
 	}
 
 }

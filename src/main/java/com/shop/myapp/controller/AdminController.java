@@ -1,10 +1,13 @@
 package com.shop.myapp.controller;
 
+import java.time.LocalDate;
+import java.util.LinkedList;
 import java.util.List;
 
 import javax.servlet.http.HttpServletRequest;
 
 import org.springframework.stereotype.Controller;
+import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.ModelAttribute;
 import org.springframework.web.bind.annotation.PathVariable;
@@ -13,13 +16,12 @@ import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.servlet.ModelAndView;
 
+import com.shop.myapp.dto.Chart;
 import com.shop.myapp.dto.Member;
 import com.shop.myapp.dto.MemberSession;
 import com.shop.myapp.service.MemberService;
 
 import lombok.extern.slf4j.Slf4j;
-
-import javax.servlet.http.HttpServletRequest;
 
 @Slf4j
 @Controller
@@ -41,7 +43,7 @@ public class AdminController {
 	public ModelAndView getMemberList(@RequestParam String chkInfo, @RequestParam String condition) {
 		List<Member> members = memberService.getMembers(chkInfo, condition);
 		ModelAndView mv = new ModelAndView();
-		mv.setViewName("members/memberTable");
+		mv.setViewName("modal/memberTable");
 		mv.addObject("members", members);
 
 		return mv;
@@ -66,5 +68,24 @@ public class AdminController {
 		memberService.updateByAdmin(member);
 		
 		return "redirect:/admin/list";
+	}
+	
+	@GetMapping("/chart")
+	public String chart(Model model) {
+		log.info("member chart!!!");
+		List<Chart> tOrderChart = memberService.getTotalPayChart();
+		LinkedList<String> totalPay = new LinkedList<>();
+		LinkedList<String> paidAt = new LinkedList<>();
+		
+		for (Chart chart : tOrderChart) {
+			totalPay.add(chart.getTotalPay());
+			paidAt.add("'"+chart.getPaidAt().toString()+"'");
+		}
+		System.out.println(totalPay);
+		System.out.println(paidAt);
+		model.addAttribute("totalPay", totalPay);
+		model.addAttribute("paidAt", paidAt);
+		
+		return "/order/totalOrderChart";
 	}
 }

@@ -20,6 +20,8 @@ public interface ItemRepository {
     int insertItem(Item item);
     int deleteItem(String itemCode);
     int updateItem(Item item);
-    int getItemListCnt();
+    int getItemListCnt(String search);
+    int getItemListCntByMemberId(String memberId);
     int itemHitUpWhenInItemDetail(String itemCode);
+
 }

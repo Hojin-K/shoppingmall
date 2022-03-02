@@ -7,7 +7,7 @@ import lombok.Setter;
 @Setter
 public class Pagination {
 
-    private int listSize = 8;                //초기값으로 목록개수를 10으로 셋팅
+    private int listSize = 12;                //초기값으로 목록개수를 10으로 셋팅
     private int page;
     private int listCnt;
     private int pageCnt;
