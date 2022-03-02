@@ -42,7 +42,6 @@ public class ReviewController {
 		ModelAndView mv = new ModelAndView();
 		mv.setViewName("modal/review");
 		mv.addObject("reviews", reviews);
-		
 		return mv; // 성공 했을 때, 성공했다는 신호와 함께 요청 값을 같이 보내줌.
 	}
 	

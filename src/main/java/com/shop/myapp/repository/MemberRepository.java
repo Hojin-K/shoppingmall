@@ -17,7 +17,7 @@ public interface MemberRepository {
     int deleteMember(String memberId);
     List<Member> findAll(@Param(value = "chkInfo") String chkInfo, @Param(value = "condition") String condition);
     Optional<Member> findById(String memberId);
-    Optional<Member> findById(String memberId, LinkedList<String> requestorLevel);
+    Optional<Member> findByIdAdmin(String memberId);
     int updateSeller(Member member);
     int updateByAdmin(Member member);
 	List<Chart> getTotalPayChart();

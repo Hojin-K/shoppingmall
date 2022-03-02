@@ -89,13 +89,12 @@ public class ItemController {
     @GetMapping("/{itemCode}/update")
     public String updateItemForm(@PathVariable String itemCode, Model model) {
     	MemberSession member = (MemberSession) session.getAttribute("member");
-        if (itemService.validateAccessToItem(itemCode, member)) {
-            Item item = itemService.getItem(itemCode);
-            model.addAttribute("item", item);
-            return "/item/updateItemForm";
+        if (!itemService.validateAccessToItem(itemCode, member)) {
+            throw new IllegalStateException("권한 없음");
         }
-
-        return "redirect:/item";
+        Item item = itemService.getItem(itemCode);
+        model.addAttribute("item", item);
+        return "/item/updateItemForm";
     }
 
     @Auth(role = Auth.Role.SELLER)

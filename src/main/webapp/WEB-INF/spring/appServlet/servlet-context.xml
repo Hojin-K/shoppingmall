@@ -79,10 +79,6 @@
     </interceptors>
 
     <annotation-driven>
-        <!-- argument resolver -->
-        <argument-resolvers>
-            <beans:bean class="com.shop.myapp.interceptor.AuthUserHandlerMethodArgumentResolver"/>
-        </argument-resolvers>
 <!--RestController converter-->
         <message-converters>
             <beans:bean class="org.springframework.http.converter.StringHttpMessageConverter">

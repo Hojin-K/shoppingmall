@@ -72,7 +72,7 @@
 						yAxes: [{
 							ticks: {
 								beginAtZero: true,
-								stepSize : 20
+								stepSize : 500
 							}
 						}]
 					}

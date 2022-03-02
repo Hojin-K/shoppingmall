@@ -55,12 +55,13 @@ $(function () {
    });
 </script>
 	<c:choose>
-	<c:when test="${qnaList.size() == 0}">
+	<c:when test="${empty qnaList}">
+		<br><br>
 		<h4>QNA가 없습니다.</h4>
 	</c:when>
-	<c:when test="${qnaList.size() != 0}">
+	<c:when test="${not empty qnaList}">
 	<div class="accordion" id="accordionList">
-<c:forEach items="${qnaList }" var="qna">
+<c:forEach items="${qnaList}" var="qna">
 	  <div class="accordion-item">
 		    <h2 class="accordion-header" id="headingOne">
 		      <button class="accordion-button collapsed" type="button" data-bs-toggle="collapse" data-bs-target="#collapse${qna.boardId}" aria-expanded="true" aria-controls="collapse${qna.boardId}">
@@ -68,7 +69,7 @@ $(function () {
 		      </button>
 		    </h2>
 		    <div id="collapse${qna.boardId}" class="accordion-collapse collapse" aria-labelledby="headingOne" data-bs-parent="#accordionList">
-		      <div class="accordion-body" id="cBody_${qna.boardId }">
+		      <div class="accordion-body" id="cBody_${qna.boardId}">
 		        <!--질문자 id  <--><p align="left" id="bWriter">작성자 : ${qna.memberId}</p>
 		        <!-- 여기가 질문 <--><p align="left" id="content">${qna.boardContent}</p>
 		        <div align="right">

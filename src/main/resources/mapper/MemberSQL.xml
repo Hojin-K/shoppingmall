@@ -68,14 +68,17 @@ set HR.SHOP_MEMBER_TB.BUSINESS_NAME = #{businessName}, business_info = #{busines
         SELECT *
         FROM SHOP_MEMBER_TB
         WHERE MEMBER_ID = #{memberId}
-        <if test="requestorLevel == null">
         AND IS_DELETE = 0
-        </if>
     </select>
     
     <select id="getTotalPayChart" resultType="com.shop.myapp.dto.Chart">
-    	SELECT PAID_AT, SUM(TOTAL_PAY) AS TOTAL_PAY  
-    	FROM SHOP_ORDER_TB GROUP BY PAID_AT ORDER BY PAID_AT ASC
+        SELECT TO_CHAR(PAID_AT,'YYYY-MM-DD') as paid_at, SUM(TOTAL_PAY) AS TOTAL_PAY
+        FROM SHOP_ORDER_TB GROUP BY TO_CHAR(PAID_AT,'YYYY-MM-DD') ORDER BY PAID_AT ASC
+    </select>
+    <select id="findByIdAdmin" resultType="com.shop.myapp.dto.Member">
+        SELECT *
+        FROM SHOP_MEMBER_TB
+        WHERE MEMBER_ID = #{memberId}
     </select>
 
 

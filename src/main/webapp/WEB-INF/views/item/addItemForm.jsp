@@ -39,7 +39,6 @@
 
             function getOptionForm() {
                 let result = "<div style='display: inline-block' name='option" + optionSetting + "' id='option" + optionSetting + "'>"
-                result += '<p>옵션</p>';
                 result += "사이즈<input type='text' name='itemOptions[" + optionSetting + "].optionName'/> "
                 result += "&nbsp;보유 수량<input onkeyPress='javascript:checkInputNum();' type='number' name='itemOptions[" + optionSetting + "].optionStock' value='0'/> "
                 result += "&nbsp;변동액<input onkeyPress='javascript:checkInputNum();'  type='number' name='itemOptions[" + optionSetting + "].optionPriceUd' value='0'/> "
@@ -81,7 +80,7 @@
             <div class="mb-3" id="options">
                 <div style='display: inline-block' name='option0' id='option0'>
                 <p>옵션</p>
-                <input type='text' name='itemOptions[0].optionName' value="Free"/>
+                사이즈<input type='text' name='itemOptions[0].optionName' value="Free"/>
                 &nbsp;보유 수량<input onkeyPress='javascript:checkInputNum();' type='number' name='itemOptions[0].optionStock' value="0"/>
                 &nbsp;변동액<input onkeyPress='javascript:checkInputNum();'  type='number' name='itemOptions[0].optionPriceUd' value="0"/>
                 <button class='btn btn-danger btn-sm' type='button' name='deleteOption'>삭제</button>

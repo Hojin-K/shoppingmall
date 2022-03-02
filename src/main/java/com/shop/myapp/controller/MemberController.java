@@ -1,6 +1,7 @@
 package com.shop.myapp.controller;
 
 import javax.servlet.http.HttpServletRequest;
+import javax.servlet.http.HttpSession;
 
 import org.springframework.http.ResponseEntity;
 import org.springframework.stereotype.Controller;
@@ -25,9 +26,11 @@ import lombok.extern.slf4j.Slf4j;
 public class MemberController {
 
     private final MemberService memberService;
+    private final HttpSession session;
 
-    public MemberController(MemberService memberService) {
+    public MemberController(MemberService memberService, HttpSession session) {
         this.memberService = memberService;
+        this.session = session;
     }
 
     @GetMapping("/join")
@@ -54,17 +57,14 @@ public class MemberController {
     	return "redirect:/";
     }
 
-    @GetMapping("/update")
-    @Auth(role = Auth.Role.USER)
-    public String updateForm() {
-    	log.info("memberUpdateForm");
-    	return "/members/update";
-    }
-    
     @Auth(role = Auth.Role.USER)
     @GetMapping("/{memberId}/info")
     public String infoForm(@PathVariable String memberId, Model model) {
-    	log.info("memberUpdateForm");
+        MemberSession member1 = (MemberSession) session.getAttribute("member");
+        if (!member1.getMemberId().equals(memberId)){
+            throw new IllegalStateException("권한 없음");
+        }
+        log.info("memberUpdateForm");
     	Member member = memberService.getMember(memberId); 
     	model.addAttribute("member", member);
     	return "/members/info";
@@ -73,6 +73,10 @@ public class MemberController {
     @Auth(role = Auth.Role.USER)
     @PostMapping("/{memberId}/update")
     public String update(@ModelAttribute Member member) {
+        MemberSession member1 = (MemberSession) session.getAttribute("member");
+        if (!member1.getMemberId().equals(member.getMemberId())){
+            throw new IllegalStateException("권한 없음");
+        }
     	// 에러가 있는지 검사
     	log.info("Edit member information.");
     	
@@ -85,6 +89,10 @@ public class MemberController {
     @Auth(role = Auth.Role.USER)
     @GetMapping("/{memberId}/delete")
     public String delete(@PathVariable String memberId, HttpServletRequest request) {
+        MemberSession member1 = (MemberSession) session.getAttribute("member");
+        if (!member1.getMemberId().equals(memberId)){
+            throw new IllegalStateException("권한 없음");
+        }
     	// 에러가 있는지 검사
     	log.info("delete member.");
     	
@@ -120,6 +128,10 @@ public class MemberController {
     @ResponseBody
     @Auth(role = Auth.Role.USER)
     public ResponseEntity<Object> getMemberInfo(@PathVariable String memberId){
+        MemberSession member1 = (MemberSession) session.getAttribute("member");
+        if (!member1.getMemberId().equals(memberId)){
+            throw new IllegalStateException("권한 없음");
+        }
         Member member = memberService.getMember(memberId);
         return ResponseEntity.ok(member);
     }

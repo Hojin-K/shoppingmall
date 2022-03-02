@@ -76,18 +76,19 @@ public class IamPortService {
     public Payment getImpAttributes(String impUid) throws ParseException {
         // access token 을 전달할 httpHeaders 생성
         HttpHeaders headers = new HttpHeaders();
-        // httpEntity 에 담아 header 전달
-        HttpEntity<String> entity = new HttpEntity<>("", headers);
-        // HttpEntity 에 headers 를 삽입
+        // IamPort 서버에서 access token 응답 받아, 해당 요청의 http header 에 추가
         headers.add("Authorization", getAccessToken());
-        // 구매자가 결제한 결제 번호의 정보를 요청 -> db에 저장된 결제 되어야하는 금액과 실제 결제된 금액을 대조
+        // httpEntity 에 headers 추가
+        HttpEntity<String> entity = new HttpEntity<>("", headers);
+        // 결제 코드로 결제 정보 불러옴
         String url = "https://api.iamport.kr/payments/" + impUid;
         // exchange()를 사용하면 postForEntity()에 비해 더 많은 정보를 전달할 수 있음
         RestTemplate template = new RestTemplate();
         ResponseEntity<String> response = template.exchange(url, HttpMethod.GET, entity, String.class);
         JSONObject responseAttributes = parsingRestAttribute(response);
-        // access token 을 받을때와 마찬가지로 json 파싱
-        // 해당 고유 번호로 결제된 금액 조회
+        // ResponseEntity 에 저장된 응답 메세지에 담긴 http body 를 JSONObject 형태로 파싱
+
+        // 해당 결제 정보를 builder 를 통해 전달.
         return Payment.builder()
                 .impUid((String) responseAttributes.get("imp_uid"))
                 .amount((Long) responseAttributes.get("amount"))

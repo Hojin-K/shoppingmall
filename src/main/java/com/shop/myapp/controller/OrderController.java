@@ -1,9 +1,11 @@
 package com.shop.myapp.controller;
 
 import java.util.List;
+import java.util.Objects;
 
 import javax.servlet.http.HttpSession;
 
+import com.fasterxml.jackson.core.JsonProcessingException;
 import org.json.simple.parser.ParseException;
 import org.springframework.http.ResponseEntity;
 import org.springframework.stereotype.Controller;
@@ -39,6 +41,8 @@ public class OrderController {
 
     @PostMapping("/addForm")
     public String insertOrderForm(@ModelAttribute FormList formList, Model model) {
+        List<String> cartCodes = formList.getCartCodes();
+        cartCodes.removeIf(Objects::isNull);
         List<Cart> carts = orderService.getSelectCartByCartIds(formList.getCartCodes());
         model.addAttribute("carts", carts);
         return "order/orderForm";
@@ -56,7 +60,7 @@ public class OrderController {
 
     @PostMapping("/{orderCode}/validate")
     @ResponseBody
-    public ResponseEntity<Object> validateTotalPay(@RequestParam("imp_uid") String impUid, @PathVariable String orderCode) throws ParseException {
+    public ResponseEntity<Object> validateTotalPay(@RequestParam("imp_uid") String impUid, @PathVariable String orderCode) throws ParseException, JsonProcessingException {
         System.out.println("impUid = " + impUid);
         System.out.println("orderCode = " + orderCode);
         Payment payment = orderService.validateTotalPay(impUid, orderCode);

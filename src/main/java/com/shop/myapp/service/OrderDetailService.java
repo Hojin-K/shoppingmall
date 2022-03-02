@@ -3,6 +3,7 @@ package com.shop.myapp.service;
 import com.fasterxml.jackson.core.JsonProcessingException;
 import com.fasterxml.jackson.databind.ObjectMapper;
 import com.shop.myapp.dto.OrderDetail;
+import com.shop.myapp.dto.Payment;
 import com.shop.myapp.repository.OrderDetailRepository;
 import org.apache.ibatis.session.SqlSession;
 import org.json.simple.parser.ParseException;
@@ -55,19 +56,34 @@ public class OrderDetailService {
         ObjectMapper objectMapper = new ObjectMapper();
         // 갯수,가격,배송비를 계산한 환불액.
         long refund = ((long) orderDetail.getAmount() * orderDetail.getOrderPrice()) + ((long) orderDetail.getAmount() * orderDetail.getPostPrice());
+        // 현재 DB에 저장된 총 환불 금액.
+        long change = orderDetail.getOrder().getChange();
         // 결제 코드인 imp_uid map 에 저장.
         refundDetail.put("imp_uid", orderDetail.getOrder().getImpUid());
         // 환불액을 map 에 저장.
-        refundDetail.put("amount", ((double) orderDetail.getAmount() * orderDetail.getOrderPrice()) + (orderDetail.getAmount() * orderDetail.getPostPrice()));
+        refundDetail.put("amount", refund);
         // String 형태로 보내야하기 때문에, ObjectMapper 를 통해 map 을 String 형태로 다시 저장.
         String refundDetailString = objectMapper.writeValueAsString(refundDetail);
-        // 현재까지 환불된 금액과 iamPort 에서 응답받은 금액이 같은지 확인하고 같으면 true, 틀리면 false
-        // 를 리턴. (동시 환불 요청 or 환불 금액 불일치)
-        if (iamPortService.cancel(refundDetailString) == (orderDetail.getOrder().getChange()+ refund)) {
+        // 현재까지 환불된 금액과 iamPort 에서 응답받은 금액이 같은지 확인하고 같으면 컨트롤러 진행
+        // 불일치시, IamPort 에서 전달한 메세지의 IllegalStateException 발생. (동시 환불 요청 or 환불 금액 불일치)
+        if (iamPortService.cancel(refundDetailString) == (change+ refund)) {
             orderDetailRepository.updateWhenCancel(orderDetail.getOrderDetailCode());
-            return true;
         }
         return false;
+    }
+    public void orderRefund(Payment payment) throws ParseException, JsonProcessingException {
+        // 환불에 사용할 imp_uid 와 amount 를 저장할 HashMap 선언.
+        Map<String, Object> refundDetail = new HashMap<>();
+        // json 형태의 String 으로 전달하기 위해서 ObjectMapper 선언.
+        ObjectMapper objectMapper = new ObjectMapper();
+        // 갯수,가격,배송비를 계산한 환불액.
+        long refund = payment.getAmount();
+        // 결제 코드인 imp_uid map 에 저장.
+        refundDetail.put("imp_uid", payment.getImpUid());
+        // 환불액을 map 에 저장.
+        refundDetail.put("amount", refund);
+        String refundDetailString = objectMapper.writeValueAsString(refundDetail);
+        iamPortService.cancel(refundDetailString);
     }
     public boolean orderCancelService(OrderDetail orderDetail) throws ParseException, JsonProcessingException {
         // 환불이 일치했을때,

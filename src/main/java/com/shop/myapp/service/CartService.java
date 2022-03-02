@@ -2,6 +2,7 @@ package com.shop.myapp.service;
 
 import com.shop.myapp.dto.Cart;
 import com.shop.myapp.repository.CartRepository;
+import org.apache.ibatis.annotations.Param;
 import org.apache.ibatis.session.SqlSession;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
@@ -50,6 +51,14 @@ public class CartService {
 
     public Optional<Cart> findMyCartByOptionCode(String memberId, String optionCode){
         return cartRepository.findMyCartByOptionCode(memberId,optionCode);
+    }
+
+    public void validateMemberId(String memberId,String cartCode){
+        Optional<Cart> byCartId = cartRepository.findByCartId(cartCode);
+        Cart cart = byCartId.orElseThrow(() -> new IllegalStateException("장바구니 정보 없음"));
+        if (!cart.getMemberId().equals(memberId)){
+            throw new IllegalStateException("권한 없음");
+        }
     }
 
 }

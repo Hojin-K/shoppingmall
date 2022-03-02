@@ -14,7 +14,6 @@
         $(function () {
             $(document).on("click", "[name='refund']", function () {
                 let orderDetailCode = $(this).attr('id');
-                alert(orderDetailCode);
                 fnModuleInfo(orderDetailCode);
             });
 

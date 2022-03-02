@@ -61,6 +61,7 @@ public class CartController {
     @ResponseBody
     public ResponseEntity<Object> deleteCart(@PathVariable String cartCode) {
         MemberSession member = (MemberSession) session.getAttribute("member");
+        cartService.validateMemberId(cartCode,member.getMemberId());
         Optional<Cart> cartOptional = cartService.findByCartId(cartCode);
         Cart cart = cartOptional.orElseThrow(() -> new IllegalStateException("cart 정보 없음"));
         if (cart.getMemberId().equals(member.getMemberId())) {

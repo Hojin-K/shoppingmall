@@ -81,7 +81,7 @@
              HR.SHOP_ITEM_TB item,
              HR.SHOP_ITEM_OPTIONS_TB options,
              HR.SHOP_COUNTRY_TB country
-        where cart.MEMBER_ID = #{memberId}
+        where cart.MEMBER_ID = #{memberId} and item.is_delete = '0'
           and cart.option_code = options.option_code
           and options.item_code = item.item_code
           and item.country_code = country.country_code

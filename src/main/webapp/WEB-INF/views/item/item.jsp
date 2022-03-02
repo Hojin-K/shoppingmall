@@ -112,6 +112,9 @@
                             <button id="update" type="button" class="btn btn-lg btn-primary col-12 m-auto">수정하기</button>
                     </div>
                         </c:when>
+                        <c:when test="${sessionScope.member.memberLevel.getLast() == 'SELLER'}">
+
+                        </c:when>
                         <c:otherwise>
                             <div class="row text-center">
                                 <input type="submit" class="btn btn-lg btn-dark col-8 m-auto" value="장바구니에 담기">

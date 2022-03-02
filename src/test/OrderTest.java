@@ -20,7 +20,7 @@ import static org.junit.Assert.assertEquals;
 @WebAppConfiguration
 @RunWith(SpringJUnit4ClassRunner.class)
 @ContextConfiguration(locations = {"file:src/main/webapp/WEB-INF/spring/appServlet/servlet-context.xml"})
-//@Transactional
+@Transactional
 public class OrderTest {
     @Autowired
     private OrderService orderService;

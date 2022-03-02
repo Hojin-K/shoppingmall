@@ -1,11 +1,11 @@
 package com.shop.myapp.controller;
 
-import java.time.LocalDate;
 import java.util.LinkedList;
 import java.util.List;
 
 import javax.servlet.http.HttpServletRequest;
 
+import com.shop.myapp.interceptor.Auth;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.GetMapping;
@@ -25,7 +25,7 @@ import lombok.extern.slf4j.Slf4j;
 
 @Slf4j
 @Controller
-//@Auth(role = Auth.Role.ADMIN)
+@Auth(role = Auth.Role.ADMIN)
 @RequestMapping("/admin")
 public class AdminController {
 	private final MemberService memberService;
@@ -53,7 +53,7 @@ public class AdminController {
 	public ModelAndView detail(@PathVariable String memberId, HttpServletRequest request) {
 		log.info("member detail!!!");
 		MemberSession mSession = (MemberSession)request.getSession().getAttribute("member");
-		Member member = memberService.getMember(memberId, mSession.getMemberLevel());
+		Member member = memberService.getMemberAdmin(memberId);
 		ModelAndView mv = new ModelAndView();
 		mv.setViewName("modal/memberDetail");
 		mv.addObject("member", member);

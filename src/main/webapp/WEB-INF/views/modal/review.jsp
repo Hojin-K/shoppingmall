@@ -102,41 +102,9 @@
 	border-radius: 4px;
 }
 
-.delete {
-	background:
-		url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' height='24' viewBox='0 0 48 48' width='24' fill='%230d6efd'%3E%3Cpath d='M0 0h48v48H0V0z' fill='none'/%3E%3Cpath d='M12 38c0 2.2 1.8 4 4 4h16c2.2 0 4-1.8 4-4V14H12v24zm4.93-14.24l2.83-2.83L24 25.17l4.24-4.24 2.83 2.83L26.83 28l4.24 4.24-2.83 2.83L24 30.83l-4.24 4.24-2.83-2.83L21.17 28l-4.24-4.24zM31 8l-2-2H19l-2 2h-7v4h28V8z'/%3E%3Cpath d='M0 0h48v48H0z' fill='none'/%3E%3C/svg%3E")
-		no-repeat 4px 7px;
-}
 </style>
-<script>
-
-    //삭제	
-	/* $(function () {
-        // test();
-
-        $(document).on("click", "#insert", function () {
-            location.href = "/item/${review.reviewCode}/insert";
-        });
-        $(document).on("click", "#update", function () {
-            location.href = "/item/${review.reviewCode}/update";
-        });
-        $(document).on("click", "#delete", function () {
-            location.href = "/item/${review.reviewCode}/delete";
-        });
-
-        $('#myTab a').click(function (e) {
-            e.preventDefault()
-            $(this).tab('show')
-        }) */
-
-
-
-	</script>
-
-
 <body>
 <c:if test="${not empty reviews}">
-
 	<ul class="reviewlist" style="list-style:none;">
 	<c:forEach items="${reviews }" var="review">
 		<li style="border: 1px solid #cccccc; text-align: left;">
@@ -163,11 +131,6 @@
 	        </dt>
 				<dd>
 					<div class="reviewcontent">${review.reviewContent}</div>
-					<div class="btn-box">
-					<c:if test="${sessionScope.member.memberId == review.memberId || sessionScope.member.memberLevel.getLast() == 'SELLER'}">
-						<button type="button" id="reviewDelete_${review.reviewCode}" class="delete">삭제</button>
-					</c:if>
-					</div>
 				</dd>
 			</dl>
 		</li>
@@ -175,6 +138,7 @@
 	</ul>
 </c:if>
 <c:if test="${empty reviews}">
+	<br><br>
 	<h4>작성된 리뷰가 없습니다.</h4>
 </c:if>
 </body>

@@ -1,8 +1,10 @@
 package com.shop.myapp.service;
 
+import com.fasterxml.jackson.core.JsonProcessingException;
 import com.shop.myapp.dto.*;
 import com.shop.myapp.repository.OrderRepository;
 import org.apache.ibatis.session.SqlSession;
+import org.json.simple.parser.ParseException;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.context.annotation.Lazy;
 import org.springframework.stereotype.Service;
@@ -71,22 +73,29 @@ public class OrderService {
         return cartService.findSelectCartByCartIds(cartIds);
     }
 
-    public Payment validateTotalPay(String impUid, String orderCode) {
-        try {
+    public Payment validateTotalPay(String impUid, String orderCode) throws ParseException, JsonProcessingException {
+        // 주문 코드에 해당하는 주문 객체 가져옴.
             Order order = orderRepository.findByOrderCode(orderCode);
-
+            // impUid 를 IamPort 서버에 전달하여 결제 정보 응답받음.
             Payment payment = iamPortService.getImpAttributes(impUid);
-            if (order.getTotalPay() == payment.getAmount()) {
-                orderRepository.updateIsPaidIntByOrderCode(orderCode,payment);
-                orderDetailService.updatePostedStatusByOrderCode(orderCode);
-                itemOptionService.modifyItemOptionAfterPay(order.getOrderDetails());
-                cartService.deleteByMemberId(order.getMemberId());
-                return payment;
-            }
-        } catch (Exception e) {
-            e.printStackTrace();
+            // 주문 객체의 결제 금액과 IamPort 의 결제 금액이 불일치할 경우,
+            if (!(order.getTotalPay() == payment.getAmount())) {
+                // IamPort 서버에 결제 전액 취소 요청
+                orderDetailService.orderRefund(payment);
+                throw new IllegalStateException("위조된 결제입니다. \n 자동 환불처리됩니다.");
         }
-        return null;
+            // 결제 금액이 일치할 경우,
+
+                // 주문 상태 변경
+                orderRepository.updateIsPaidIntByOrderCode(orderCode,payment);
+                // 배송 상태 변경
+                orderDetailService.updatePostedStatusByOrderCode(orderCode);
+                // 주문 상품의 재고 변경
+                itemOptionService.modifyItemOptionAfterPay(order.getOrderDetails());
+                // 장바구니 비워줌
+                cartService.deleteByMemberId(order.getMemberId());
+                // 결제 정보 리턴
+                return payment;
     }
 
     public int cancelOrder(String orderCode) {

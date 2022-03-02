@@ -35,9 +35,9 @@ public class MemberService {
                 orElseThrow(() -> new IllegalStateException(memberId + " 라는 id의 member 없음"));
     }
     
-    public Member getMember(String memberId, LinkedList<String> requesterLevel) {
+    public Member getMemberAdmin(String memberId) {
         return memberRepository.
-                findById(memberId).
+                findByIdAdmin(memberId).
                 orElseThrow(() -> new IllegalStateException(memberId + " 라는 id의 member 없음"));
     }
 
