@@ -55,10 +55,9 @@ public class IamPortService {
         // linked 를 사용하면 값들의 순서를 보장할 수 있음
         MultiValueMap<String, String> map = new LinkedMultiValueMap<>();
 
-        // import key
-        map.add("imp_key","8245163167318128");
+        map.add("imp_key", "{키 번호}");
         // import secret key
-        map.add("imp_secret", "41123179b382fed758afa59a01b11043b4f72a3d6ce176d91234dd508082e34968a885c53cb1ef89");
+        map.add("imp_secret", "{시크릿 번호}");
         // RestTemplate 를 사용하여 url 에 request 요청 -> 이후 response 를 ResponseEntity 에 저장
 
         ResponseEntity<String> response = template.postForEntity(url, map, String.class);

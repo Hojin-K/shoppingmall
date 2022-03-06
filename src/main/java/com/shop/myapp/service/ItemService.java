@@ -30,9 +30,6 @@ public class ItemService {
         // itemCode 로 상품 조회
         itemRepository.itemHitUpWhenInItemDetail(itemCode);
         Optional<Item> item = itemRepository.findByItemCode(itemCode);
-        // 상품 null 체크
-        // 상품의 옵션 조회
-        // 상품에 옵션 넣기
         return item.orElseThrow(() -> new IllegalStateException("Not Found Item"));
     }
 

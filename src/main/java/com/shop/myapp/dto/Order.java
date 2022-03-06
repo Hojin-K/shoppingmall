@@ -63,8 +63,6 @@ public class Order {
         this.orderDetails = orderDetails;
     }
 
-
-
     public Order() {
     }
 
